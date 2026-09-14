@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Farm Manager</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./style.css">
+    </head>
+    <body>
+        <div id="app">
+            <header class="topbar">
+                <h1> Farm Manager </h1>
+            </header>
+            <main class="content">
+                <section id="dashboard-view">
+                    <h2>Morning Brief</h2>
+                    <p>Welcome to the land!</p>
+                </section>
+                <section id="tasks-view">
+                    <h2>Chore Board</h2>             
+                </section>
+                <section id="assets-view" class="hidden">
+                    <h2>Barn & Garage</h2>
+                </section>
+            </main>
+
+            <nav class="bottom-nav">
+                <button class="nav-btn active" data-target="dashboard-view">Dashboard</button>
+                <button class="nav-btn" data-target="tasks-view"> Tasks</button>
+                <button class="nav-btn" data-target="assets-view"> Assets</button>
+            </nav>
+        </div>
+
+        <script type="module" src=/main.js></script>""
+    </body>
+</html>
