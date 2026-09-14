@@ -1,3 +1,49 @@
 :root {
     --bg-color: #FDFBF7;
+    --text-main: #4A4A4A;
+    --brand-green: #7BA05B;
+    --brand-orange: #E07A5F;
+    --card-bg: #FFFFFF;
+    --nav-bg: #F4EEDF;
+}
+/*--Base--*/
+* {
+    box-sizing: border-box; margin: 0; padding: 0;
+}
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    height: 100vh; display: flex;
+    flex-direction: column;
+}
+#app {
+    display: flex; flex-direction: column; height: 100%;
+}
+.topbar {
+    background-color: var(--brand-green);
+    color: white; padding: 1rem; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.topbar h1 {
+    font-weight: 700; font-size: 1.5rem;
+}
+.content {
+    flex: 1; padding: 1.5rem; overflow-y: auto;
+}
+.hidden {
+    display: none !important;
+}
+.bottom-nav {
+    background-color: var(--card-bg); display: flex; justify-content: space-around;
+    padding: 1rem; border-top: 2px solid var(--nav-bg);
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+.nav-btn {
+    background: none; border: none; font-family: 'Quicksand', sans-serif;
+    font-weight: 600; font-size: 1rem; color: #999; cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.2s;
+}
+.nav-btn.active {
+    color: var(--brand-green);
 }
