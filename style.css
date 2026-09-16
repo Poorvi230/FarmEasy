@@ -13,6 +13,8 @@
 body {
     font-family: 'Quicksand', sans-serif;
     background-color: var(--bg-color);
+    background-image: radial-gradient(#e0dcd3 2px, transparent 2px);
+    background-size: 30px 30px;
     color: var(--text-main);
     height: 100vh; display: flex;
     flex-direction: column;
@@ -114,3 +116,49 @@ body {
         border-radius: 12px; 
         color: var(--text-main)
     }
+    /*--assest stuff--*/
+    .asset-grid {
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 15px;
+    }
+    .asset-card {
+        background-color: var(--card-bg);
+        padding: 20px 10px; border-radius: 12px;
+        text-align: center;
+        border: 1px solid #f0f0f0;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+    }
+    .asset-icon {
+        font-size: 3rem;
+        margin-bottom: 10px;
+    }
+    .asset-card h3 {
+        font-size: 1.1rem; color: var(--text-main);
+    }
+    .asset-card p {
+        font-size: 0.9rem; color: #888;
+        margin-top: 5px;
+    }
+.dash-card, .task-item, .asset-card, .btn-primary {
+    transition: 0.2s ease, box-shadow 0.2s ease;
+}
+.dash-card:hover, .task-item:hover, .asset-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.06);
+}
+.btn-primary:active {
+    transform: scale(0.95);
+}
+
+main section {
+    animation: popIn 0.3s ease-out;
+}
+@keyframes popIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.task-item:has(input:checked) {
+    opacity: 0.6; text-decoration: line-through; 
+}
