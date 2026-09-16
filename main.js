@@ -51,3 +51,21 @@ if(cancelBtn) {
         modalOverlay.classList.add('hidden');
     });
 }
+if(saveBtn && taskList) {
+      saveBtn.addEventListener('click', () => {
+        let newChore = choreInput.value;
+
+        if(newChore.trim() !== "") {
+          const newTaskHTML = `
+            <label class="task-item" style="animation: popIn 0.3s ease-out;">
+              <input type="checkbox">
+              <span class="task-text">${newChore}</span>
+              <span class="task-tag">New 🌱</span>
+            </label>
+          `;
+
+          taskList.insertAdjacentHTML('beforeend', newTaskHTML);
+          modalOverlay.classList.add('hidden');
+        }
+      });
+    }
