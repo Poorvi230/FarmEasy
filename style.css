@@ -1,10 +1,12 @@
 :root {
     --bg-color: #FDFBF7;
     --text-main: #4A4A4A;
-    --brand-green: #7BA05B;
-    --brand-orange: #E07A5F;
+    --brand-green: #7faf54;
+    --brand-orange: #f48e71;
     --card-bg: #FFFFFF;
     --nav-bg: #F4EEDF;
+    --bg-yellow: rgba(252, 226, 111, 0.35);
+    --bg-blue: rgba(188, 216, 226, 0.35);
 }
 /*--Base--*/
 * {
@@ -13,8 +15,13 @@
 body {
     font-family: 'Quicksand', sans-serif;
     background-color: var(--bg-color);
-    background-image: radial-gradient(#e0dcd3 2px, transparent 2px);
-    background-size: 30px 30px;
+    background-image: conic-gradient(
+        var(--bg-yellow) 25%,
+        var(--bg-blue) 0 50%,
+        var(--bg-yellow) 0 75%,
+        var(--bg-blue) 0
+    );
+    background-size: 180px 180px;
     color: var(--text-main);
     height: 100vh; display: flex;
     flex-direction: column;
