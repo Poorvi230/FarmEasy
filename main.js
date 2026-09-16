@@ -15,3 +15,39 @@ navButtons.forEach(btn => {
         targetView.classList.remove('hidden');
     });
 });
+
+const alertBtn = document.querySelector('.alert-card .btn-primary');
+if(alertBtn) {
+    alertBtn.addEventListener('click', function() {
+        const card = this.closest('.alert-card');
+
+        card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.9)';
+
+        setTimeout(() => {
+            card.remove();
+        }, 300);
+    });
+}
+//new chore add
+const addChoreBtn = document.querySelector('#tasks-view .btn-primary');
+const taskList = document.querySelector('.task-list');
+
+const modalOverlay = document.getElementById('chore-modal');
+const choreInput = document.getElementById('new-chore-input');
+const saveBtn = document.getElementById('save-chore-btn');
+const cancelBtn = document.getElementById('cancel-chore-btn');
+
+if(addChoreBtn) {
+    addChoreBtn.addEventListener('click', () => {
+        modalOverlay.classList.remove('hidden');
+        choreInput.value = '';
+        choreInput.focus();
+    });
+}
+if(cancelBtn) {
+    cancelBtn.addEventListener('click', () => {
+        modalOverlay.classList.add('hidden');
+    });
+}
