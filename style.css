@@ -86,3 +86,31 @@ body {
         font-family: inherit; font-weight: 600; margin-top: 10px;
         /* transition: background-color 0.2s; */
     }
+    /*--chore board--*/
+    .subtitle {
+        color: #888; margin-bottom: 20px;
+    }
+    .task-list {
+        display: flex; flex-direction: column; gap: 10px;
+    }
+    .task-item {
+        display: flex; align-items: center;
+        background-color: var(--card-bg); 
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        cursor: pointer; border: 1px solid #f9f9f9;
+    }
+    .task-item input {
+        margin-right: 15px; width: 18px; height: 18px; 
+        accent-color: var(--brand-green);
+    }
+    .task-text {
+        flex-grow: 1; font-weight: 500;
+    }
+    .task-tag {
+        font-size: 0.8rem; background-color: var(--nav-bg);
+        padding: 4px 8px;
+        border-radius: 12px; 
+        color: var(--text-main)
+    }
