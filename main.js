@@ -94,3 +94,51 @@ if(saveBtn && taskList) {
             splash.remove();
         }, 3100);
     }
+    //-lve weather--
+    const weatherWidget = document.querySelector('.weather_widget');
+    const weatherTitle = weatherWidget.querySelector('h3');
+    const weatherTemp = weatherWidget.querySelector('p');
+    const weatherDesc = weatherWidget.querySelector('small');
+
+    const weatherCodes = {
+        0: "☀️ Clear skies",
+        1: "🌤️ Mostly clear" ,
+        2: "⛅ Partly cloudy",
+        3: "☁️ Overcast",
+        45: "🌫️ Foggy" ,
+        51: "🌧️ Light drizzle" ,
+        61: "🌧️ Raining" ,
+        71: "❄️ Snowing",
+        95: "⛈️ Thunderstorm"
+    };
+
+    function fetchLiveWeather() {
+        weatherDesc.innerText = "Checking the skies...";
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                try {
+                    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=fahrenheit`);
+                    const data = await response.json();
+
+                    const tempF = Math.round(data.current_weather.temperature);
+                    const tempC = Math.round((tempF - 32) * 5 / 9);
+                    const code = data.current_weather.weathercode;
+                    const condition = weatherCodes[code] || "Wild weather";
+
+                    weatherTitle.innerText = "Live Local Weather";
+                    weatherTemp.innerText = `${tempF}°F | ${tempC}°C`;
+                    weatherDesc.innerText = condition;
+
+                } catch(error) {
+                    console.error("API failed:", error);
+                    weatherDesc.innerText = "Weather radio is down.";
+                }
+            }, () => {
+                weatherDesc.innerText = "Location access denied.";
+            });
+        }
+    }
+    fetchLiveWeather();
