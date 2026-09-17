@@ -100,30 +100,75 @@ body {
     .subtitle {
         color: #888; margin-bottom: 20px;
     }
+    #tasks-view {
+        background-color: #d1ab86;
+        background-image: radial-gradient(#c29b76 2px, transparent 2px);
+        background-size: 20px 20px;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: inset 0 0 30px rgba(0,0,0,0.15);
+        min-height: 450px;
+    }
+    #tasks-vew h2, #tasks-view .subtitle {
+        color: #4a3b2c;
+        text-align: center;
+    }
     .task-list {
-        display: flex; flex-direction: column; gap: 10px;
+        display: flex; flex-direction: wrap; gap: 25px;
+        justify-content: center; margin-top: 20px;
     }
     .task-item {
+        width: 140px;
+        height: 140px;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
         display: flex; align-items: center;
-        background-color: var(--card-bg); 
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        cursor: pointer; border: 1px solid #f9f9f9;
+        position: relative;
+        padding: 20px 10px;
+        box-shadow: 2px 5px 10px rgba(0,0,0,0.15);
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
-    .task-item input {
-        margin-right: 15px; width: 18px; height: 18px; 
-        accent-color: var(--brand-green);
+    .task-item::before {
+        content: '';
+        position: absolute;
+        top: 8px; left: 50%;
+        transform: translateX(-50%);
+        width: 14px;
+        height: 14px;
+        background-color: var(--brand-orange);
+        border-radius: 50%;
+        box-shadow: -2px 3px 3px rgba(0,0,0,0.2);
+    }
+
+    .task-item:nth-child(3n+1) { background-color: #fdfae3; transform: rotate(-3deg); }
+    .task-item:nth-child(3n+2) { background-color: #f4f8f3; transform: rotate(2deg); }
+    .task-item:nth-child(3n+3) { background-color: #fce8e3; transform: rotate(-1deg); }
+
+    .task-check {
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        bottom: 15px;
+        transform: scale(1.5);
+        transition: opacity 0.3s;
+    }
+    .task-item.expanded-note {
+        transform: scale(1.7) rotate(0deg) !important;
+        z-index: 100;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     }
     .task-text {
         flex-grow: 1; font-weight: 500;
     }
-    .task-tag {
-        font-size: 0.8rem; background-color: var(--nav-bg);
-        padding: 4px 8px;
-        border-radius: 12px; 
-        color: var(--text-main)
+    .task-item.expanded-note .task-check {
+        opacity: 1; pointer-events: auto;
     }
+    .task-item:has(input:checked) {
+        opacity: 0.5;
+    }
+    
     /*--assest stuff--*/
     .asset-grid {
         display: grid; 

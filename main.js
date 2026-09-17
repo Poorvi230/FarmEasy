@@ -57,11 +57,11 @@ if(saveBtn && taskList) {
 
         if(newChore.trim() !== "") {
           const newTaskHTML = `
-            <label class="task-item" style="animation: popIn 0.3s ease-out;">
-              <input type="checkbox">
+            <div class="task-item" style="animation: popIn 0.3s ease-out;">
               <span class="task-text">${newChore}</span>
               <span class="task-tag">New 🌱</span>
-            </label>
+              <input type="checkbox" class="task-check">
+            </div>
           `;
 
           taskList.insertAdjacentHTML('beforeend', newTaskHTML);
@@ -142,3 +142,20 @@ if(saveBtn && taskList) {
         }
     }
     fetchLiveWeather();
+
+    //--pinboard for tasks--
+    const taskBoard = document.querySelector('.task-list');
+
+    if(taskBoard) {
+        taskBoard.addEventListener('click', (e) => {
+            const item = e.target.closest('.task-item');
+            if(!item) return;
+
+            if(e.targert.tagName.toLowerCase() == 'input') return;
+
+            document.querySelectorAll('.task-item').forEach(note => {
+                if(note !== item) note.classList.remove('expanded-note');
+            });
+            item.classList.toggle('expanded-note');
+        });
+    }
