@@ -244,8 +244,9 @@ main section {
     scrollbar-width: none;
 }
 .machine-slide {
-    flex: 0 0 75%;
-    max-width: 260px;
+    flex: 0 0 85%;
+    max-width: 320px;
+    min-height: 360px;
     scroll-snap-align: center;
     background-color: var(--card-bg);
     border-radius: 20px;
@@ -256,8 +257,8 @@ main section {
     flex-direction: column; align-items: center; text-align: center;
 }
 .machine-slide .img-placeholder {
-    width: 100px; 
-    height: 100px;
+    width: 150px; 
+    height: 150px;
     background-color: var(--nav-bg);
     border-radius: 50%;
     display: flex;
@@ -270,7 +271,7 @@ main section {
 }
 .machine-slide .machine-info h4 {
     color: var(--brand-green);
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     margin-bottom: 5px;
 }
 .machine-slide .status {
@@ -284,4 +285,53 @@ main section {
 .machine-slide small {
     color: #999; 
     font-size: 0.8rem;
+}
+/*--splash screen--*/
+#splash-screen.fade-out {
+    opacity: 0;
+    visibility: hidden; pointer-events: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--brand-green);
+    background: radial-gradient(circle at center, #90c864 0%, var(--brand-green) 100%);
+    display: flex;
+    justify-content: center; align-items: center;
+    z-index: 9999;
+    color: white;
+    transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+}
+.splash-content {
+    text-align: center;
+    animation: floatUp 1s ease-out forwards;
+}
+.splash-logo {
+    font-size: 6rem;
+    margin-bottom: 10px;
+    animation: pulse 2s infinite ease-in-out;
+}
+.splash-title {
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 2px; margin-bottom: 5px;
+    display: inline-block; 
+    padding: 20px 50px;
+    border: var(--bg-yellow);
+    border-radius: 255px 15px 255px 15px / 15px 255px 15px 255px;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+.splash-tagline {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+@keyframes floatUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }

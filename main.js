@@ -84,3 +84,13 @@ if(saveBtn && taskList) {
             overviewGrid.classList.remove('hidden');
         });
     }
+    //-splash screen--
+    const splash = document.getElementById('splash-screen');
+    if(splash) {
+        setTimeout(() => {
+            splash.classList.add('fade-out');
+        }, 2300);
+        setTimeout(() => {
+            splash.remove();
+        }, 3100);
+    }
