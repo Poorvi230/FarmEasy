@@ -69,3 +69,18 @@ if(saveBtn && taskList) {
         }
       });
     }
+    const machineryCard = document.getElementById('card-machinery');
+    const overviewGrid = document.getElementById('asset-overview-grid');
+    const machineryDetails = document.getElementById('machinery-details');
+    const backBtn = document.getElementById('back-to-assets');
+
+    if(machineryCard && overviewGrid && machineryDetails) {
+        machineryCard.addEventListener('click', () => {
+            overviewGrid.classList.add('hidden');
+            machineryDetails.classList.remove('hidden');
+        });
+        backBtn.addEventListener('click', () => {
+            machineryDetails.classList.add('hidden');
+            overviewGrid.classList.remove('hidden');
+        });
+    }
