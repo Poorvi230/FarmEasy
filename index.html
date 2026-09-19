@@ -12,7 +12,7 @@
     <body>
         <div id="splash-screen" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; background-color: #7faf54; display: flex; justify-content: center; align-items: center;">
             <div class="splash-content">
-                <div class="splash-logo"></div>
+                <div class="splash-logo">🚜</div>
                 <h1 class="splash-title">FarmEasy</h1>
                 <p class="splash-tagline">Your farm management, made easy!</p>
             </div>
@@ -48,7 +48,7 @@
                             </ul>
                         </div>
                         <!--alert fahhh-->
-                        <div class="death-card alert-card">
+                        <div class="dash-card alert-card">
                             <h3>Attention!!!!</h3>
                             <p>Tractor A needs oil change</p>
                             <button class="btn-primary">Acknowledge</button>
@@ -57,35 +57,29 @@
                 </section>
 
                 <section id="tasks-view" class="hidden">
-                    <h2>Chore Board</h2>  
-                    <p class="subtitle">What are we to do today?</p>
+                    <h2>Chore Board</h2>
+                    <p class="subtitle">What are we to do today</p>
 
-                    <div class="task-list">
-                            <span class="task-text">Feed the chickens</span>
-                            <span class="task-tag">Morning</span>
-                            <input type="checkbox" class="task-check">
-                    </div>
-                        <div class="task-item">
-                            <span class="task-text">Check east Fence</span>
-                            <span class="task-tag">Urgent</span>
-                             <input type="checkbox" checked class="task-check">
-                        </div>
-                        <div class="task-item">
-                            <span class="task-text">Water the tomato sprouts</span>
-                            <span class="task-tag">Afternoon</span>
-                            <input type="checkbox" checked class="task-check">
-                        </div>
+                    <div class="chore-filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="pending">To-Do</button>
+                        <button class="filter-btn" data-filter="completed">Done</button>
+                        <button class="filter-btn" data-filter="Urgent">Urgent</button>
                     </div>
 
-                    <button class="btn-primary" style="margin-top: 20px; width: 100%;">+ Add New Chore</button>
+                    <div class="task-list" id="task-board-container">
+
+                    </div>
+
+                    <button id="open-chore-modal-btn" class="btn-primary" style="margin-top: 25px; width: 100%;">+Add new Chore</button>
                 </section>
 
                 <section id="assets-view" class="hidden">
                     <h2>Barn & Garage</h2>
                     <p class="subtitle">Farm Inventory</p>
 
-                    <div class="assets-grid" id="asset-overview-grid">
-                        <div class="assets-card" id="card-machinery" style="cursor: pointer;">
+                    <div class="asset-grid" id="asset-overview-grid">
+                        <div class="asset-card" id="card-machinery" style="cursor: pointer;">
                             <div class="asset-icon">🚜</div>
                             <h3>Machinery</h3>
                             <p>3 active</p>
@@ -101,7 +95,7 @@
                             <div class="asset-icon">🐄</div>
                             <h3>Livestock</h3>
                             <p> 50 total</p>
-                            <p1> 20cows, 14 pigs, 16 chickens</p1>
+                            <p> 20cows, 14 pigs, 16 chickens</p>
                         </div>
 
                         <div class="asset-card">
@@ -152,10 +146,19 @@
         <div id="chore-modal" class="modal-overlay hidden">
             <div class="cute-modal">
                 <h3>What do u have to do?</h3>
-                <input type="text" id="new-chore-input" placeholder="e.g. Pet cutie cows 🐄" />
+                <input type="text" id="new-chore-input" placeholder="e.g. Pet cutie cows" maxlength="45"/>
+                <div class="tag-selector-group">
+                    <label for="chore-tag-select">Chore Tag:</label>
+                    <select id="chore-tag-select">
+                        <option value="Morning">🌱 Morning</option>                                                                                                                                                
+                        <option value="Afternoon">☀️ Afternoon</option>                                                                                                                                            
+                        <option value="Evening">🌙 Evening</option>                                                                                                                                                
+                        <option value="Urgent">🚨 Urgent</option>                                                                                                                                                                      </select>
+                    </select>        
+                </div>
                 <div class="modal-button">
                     <button id="cancel-chore-btn" class="btn-secondary">Nevermind</button>
-                    <button id="save-chore-btn" class="btn-primary">Add it!</button>
+                    <button id="save-chore-btn" class="btn-primary">Add it</button>
                 </div>
             </div>
         </div>
