@@ -514,3 +514,74 @@ renderChores();
         }
     }
     spawnBugs();
+    //--finance logbook/
+    let transactions = JSON.parse(localStorage.getItem('frameasy_finances')) || [];
+
+    function updateFinanceUI() {
+        const list = document.getElementById('transaction-history');
+        const balanceTxt = document.getElementById('net-balance-text');
+        const incomeTxt = document.getElementById('total-income-text');
+        const expenseTxt = document.getElementById('total-expense-text');
+
+        if(!list) return;
+
+        list.innerHTML = '';
+        let totalIncome = 0;
+        let totalExpense = 0;
+
+        if (transactions.length === 0) {
+            list.innerHTML = '<p class="empty-board-msg">No transactions logged yet.</p>';
+        }
+        const sorted = [...transactions].reverse();
+
+        sorted.forEach(t => {
+            if (t.type === 'income') totalIncome += t.amount;
+            if (t.type === 'expense') totalExpense += t.amount;
+
+            const div = document.createElement('div');
+            div.className = `transaction-item ${t.type}`;
+            div.innerHTML =`
+            <div class="trans-info">
+            <strong>${t.desc}</strong>
+            <small>${new Date(t.date).totalLocaleDateString()}</small>
+            </div>
+            <div class="trans-amount-text">
+            ${t.type === 'income' ? '+' : '-'}$${t.amount.toFixed(2)}
+            </div>
+            `;
+            list.appendChild(div);
+        });
+        const net = totalIncome - totalExpense;
+        incomeTxt.innerText = `+$${totalIncome.toFixed(2)}`;
+        expenseTxt.innerText = `-$${totalExpense.toFixed(2)}`;
+
+        balanceTxt.innerText = `${net >= 0 ? '' : '-'}$${Math.abs(net).toFixed(2)}`;
+        balanceTxt.style.color = net >= 0 ? '#699b4f' : '#d9534f';
+    }
+
+    const addTransBtn = document.getElementById('add-trans-btn');
+    if(addTransBtn) {
+        addTransBtn.addEventListener('click', () => {
+            const type = document.getElementById('trans-type').value;
+            const amount = parseFloat(document.getElementById('trans-amount').value);
+            const desc = document.getElementById('trans-desc').value.trim();
+
+            if (!amount || amount <= 0 || !desc) {
+                alert("Please enter a valid amount and description!");
+                return;
+            }
+            transactions.push({
+                id: Date.now(),
+                type: type,
+                amount: amount,
+                desc: desc,
+                date: new Date().toISOString()
+            });
+            localStorage.setItem('farmeasy_finances', JSON.stringify(transactions));
+
+            document.getElementById('trans-amount').value = '';
+            document.getElementById('trans-desc').value = '';
+            updateFinanceUI();
+        });
+    }
+    updateFinanceUI();

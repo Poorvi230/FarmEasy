@@ -783,3 +783,63 @@ body::before {
     40% { transform: translateY(-40px) scale(1.3); opacity: 1; }
     100% { transform: translateY(-80px) scale(1); opacity: 0; }
 }
+
+/*--finance--*/
+.finance-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+.finance-card {
+    background-color: var(--card-bg);
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+}
+.finance-card h3 { font-size: 0.85rem; color: #888; margin-bottom: 5px; }
+.finance-card p { font-size: 1.4rem; font-weight: 700; }
+.finance-card.balance p { color: var(--text-main); }
+.finance-card.income p { color: #699b4f; }
+.finance-card.expense p { color: #d9534f; }
+
+.finance-form-container {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    border: 1px solid #f0f0f0;
+}
+
+.finance-form-container h3 { margin-bottom: 15px; color: var(--text-main); }
+.finance-form { display: flex; flex-wrap: wrap; gap: 10px; }
+.finance-form > * { flex: 1 1 100px; }
+
+.finance-form input, .finance-form select {
+    padding: 10px;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    font-family: inherit;
+    font-family: 0.95rem;
+    background-color: var(--bg-color);
+    outline: none;
+    color: var(--text-main);
+}
+.finance-form input:focus, .finance-form select:focus { border-color: var(--brand-green); }
+.transaction-list { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+.transaction-item { display: flex; justify-content: space-between; align-items: center;
+background-color: var(--card-bg); 
+padding: 15px; border-radius: 10px;
+border-left: 5px solid #ccc; }
+
+.transaction-item.income { border-left-color: #699b4f; }
+.transaction-item.expense { border-left-color: #d9534f; }
+.trans-info strong {
+    display: block; color: var(--text-main); font-size: 1rem;
+}
+.trans-info small { color: #999; font-size: 0.8rem; }
+.trans-amount-text { font-weight: 700; font-size: 1.1rem; }
+.transaction-item.income .trans-amont-text { color: #699b4f; }
+.transaction-item.expense .trans-amount-text { color: #d9534f; }
