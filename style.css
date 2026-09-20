@@ -25,12 +25,12 @@ body.theme-evening {
 }
 body.theme-night {
     --sky-top: #0f2027;
-    --sky-bottom: #203a43;
+    --sky-bottom: #275564;
     --text-main: #e4e7eb;
     --card-bg: rgba(30, 39, 50, 0.85);
     --nav-bg: rgba(40, 52, 66, 0.9);
     --grass-color: rgba(22, 50, 41, 0.6);
-    --grass-dark: rgba(7, 26, 16, 0.9);
+    --grass-dark: rgba(29, 183, 101, 0.9);
 }
 /*--Base--*/
 * {
@@ -765,3 +765,20 @@ body::before {
             radial-gradient(ellipse at 50% 130%, var(--grass-dark) 0%, transparent 65%);
     }
 
+    /*--floating text*/
+    .floating-text {
+        position: fixed;
+        font-size: 1.5rem; 
+        font-weight: 800;
+        color: var(--brand-green);
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        pointer-events: none;
+        z-index: 9999;
+        animation: floatUpGamify 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+@keyframes floatUpGamify {
+    0% { transform: translateY(0) scale(0.5); opacity: 1; }
+    40% { transform: translateY(-40px) scale(1.3); opacity: 1; }
+    100% { transform: translateY(-80px) scale(1); opacity: 0; }
+}

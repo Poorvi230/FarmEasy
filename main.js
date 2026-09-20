@@ -2,7 +2,7 @@ const navButtons = document.querySelectorAll('.nav-btn');
 let views = document.querySelectorAll('main section');
 
 function updateTimeTheme() {
-    const hour = 13;
+    const hour = 22;
     const body = document.body;
     const greeting = document.querySelector('#dashboard-view h2');
 
@@ -321,29 +321,44 @@ renderChores();
     }
     updateLiveStockUI();
 
-    if(milkBtn) {
-        milkBtn.addEventListener('click', () => {
-            milkCount += 1;
-            localStorage.setItem('farmeasy_milk_today', milkCount);
-            updateLiveStockUI();
-        });
-    }
+    function spawnFloatingText(e, text) {
+        const floater = document.createElement('div');
+        floater.className = 'floating-text';
+        floater.innerText = text;
 
-    if (eggBtn) {
-        eggBtn.addEventListener('click', () => {
-            eggCount += 6;
-            localStorage.setItem('farmeasy_eggs_today', eggCount);
-            updateLiveStockUI();
-        });
-    }
+        floater.style.left = (e.clientX - 10) + 'px';
+        floater.style.top = (e.clientY - 20) + 'px';
 
-    if (pigsBtn) {
-        pigsBtn.addEventListener('click', () => {
-            pigsFed = !pigsFed;
-            localStorage.setItem('farmeasy_pigs_fed', pigsFed);
-            updateLiveStockUI();
-        });
-    }
+        document.body.appendChild(floater);
+        setTimeout(() => { floater.remove(); }, 1000);
+    } 
+
+    if (milkBtn) {
+            milkBtn.addEventListener('click', (e) => {
+                milkCount += 1;
+                localStorage.setItem('farmeasy_milk_today', milkCount);
+                updateLiveStockUI();
+                spawnFloatingText(e, '+1 Gal!');
+            });
+        }
+
+        if (eggBtn) {
+            eggBtn.addEventListener('click', (e) => {
+                eggCount += 6;
+                localStorage.setItem('farmeasy_eggs_today', eggCount);
+                updateLiveStockUI();
+                spawnFloatingText(e, '+6 Eggs!');
+            });
+        }
+
+        if (pigsBtn) {
+            pigsBtn.addEventListener('click', (e) => {
+                pigsFed = !pigsFed;
+                localStorage.setItem('farmeasy_pigs_fed', pigsFed);
+                updateLiveStockUI();
+                spawnFloatingText(e, pigsFed ? 'Fed!' : 'Hungry!');
+            });
+        }
 
     const pumpBtn = document.getElementById('test-pump-btn');
     const pumpBadge = document.getElementById('pump-status-badge');
