@@ -1209,5 +1209,83 @@ border-left: 5px solid #ccc; }
 }
 
 .telemetry-pill {
-    
+    background-color: var(--bg-color);
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 8px 12px;
+}
+
+.telemetry-pill small {
+    display: block;
+    color: #888;
+    font-size: 0.72rem;
+    margin-bottom: 2px;
+}
+
+.telemetry-pill strong {
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+.spray-window-box {
+    background-color: var(--bg-color);
+    border-radius: 12px;
+    padding: 12px 14px;
+    border: 1px solid #f0ebd8;
+    margin-bottom: 8px;
+}
+
+.spray-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.spray-badge.optimal {
+    background-color: #eaf5e1;
+    color: #3b6e22;
+    border: 1px solid #cce8b8;
+}
+
+.spray-badge.caution {
+    background-color: #fef5e7;
+    color: #b7791f;
+    border: 1px solid #fae1b8;
+}
+
+.spray-badge.danger {
+    background-color: #fce8e6;
+    color: #c53030;
+    border: 1px solid #f8b4b4;
+}
+
+.spray-reason-text {
+    font-size: 0.82rem;
+    color: #555;
+    line-height: 1.35;
+}
+
+.trafficability-subtext {
+    font-size: 0.75rem;
+    color: #999;
+    font-style: italic;
+}
+
+.traffic-status.good { color: #4a7732; }
+.traffic-status.caution { color: #d69830; }
+.traffic-status.risk { color: #c53030; }
+
+.livestock-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px dashed #f0f0f0;
+}
+
+.livestock-list li:last-child {
+    border-bottom: none;
 }
