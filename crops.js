@@ -1,191 +1,323 @@
-const CROP_TYPES = {
-    carrot: { name: 'Carrot', emoji: '🥕', growTime: 15, yield: 4 },
-    tomato: { name: 'Tomato', emoji: '🍅', growTime: 30, yield: 3 },                                                                                                                                               
-    corn: { name: 'Sweet Corn', emoji: '🌽', growTime: 45, yield: 2 },                                                                                                                                             
-    strawberry: { name: 'Strawberry', emoji: '🍓', growTime: 60, yield: 5 }                                                                                                                                        
-}
-
-let selectedCropKey = 'carrot';
-
-const defaultPlots = [
-            { id: 1, crop: 'carrot', plantedAt: Date.now() - 6000, duration: 15, watered: true },
-        { id: 2, crop: 'tomato', plantedAt: Date.now() - 22000, duration: 30, watered: false },                                                                                                                        
-        { id: 3, crop: null, plantedAt: null, duration: 0, watered: false },                                                                                                                                           
-        { id: 4, crop: null, plantedAt: null, duration: 0, watered: false },                                                                                                                                           
-        { id: 5, crop: null, plantedAt: null, duration: 0, watered: false },                                                                                                                                           
-        { id: 6, crop: null, plantedAt: null, duration: 0, watered: false }                                                                                                                                            
+const PHENOLOGICAL_STAGES = [
+    { name: "Seeding / Emergence", percent: 15 },
+    { name: "Vegetative Growth", percent: 40 },
+    { name: "Flowering / Tasseling", percent: 70 },
+    { name: "Ripening & Maturation", percent: 90 },
+    { name: "Harvest Ready", percent: 100 }
 ];
 
-let plots = JSON.parse(localStorage.getItem('farmeasy_plots')) || defaultPlots;
-let harvestStorage = JSON.parse(localStorage.getItem('farmeasy_harvest')) || {
-    carrot: 8,
-    tomato: 3,
-    corn: 0,
-    strawberry: 0
-};
+const defaultParcels = [
+    {
+        id: "north-40",
+        name: "North 40 Field",
+        acreage: 40,
+        category: "Grains",
+        crop: "Hard Red Winter Wheat",
+        variety: "Overland HRW",
+        plantedDate: "March 15",
+        targetHarvest: "July 20",
+        stageIndex: 1,
+        soilMoisture: 68,
+        expectedYield: "65 bu/ac (2,600 bu total)",
+        logs: [
+            { date: "Sep 10", type: "Fertilizer", note: "Applied 120 lbs/ac 46-0-0 Urea" },
+            { date: "Sep 16", type: "Irrigation", note: "Center pivot run: 1.0 inch water" }
+        ]
+    },
+    {
+        id: "riverbed-25",
+        name: "Riverbed Paddock",
+        acreage: 25,
+        category: "Grains",
+        crop: "Yellow Dent Corn",
+        variety: "Pioneer P1197",
+        plantedDate: "April 20",
+        targetHarvest: "October 15",
+        stageIndex: 2,
+        soilMoisture: 54,
+        expectedYield: "185 bu/ac (4,625 bu total)",
+        logs: [
+            { date: "Sep 05", type: "Scouting", note: "Stand emergence 98%, low weed pressure" }
+        ]
+    },
+    {
+        id: "south-meadow-15",
+        name: "South Meadow",
+        acreage: 15,
+        category: "Forage",
+        crop: "Alfalfa Hay",
+        variety: "AmeriStand 407TQ",
+        plantedDate: "May 01",
+        targetHarvest: "Sep 28",
+        stageIndex: 4,
+        soilMoisture: 72,
+        expectedYield: "2.5 tons/ac (37.5 tons total)",
+        logs: [
+            { date: "Aug 22", type: "Harvest", note: "1st cut baled: 35 tons high-protein round bales" }
+        ]
+    },
+    {
+        id: "east-orchard-10",
+        name: "East Orchard",                                                                                                                                                                                      
+        acreage: 10,                                                                                                                                                                                               
+        category: "Orchard",                                                                                                                                                                                       
+        crop: "Honeycrisp Apples",                                                                                                                                                                                 
+        variety: "Malus Domestica",                                                                                                                                                                                
+        plantedDate: "Perennial (Yr 6)",                                                                                                                                                                           
+        targetHarvest: "October 05",                                                                                                                                                                               
+        stageIndex: 3,                                                                                                                                                                    
+        soilMoisture: 61,                                                                                                                                                                                          
+        expectedYield: "750 bu/ac (7,500 bu total)",                                                                                                                                                               
+        logs: [                                                                                                                                                                                                    
+        { date: "Sep 12", type: "Scouting", note: "Fruit sizing optimal, sugar brix testing 13.5°" }                                                                                                           
+        ]                                                                                                                                                                                                          
+    }
+];
 
-const plotsGrid = document.getElementById('garden-plots-grid');
-const harvestSummaryRow = document.getElementById('harvest-summary-row');
-const totalProduceText = document.getElementById('total-produce-count');
-const seedChips = document.querySelectorAll('.seed-chip');
-const waterAllBtn = document.getElementById('water-all-btn');
+let fieldParcels = JSON.parse(localStorage.getItem('farmeasy_field_parcels')) || defaultParcels;
+let parcelFilter = 'all';
+let activeParcelForLogging = null;
 
-function saveFarmPlots() {
-    localStorage.setItem('farmeasy_plots', JSON.stringify(plots));
-    localStorage.setItem('farmeasy_harvest', JSON.stringify(harvestStorage));
+    const parcelsContainer = document.getElementById('field-parcels-container');                                                                                                                                       
+    const totalAcresEl = document.getElementById('kpi-total-acres');                                                                                                                                                   
+    const activeVarietiesEl = document.getElementById('kpi-active-varieties');                                                                                                                                         
+    const avgMoistureEl = document.getElementById('kpi-avg-moisture');                                                                                                                                                 
+    const nextHarvestEl = document.getElementById('kpi-next-harvest');                                                                                                                                                 
+    const parcelFilterButtons = document.querySelectorAll('.parcel-filter-btn');    
+    
+    const activityModal = document.getElementById('field-activity-modal');                                                                                                                                             
+    const modalParcelTitle = document.getElementById('modal-parcel-name');                                                                                                                                             
+    const activityTypeSelect = document.getElementById('activity-type-select');                                                                                                                                        
+    const activityNoteInput = document.getElementById('activity-note-input');                                                                                                                                          
+    const saveActivityBtn = document.getElementById('save-activity-btn');                                                                                                                                              
+    const cancelActivityBtn = document.getElementById('cancel-activity-btn');   
+
+function saveParcels() {
+    localStorage.setItem('farmeasy_field_parcels', JSON.stringify(fieldParcels));
 }
 
-seedChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-        seedChips.forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        selectedCropKey = chip.getAttribute('data-crop');
-    });
-});
+function renderParcelsKPIs() {
+    if (!totalAcresEl) return;
+    const totalAcres = fieldParcels.reduce((sum, p) => sum + p.acreage, 0);
+    const avgMoisture = Math.round(fieldParcels.reduce((sum, p) => sum + p.soilMoisture, 0) / (fieldParcels.length || 1));
+    const uniqueCrops = new Set(fieldParcels.map(p => p.crop)).size;
 
-function renderHarvestSummary() {
-    if (!harvestSummaryRow) return;
-    harvestSummaryRow.innerHTML = '';
-    let totalItems = 0;
+    totalAcresEl.innerText = `${totalAcres} Acres`;
+    activeVarietiesEl.innerText = `${uniqueCrops} Crops`;
+    avgMoistureEl.innerText = `${avgMoisture}%`;
 
-    Object.keys(CROP_TYPES).forEach(key => {
-        const count = harvestStorage[key] || 0;
-        totalItems += count;
-        const pill = document.createElement('div');
-        pill.className = 'harvest-item-pill';
-        pill.innerText = `${CROP_TYPES[key].emoji} ${CROP_TYPES[key].name}: ${count}`;
-        harvestSummaryRow.appendChild(pill);
-    });
-
-    if (totalProduceText) {
-        totalProduceText.innerText = `${totalItems} items sorted`;
+    if (nextHarvestEl) {
+        const harvestReady = fieldParcels.find(p => p.stageIndex === PHENOLOGICAL_STAGES.length - 1);
+        if (harvestReady) {
+            nextHarvestEl.innerText = `${harvestReady.name} (Ready)`;
+        } else {
+            const nextUp = [...fieldParcels].sort((a, b) => b.stageIndex - a.stageIndex)[0];
+            nextHarvestEl.innerText = nextUp ? `${nextUp.name} (${nextUp.targetHarvest})` : "--";
+        }
     }
 }
 
-function renderPlots() {
-    if (!plotsGrid) return;
-    plotsGrid.innerHtml = '';
-    const now = Date.now();
+function renderParcels() {
+    if (!parcelsContainer) return;
+    parcelsContainer.innerHTML = '';
 
-    plots.forEach(plot => {
-        const card = document.createElement('div');
-        card.className = `plot-card ${plot.watered ? 'watered-bed' : ''}`;
-        card.dataset.id = plot.id;
-        if (!plot.crop) {
-            card.innerHTML = `                                                                                                                                                                                     
-                    <div class="plot-header">
-                        <span>Bed #${plot.id}</span>
-                        <span class="plot-badge-empty">Empty</span>
-                    </div>
-                    <div class="plot-body">
-                        <span class="plot-emoji">🟫</span>
-                        <p class="plot-name">Tilled Soil</p>
-                        <small class="plot-timer">Ready for seeds</small>
-                    </div>
-                    <button class="plot-action-btn plant" data-action="plant">Plant ${CROP_TYPES[selectedCropKey].name}</button>
-                `;                                                                                                                                                                                                     
-        } else {
-            const cropConfig = CROP_TYPES[plot.crop];
-            const speedMultiplier = plot.watered ? 1.5 : 1.0;
-            const elapsed = ((now - plotPlantedAt) / 1000) * speedMultiplier;
-            const progress = Math.min(100, Math.floot((elapsed / plot.duration) * 100));
-            const remainingSec = Math.max(0, Math.ceil((plot.duration - elapsed) / speedMultiplier));
-            const isReady = progress >= 100;
-
-            let stageEmoji = '🌱';
-            if (progress >= 45 && !isReady) stageEmoji = '🌿';
-            if (isReady) stageEmoji = cropConfig.emoji;
-
-            let actionButton = '';
-            if (isReady) {
-                actionButton = `<button class="plot-action-btn harvest" data-action="harvest">🧺 Harvest (+${cropConfig.yield})</button>`;                                                                         
-            } else if (!plot.watered) {
-                actionButton = `<button class="plot-action-btn water" data-action="water">💧 Water Bed</button>`;                                                                                                  
-            } else {
-                actionButton = `<button class="plot-action-btn moist" disabled>💧 Moist (+1.5x)</button>`;                                                                                                         
-            }
-
-            card.innerHTML = `                                                                                                                                                                                     
-                <div class="plot-header">                                                                                                                                                                          
-                    <span>Bed #${plot.id}</span>                                                                                                                                                                   
-                    <span class="${plot.watered ? 'plot-badge-moist' : 'plot-badge-dry'}">${plot.watered ? '💧 Moist' : 'Dry'}</span>                                                                              
-                </div>                                                                                                                                                                                             
-                <div class="plot-body">                                                                                                                                                                            
-                    <span class="plot-emoji ${isReady ? 'crop-bounce' : ''}">${stageEmoji}</span>                                                                                                                  
-                    <p class="plot-name">${cropConfig.name}</p>                                                                                                                                                    
-                    <small class="plot-timer">${isReady ? '✨ Ready to harvest!' : `⏳ ${remainingSec}s left`}</small>                                                                                             
-                    <div class="plot-progress-bg">                                                                                                                                                                 
-                    <div class="plot-progress-fill" style="width: ${progress}%"></div>                                                                                                                         
-                    </div>                                                                                                                                                                                         
-                </div>                                                                                                                                                                                             
-                ${actionButton}                                                                                                                                                                                    
-            `;                  
-        }
-        plotsGrid.appendChild(card);
+    const filtered = fieldParcels.filter(parcel => {
+        if (parcelFilter === 'all') return true;
+        return parcel.category.toLowerCase() === parcelFilter.toLowerCase();
     });
+
+    if (filtered.length === 0) {
+        parcelsContainer.innerHTML =  `<p class="empty-board-msg">No field parcels found in this category.</p>`;
+        return;
+    }
+
+    filtered.forEach(parcel => {
+        const currentStage = PHENOLOGICAL_STAGES[parcel.stageIndex];
+        const isHarvestReady = parcel.stageIndex === PHENOLOGICAL_STAGES.length -1;
+
+        let moistureBadgeClass = 'moisture-optimal';
+        let moistureLabel = 'Optimal';
+        if (parcel.soilMoisture < 50) {
+            moistureBadgeClass = 'moisture-dry';
+            moistureLabel = 'Dry • Water Needed';
+        } else if (parcel.soilMoisture > 80) {
+            moistureBadgeClass = 'moisture-wet';
+            moistureLabel = 'Saturated';
+        }
+
+        const card = document.createElement('div');
+        card.className = 'parcel-card';
+        card.dataset.id = parcel.id;
+
+        const recentLogsHTML = parcel.logs.slice(-2).map(log => `                                                                                                                                                  
+        <div class="parcel-log-pill">                                                                                                                                                                          
+            <strong>${log.date} • ${log.type}:</strong> ${log.note}                                                                                                                                            
+        </div>                                                                                                                                                                                                 
+        `).join(''); 
+        
+        card.innerHTML = `                                                                                                                                                                                         
+                <div class="parcel-card-header">                                                                                                                                                                       
+                    <div>                                                                                                                                                                                              
+                        <h3 class="parcel-title">${parcel.name}</h3>                                                                                                                                                   
+                        <span class="parcel-subtitle">${parcel.acreage} Acres • ${parcel.crop} (${parcel.variety})</span>                                                                                              
+                    </div>                                                                                                                                                                                             
+                    <span class="parcel-category-tag">${parcel.category}</span>                                                                                                                                        
+                </div>                                                                                                                                                                                                 
+                                                                                                                                                                                                                       
+                <div class="parcel-metrics-grid">                                                                                                                                                                      
+                    <div class="metric-cell">                                                                                                                                                                          
+                        <small>Sowing Date</small>                                                                                                                                                                     
+                        <strong>${parcel.plantedDate}</strong>                                                                                                                                                         
+                    </div>                                                                                                                                                                                             
+                    <div class="metric-cell">                                                                                                                                                                          
+                        <small>Target Harvest</small>                                                                                                                                                                  
+                        <strong>${parcel.targetHarvest}</strong>                                                                                                                                                       
+                    </div>                                                                                                                                                                                             
+                    <div class="metric-cell">                                                                                                                                                                          
+                        <small>Soil Moisture</small>                                                                                                                                                                   
+                        <strong class="${moistureBadgeClass}">${parcel.soilMoisture}% (${moistureLabel})</strong>                                                                                                      
+                    </div>                                                                                                                                                                                             
+                    <div class="metric-cell">                                                                                                                                                                          
+                        <small>Est. Yield</small>                                                                                                                                                                      
+                        <strong>${parcel.expectedYield}</strong>                                                                                                                                                       
+                    </div>                                                                                                                                                                                             
+                </div>                                                                                                                                                                                                 
+                                                                                                                                                                                                                       
+                <!-- Phenological Growth Stage -->                                                                                                                                                                     
+                <div class="growth-stage-wrapper">                                                                                                                                                                     
+                    <div class="stage-labels">                                                                                                                                                                         
+                        <span><strong>Stage:</strong> ${currentStage.name}</span>                                                                                                                                      
+                        <span>${currentStage.percent}% Maturity</span>                                                                                                                                                 
+                    </div>                                                                                                                                                                                             
+                    <div class="stage-progress-bg">                                                                                                                                                                    
+                        <div class="stage-progress-fill ${isHarvestReady ? 'harvest-ready-fill' : ''}" style="width: ${currentStage.percent}%"></div>                                                                  
+                    </div>                                                                                                                                                                                             
+                </div>                                                                                                                                                                                                 
+                                                                                                                                                                                                                       
+                <!-- Recent Activity Log Pills -->                                                                                                                                                                     
+                <div class="parcel-activity-history">                                                                                                                                                                  
+                    ${recentLogsHTML || '<span style="color:#aaa; font-size:0.8rem; font-style:italic;">No recorded activities yet.</span>'}                                                                           
+                </div>                                                                                                                                                                                                 
+                                                                                                                                                                                                                       
+                <!-- Parcel Actions -->                                                                                                                                                                                
+                <div class="parcel-actions">                                                                                                                                                                           
+                    <button class="btn-parcel-action btn-irrigate" data-action="irrigate" title="Add 10% soil moisture">💧 Irrigate</button>                                                                           
+                    <button class="btn-parcel-action btn-advance" data-action="advance" title="Advance to next phenological stage">⏩ Next Stage</button>                                                              
+                    <button class="btn-parcel-action btn-log-activity" data-action="log-activity">📝 Log Activity</button>                                                                                             
+                </div>                                                                                                                                                                                                 
+            `;
+        parcelsContainer.appendChild(card);
+    });
+    renderParcelsKPIs();
 }
 
-if (plotsGrid) {
-    plotsGrid.addEventListener('click', (e) => {
-        const btn = e.target.closest('.plot-action-btn');
+if (parcelsContainer) {
+    parcelsContainer.addEventListener('click', (e) => {
+        const btn = e.target.closest('.btn-parcel-action');
         if (!btn) return;
-        const card = btn.closest('.plot-card');
-        const plotId = Number(card.dataset.id);
-        const plot = plots.find(p => p.id === plotId);
-        if (!plot) return;
+        const card = btn.closest('.parcel-card');
+        const parcelId = card.dataset.id;
+        const parcel = fieldParcels.find(p => p.id === parcelId);
+        if (!parcel) return;
 
         const action = btn.getAttribute('data-action');
 
-        if (action === 'plant') {
-            const cropData = CROP_TYPES[selectedCropKey];
-            plot.crop = selectedCropKey;
-            plot.plantedAt = Date.now();
-            plot.duration = cropData.growTime;
-            plot.watered = false;
-            saveFarmPlots();
-            renderPlots();
-        } else if (action === 'water') {
-            plot.watered = true;
-            saveFarmPlots();
-            renderPlots();
-        } else if (action === 'harvest') {
-            const cropKey = plot.crop;
-            const cropData = CROP_TYPES[cropKey];
-            harvestStorage[cropKey] = (harvestStorage[cropKey] || 0) + cropData.yield;
-
-            plot.crop = null;
-            plot.plantedAt = null;
-            plot.duration = 0;
-            plot.watered = false;
-
-            saveFarmPlots();
-            renderHarvestSummary();
-            renderPlots();
-        }
-    });
-}
-
-if (waterAllBtn) {
-    waterAllBtn.addEventListener('click', () => {
-        let anyWatered = false;
-        plots.forEach(plot => {
-            if (plot.crop && !plot.watered) {
-                plot.watered = true;
-                anyWatered = true;
+        if (action === 'irrigate') {
+            parcel.soilMoisture = Math.min(95, parcel.soilMoisture + 10);
+            parcel.logs.push({
+                date: "Today",
+                type: "Irrigation",
+                note: "Center pivot application (+10% soil moisture)"
+            });
+            saveParcels();
+            renderParcels();
+        } else if (action === 'advance') {
+            const wasHarvestReady = parcel.stageIndex === PHENOLOGICAL_STAGES.length - 1;
+            if (wasHarvestReady) {
+                parcel.stageIndex = 0;
+                parcel.logs.push({
+                    date: "Today",
+                    type: "Harvest",
+                    note: `Harvested & Re-seeded: Began new Seeding cycle (${parcel.crop})`
+                });
+            } else {
+                parcel.stageIndex += 1;
+                parcel.logs.push({
+                    date: "Today",
+                    type: "Scouting",
+                    note: `Phenology Update: Advanced to ${PHENOLOGICAL_STAGES[parcel.stageIndex].name}`
+                });
             }
-        });
-        if (anyWatered) {
-            saveFarmPlots();
-            renderPlots();
+            saveParcels();
+            renderParcels();
+        } else if (action === 'log-activity') {
+            activeParcelForLogging = parcel;
+            if (modalParcelTitle) modalParcelTitle.innerText = parcel.name;
+            if (activityNoteInput) {
+                activityNoteInput.value = '';
+                setTimeout(() => activityNoteInput.focus(), 60);
+            }
+            if (activityModal) activityModal.classList.remove('hidden');
         }
     });
 }
-setInterval(() => {
-    const fieldsView = document.getElementById('fields-view');
-    if (fieldsView && !fieldsView.classList.contains('hidden')) {
-        renderPlots();
-    }
-}, 1000);
 
-renderHarvestSummary();
-renderPlots();
+if (saveActivityBtn) {
+    saveActivityBtn.addEventListener('click', () => {
+        if (!activeParcelForLogging) return;
+        const note = activityNoteInput ? activityNoteInput.value.trim() : '';
+        const type = activityTypeSelect ? activityTypeSelect.value : 'Scouting';
+
+        if (note) {
+            if (!activeParcelForLogging.logs) activeParcelForLogging.logs = [];
+            activeParcelForLogging.logs.push({
+                date: "Today",
+                type: type,
+                note: note
+            });
+            saveParcels();
+            renderParcels();
+            if (activityModal) activityModal.classList.add('hidden');
+        }
+    });
+}
+
+if (activityNoteInput) {
+    activityNoteInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            if (saveActivityBtn) saveActivityBtn.click();
+        }
+    });
+}
+
+if (cancelActivityBtn) {
+    cancelActivityBtn.addEventListener('click', () => {
+        if (activityModal) activityModal.classList.add('hidden');
+    });
+}
+
+if (activityModal) {
+    activityModal.addEventListener('click', (e) => {
+        if (e.target === activityModal) activityModal.classList.add('hidden');
+    });
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        if (activityModal && !activityModal.classList.contains('hidden')) {
+            activityModal.classList.add('hidden');
+        }
+    }
+});
+
+parcelFilterButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+        parcelFilterButtons.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        parcelFilter = this.getAttribute('data-filter');
+        renderParcels();
+    });
+});
+
+renderParcels();

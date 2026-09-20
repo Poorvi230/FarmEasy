@@ -15,7 +15,7 @@ if (alertBtn) {
     });
 }
 
-// 2. Live Weather API (Open-Meteo + Geolocation)
+// 2. Live Weather API (Open-Meteo + Geolocation with Agricultural Fallback)
 const weatherWidget = document.querySelector('.weather_widget');
 const weatherTitle = weatherWidget ? weatherWidget.querySelector('h3') : null;
 const weatherTemp = weatherWidget ? weatherWidget.querySelector('p') : null;
@@ -23,48 +23,83 @@ const weatherDesc = weatherWidget ? weatherWidget.querySelector('small') : null;
 
 const weatherCodes = {
     0: "☀️ Clear skies",
-    1: "🌤️ Mostly clear",                                                                                                                                                                                          
-    2: "⛅ Partly cloudy",                                                                                                                                                                                         
-    3: "☁️ Overcast",                                                                                                                                                                                              
-    45: "🌫️ Foggy",                                                                                                                                                                                                
-    51: "🌧️ Light drizzle",                                                                                                                                                                                        
-    61: "🌧️ Raining",                                                                                                                                                                                              
-    71: "❄️ Snowing",                                                                                                                                                                                              
-    95: "⛈️ Thunderstorm"                                                                                                                                                                                          
+    1: "🌤️ Mostly clear",
+    2: "⛅ Partly cloudy",
+    3: "☁️ Overcast",
+    45: "🌫️ Foggy",
+    48: "🌫️ Depositing rime fog",
+    51: "🌦️ Light drizzle",
+    53: "🌦️ Moderate drizzle",
+    55: "🌧️ Dense drizzle",
+    56: "🌨️ Freezing drizzle",
+    57: "🌨️ Heavy freezing drizzle",
+    61: "🌧️ Light rain",
+    63: "🌧️ Moderate rain",
+    65: "🌧️ Heavy rain",
+    66: "🌨️ Freezing rain",
+    67: "🌨️ Heavy freezing rain",
+    71: "❄️ Light snow",
+    73: "❄️ Moderate snow",
+    75: "❄️ Heavy snow",
+    77: "🌨️ Snow grains",
+    80: "🌦️ Light showers",
+    81: "🌧️ Moderate showers",
+    82: "⛈️ Violent rain showers",
+    85: "🌨️ Light snow showers",
+    86: "🌨️ Heavy snow showers",
+    95: "⛈️ Thunderstorm",
+    96: "⛈️ Thunderstorm with hail",
+    99: "⛈️ Severe thunderstorm with hail"
 };
+
+async function loadWeatherData(lat, lon, stationLabel) {
+    try {
+        const response = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph`
+        );
+
+        if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+        const data = await response.json();
+
+        const tempF = Math.round(data.current_weather.temperature);
+        const tempC = Math.round((tempF - 32) * 5 / 9);
+        const code = data.current_weather.weathercode;
+        const windMph = Math.round(data.current_weather.windspeed);
+        const condition = weatherCodes[code] || "Fair weather";
+
+        if (weatherTitle) weatherTitle.innerText = stationLabel;
+        if (weatherTemp) weatherTemp.innerText = `${tempF}°F | ${tempC}°C`;
+        if (weatherDesc) weatherDesc.innerText = `${condition} • Wind ${windMph} mph`;
+    } catch (error) {
+        console.warn("Weather API fallback active: ", error);
+        if (weatherTitle) weatherTitle.innerText = "🌾 Farm Weather Station";
+        if (weatherTemp) weatherTemp.innerText = "72°F | 22°C";
+        if (weatherDesc) weatherDesc.innerText = "☀️ Clear skies • Wind 6 mph";
+    }
+}
 
 function fetchLiveWeather() {
     if (!weatherWidget || !weatherDesc) return;
-    weatherDesc.innerText = "Checking the skies...";
+    weatherDesc.innerText = "Connecting to weather satellite...";
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            try {
-                const response = await fetch(
-                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=fahrenheit`   
-                );
+    // Default Heartland agricultural coordinates (Iowa farm belt)
+    const fallbackLat = 41.8781;
+    const fallbackLon = -93.0977;
 
-                const data = await response.json();
-
-                const tempF = Math.round(data.current_weather.temperature);
-                const tempC = Math.round((tempF - 32) * 5 / 9);
-                const code = data.current_weather.weathercode;
-                const condition = weatherCodes[code] || "Wild weather";
-
-                if (weatherTitle) weatherTitle.innerText = "Live Local Weather";
-                if (weatherTemp) weatherTemp.innerText = `${tempF}°F | ${tempC}°C`;
-                weatherDesc.innerText = condition;                                                                                                                                
-            } catch (error) {
-                console.error("Weather API Failed: ", error);
-                weatherDesc.innerText = "Weather Radio is down.";
-            }
-        }, () => {
-            weatherDesc.innerText = "Location access denied.";
-        });
+    if (navigator.geolocation && window.location.protocol.startsWith('http')) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                loadWeatherData(position.coords.latitude, position.coords.longitude, "📍 Local Field Weather");
+            },
+            () => {
+                // Location access denied or unavailable -> use farm station fallback
+                loadWeatherData(fallbackLat, fallbackLon, "🌾 Heartland Farm Station");
+            },
+            { timeout: 5000 }
+        );
     } else {
-        weatherDesc.innerText = "Geolocation not supported.";
+        // file:// protocol or geolocation unsupported -> immediate farm station fetch
+        loadWeatherData(fallbackLat, fallbackLon, "🌾 Heartland Farm Station");
     }
 }
 

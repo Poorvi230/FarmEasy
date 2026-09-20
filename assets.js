@@ -39,10 +39,14 @@ function updateRustusUI() {
             rustusBtn.disabled = true;
             rustusBtn.style.opacity = '0.7';
         }
-        if (machinerySummary) machinerySummary.innerText = '3 active All healthy';
+        if (machinerySummary) machinerySummary.innerText = '3 active • All healthy';
+
+        // Auto-remove oil service alert on dashboard if already serviced
+        const alertCard = document.querySelector('.alert-card');
+        if (alertCard) alertCard.remove();
     } else {
         rustusStatus.className = 'status warning';
-        rustusStatus.innerText = 'Needs Oil'
+        rustusStatus.innerText = 'Needs Oil';
         rustusServiced.innerText = 'Last Serviced: Jan 04';
         if (rustusBtn) {
             rustusBtn.innerText = 'Service Tractor';
@@ -183,13 +187,13 @@ if (pumpBtn && pumpBadge) {
     pumpBtn.addEventListener('click', () => {
         pumpBtn.disabled = true;
         pumpBtn.innerText = 'Testing Pressure...';
-        pumpBadge.innerText = 'Pumping...'
+        pumpBadge.innerText = 'Pumping...';
         pumpBadge.style.backgroundColor = '#d8ebf9';
         pumpBadge.style.color = '#1f6596';
 
         setTimeout(() => {
             pumpBtn.disabled = false;
-            pumpBtn.innerText = 'Run Pump Test';
+            pumpBtn.innerText = '🔄 Run Pump Test';
             pumpBadge.innerText = 'Online';
             pumpBadge.style.backgroundColor = '#eaf5e1';
             pumpBadge.style.color = '#4a7732';

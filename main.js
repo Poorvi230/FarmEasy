@@ -19,10 +19,14 @@ navButtons.forEach(btn => {
 
 const splash = document.getElementById('splash-screen');
 if (splash) {
-    setTimeout(() => {
+    let dismissed = false;
+    const dismissSplash = () => {
+        if (dismissed) return;
+        dismissed = true;
         splash.classList.add('fade-out');
-    }, 2300);
-    setTimeout(() => {
-        splash.remove();
-    }, 3100);
+        setTimeout(() => splash.remove(), 800);
+    };
+
+    splash.addEventListener('click', dismissSplash);
+    setTimeout(dismissSplash, 2200);
 }

@@ -114,7 +114,7 @@ if (taskBoard) {
             chores = chores.filter(c => c.id !== choreId);
             saveChoresToStorage();
             renderChores();
-            return
+            return;
         }
 
         if (e.target.classList.contains('task-check')) {
@@ -135,5 +135,13 @@ if (taskBoard) {
         item.classList.toggle('expanded-note');
     });
 }
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        if (modalOverlay && !modalOverlay.classList.contains('hidden')) {
+            modalOverlay.classList.add('hidden');
+        }
+    }
+});
 
 renderChores();
