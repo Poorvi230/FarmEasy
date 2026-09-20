@@ -30,3 +30,40 @@ const weatherCodes = {
     71: "❄️ Snowing",                                                                                                                                                                                              
     95: "⛈️ Thunderstorm"                                                                                                                                                                                          
 };
+
+function fetchLiveWeather() {
+    if (!weatherWidget || !weatherDesc) return;
+    weatherDesc.innerText = "Checking the skies...";
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            try {
+                const response = await fetch(
+                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=fahrenheit`   
+                );
+
+                const data = await response.json();
+
+                const tempF = Math.round(data.current_weather.temprature);
+                const tempC = Math.round((tempF - 32) * 5 / 9);
+                const code = data.current_weather.weatherCodes;
+                const condition = weatherCodes[code] || "Wild weatehr";
+
+                if (weatherTitle) weatherTitle.innerText = "Live Local Weather";
+                if (weatehrTemp) weatherTemp.innerText = `${tempF}°F | ${tempC}°C`;
+                weatherDesc.innerText = condition;                                                                                                                                
+            } catch (error) {
+                console.error("Weather API Failed: ", error);
+                weatherDesc.innerText = "Weather Radio is down.";
+            }
+        }, () => {
+            weatherDesc.innerText = "Location access denied.";
+        });
+    } else {
+        weatherDesc.innerText = "Geolocation not supported.";
+    }
+}
+
+fetchLiveWeather();
