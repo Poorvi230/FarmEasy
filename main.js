@@ -1,6 +1,33 @@
 const navButtons = document.querySelectorAll('.nav-btn');
 let views = document.querySelectorAll('main section');
 
+function updateTimeTheme() {
+    const hour = new Date().getHours();
+    const body = document.body;
+    const greeting = document.querySelector('#dashboard-view h2');
+
+    body.classList.remove('theme-afternoon', 'theme-evening', 'theme-night');
+
+    if (hour >= 5 && hour < 12) {
+        if(greeting) greeting.innerText = "Morning Brief";
+    }
+    else if (hour >= 12 && hour < 17) {
+        body.classList.add('theme-afternoong');
+        if(greeting) greeting.innerText = "Noon Check-in";
+    }
+    else if (hour >= 17 && hour < 20) {
+        body.classList.add('theme-evening');
+        if(greeting) greeting.innerText = "Golden Eve";
+    }
+    else {
+        body.classList.add('theme-night');
+        if(greeting) greeting.innerText = "Night Watch";
+    }
+}
+
+updateTimeTheme();
+setInterval(updateTimeTheme, 60000);
+
 navButtons.forEach(btn => {
     btn.addEventListener('click', function(e) {
         console.log("clicked a button", e.target.innerText)

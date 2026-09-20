@@ -8,6 +8,34 @@
     --bg-yellow: rgba(252, 226, 111, 0.35);
     --bg-blue: rgba(188, 216, 226, 0.35);
 }
+/*-time themeimg*/
+body.theme-afternoon {
+    --bg-color: #f0f8ff;
+    --brand-green: #639c3a;
+    --bg-yellow: rgba(255, 215, 0, 0.25);
+    --bg-blue: rgba(135, 206, 235, 0.35);
+    --nav-bg: #e6f3e6;
+}
+body.theme-evening {
+    --bg-color: #fff3e0;
+    --text-main: #3e2723;
+    --brand-green: #748c59;
+    --brand-orange: #d85732;
+    --card-bg: #fffbf7;
+    --nav-bg: #fcece3;
+    --bg-yellow: rgba(255, 140, 105, 0.3);
+    --bg-blue: rgba(179, 136, 255, 0.25);
+}
+body.theme-night {
+    --bg-color: #121a22;
+    --text-main: #e4e7eb;
+    --brand-green: #598539;
+    --brand-orange: #b86349;
+    --card-bg: #1e2732;
+    --nav-bg: #283422;
+    --bg-yellow: rgba(30, 60, 90, 0.6);
+    --bg-blue: rgba(20, 30, 45, 0.6);
+}
 /*--Base--*/
 * {
     box-sizing: border-box; margin: 0; padding: 0;
