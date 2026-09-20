@@ -1211,3 +1211,162 @@ border-left: 5px solid #ccc; }
 .telemetry-pill {
     
 }
+
+/*--fild parcel, argonomy--*/
+.parcel-card {
+    background-color: var(--card-bg);
+    border: 1px solid #ede8de;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.parcel-card-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+}
+.parcel-title {
+    color: var(--brand-green); font-size: 1.3rem; margin-bottom: 4px;
+}
+.parcel-subtitle {
+    color: #888; font-size: 1.3rem; margin-bottom: 4px;
+}
+.parcel-category-tag {
+    background-color: var(--bg-yellow);
+    color: #9e7f22;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem; 
+    font-weight: 700;
+} 
+
+.parcel-metrics-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px; background-color: var(--bg-color); padding: 12px; border-radius: 12px;
+}
+.metric-cell { display:  flex; flex-direction: column; }
+.metric-cell small {
+    color: #888; font-size: 0.75rem; 
+    text-transform: uppercase; letter-spacing: 0.5px;
+ }
+ .metric-cell strong {
+    color: var(--text-main); font-size: 0.95rem; margin-top: 2px;
+ }
+ .moisture-optimal { color: #4a7732 !important; }
+ .moisture-dry { color: #d9534f; !important; }
+ .moisture-wet { color: #0077b6 !important; }
+
+ /*-growth prog*/
+ .growth-stage-wrapper {
+    background: #fdfdfd; border: 1px solid #f0f0f0;
+    padding: 12px;
+    border-radius: 12px;
+ }
+ .stage-labels {
+    display: flex; justify-content: space-between; font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 8px;
+ }
+ .stage-progress-bg {
+    width: 100%;
+    height: 12px;
+    background-color: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+ }
+ .stage-progress-fill {
+    height: 100%; 
+    background: linear-gradient(90deg, #90c864, var(--brand-green));
+    border-radius: 10px;
+    transition: width 0.8s ease-out;
+ }
+ .harvest-ready-fill {
+    background: linear-gradient(90deg, #f4a261, var(--brand-orange));
+    animation: pulseGlow 1.5s infinite alternate;
+ }
+ .parcel-activity-history { display: flex; flex-direction: column; gap: 8px; }
+ .parcel-log-pill {
+    font-size: 0.85rem;
+    background-color: #f7f9f6;
+    border-left: 3px solid var(--brand-green);
+    padding: 8px 12px;
+    border-radius: 0 8px 8px 0;
+    color: #555;
+ }
+ .parcel-actions { display: flex; gap: 10px; margin-top: 5px; flex-wrap: wrap; }
+ .btn-parcel-action {
+    flex: 1;
+    padding: 10px; border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.1s ease, box shadow 0.1s ease;
+}
+.btn-parcel-action:active { transform: scale(0.96); }
+.btn-irrigate { background-color: var(--bg-blue); color: #0077b6; }
+.btn-advance { background-color: #eaf5e1; color: #4a7732; }
+.btn-log-activity { background-color: #f0f0f0; color: #555; }
+
+/*weather, spray advis*/
+.card-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; margin-bottom: 15px;
+}
+.weather-condition-text {
+    font-weight: 700; color: var(--brand-orange);
+    font-size: 1.1rem;
+}
+.weather-temp-block {
+    background-color: var(--brand-green);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 12px; 
+    font-weight: 700;
+    font-size: 1.2rem;
+    box-shadow: 0 3px 6px rgba(127, 175, 84, 0.3);
+}
+.weather-telemetry-row {
+        display: flex; justify-content: space-between;
+        background-color: var(--bg-color); 
+        padding: 15px;
+        border-radius: 12px; margin-bottom: 15px;
+    }
+.telemetry-pill { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}    
+.telemetry-pill small {
+    color: #888; font-size: 0.75rem;
+    text-transform: uppercase;
+}
+.telemetry-pill strong { font-size: 0.95rem; color: var(--text-main);
+  margin-top: 4px; }
+
+.spray-window-box {
+    text-align: center; padding: 15px; background-color: #fcfcfc;
+    border: 1px dashed #ccc; border-radius: 12px; margin-bottom: 10px;
+}
+.spray-badge {
+    display: inline-block; padding: 6px 14px; border-radius: 20px;
+    font-weight: 700; font-size: 0.9rem; margin-bottom: 10px;
+}
+.spray-badge.optimal { background-color: #eaf5e1; color: #4a7732; }
+.spray-badge.caution { background-color: #fff3cd; color: #856404; }
+.spray-badge.danger { background-color: #f8d7da; color: #721c24; animation: pulseGlow 1s infinite alternate; }
+
+.spray-reason-text { font-size: 0.85rem; color: #666; line-height: 1.4; }
+
+.traffic-status.good { color: #4a7732; }
+.traffic-status.caution { color: #d69830; }
+.traffic-status.risk { color: #d9534f; }
+
+@keyframes pulseGlow {
+    0% { filter: brightness(1); }
+    100% { filter: brightness(1.15); }
+ }
