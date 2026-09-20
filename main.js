@@ -30,16 +30,30 @@ setInterval(updateTimeTheme, 60000);
 
 navButtons.forEach(btn => {
     btn.addEventListener('click', function(e) {
-        console.log("clicked a button", e.target.innerText)
+        if (this.classList.contains('active'));
+
         navButtons.forEach(b => b.classList.remove('active'));
         this.classList.add('active');
-        views.forEach(v => {
-            v.classList.add('hidden');
-        });
-        let targetId = this.getAttribute('data-target');
-        let targetView = document.getElementById(targetId);
 
-        targetView.classList.remove('hidden');
+        const contentArea = document.querySelector('.content');
+
+        contentArea.style.opacity = '0';
+        contentArea.style.transform = 'translateX(-20px)';
+
+        setTimeout(() => {
+            views.forEach(v => v.classList.add('hidden'));
+            let targetId = this.getAttribute('data-target');
+            document.getElementById(targetId).classList.remove('hidden');
+
+            contentArea.style.transition = 'none';
+            contentArea.style.transform = 'translateX(20px)';
+
+            void contentArea.offsetWidth;
+            contentArea.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+
+            contentArea.style.opacity = '1';
+            contentArea.style.transform = 'translateX(0)';
+        }, 250);
     });
 });
 
@@ -333,7 +347,7 @@ renderChores();
         setTimeout(() => { floater.remove(); }, 1000);
     } 
 
-    if (milkBtn) {
+    if (milkBtn) { 
             milkBtn.addEventListener('click', (e) => {
                 milkCount += 1;
                 localStorage.setItem('farmeasy_milk_today', milkCount);
