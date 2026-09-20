@@ -26,6 +26,7 @@
                 <button class="nav-btn" data-target="tasks-view">Tasks</button>
                 <button class="nav-btn" data-target="assets-view">Assets</button>
                 <button class="nav-btn" data-target="fields-view">🌾 Fields</button>
+                <button class="nav-btn" data-target="finance-view">💰 Finance</button>
             </nav>
 
             <main class="content">
@@ -267,7 +268,43 @@
                     </div>
 
                     <div class="parcels-list" id="field-parcels-container">
+                    </div>
+                </section>
 
+                <section id="finance-view" class="hidden">
+                    <h2>Financial Ledger</h2>
+                    <p class="subtitle">Track daily budget, income, and expenses</p>
+
+                    <div class="finance-summary-grid">
+                        <div class="finance-card balance">
+                            <h3>Net Balance</h3>
+                            <p id="net-balance-text">$+0.00</p>
+                        </div>
+                        <div class="finance-card income">
+                            <h3>Income</h3>
+                            <p id="total-income-text">+bash.00</p>
+                        </div>
+                        <div class="finance-card expense">
+                            <h3>Expenses</h3>
+                            <p id="total-expense-text">-bash.00</p>
+                        </div>
+                    </div>
+
+                    <div class="finance-form-container">
+                        <h3>Log Transactions</h3>
+                        <div class="finance-form">
+                            <select id="trans-type">
+                                <option value="expense">Expense (-)</option>
+                                <option value="income">Income (+)</option>
+                            </select>
+                            <input type="number" id="trans-amount" placeholder="Amount ($)" min="0" step="0.01">
+                            <input type="text" id="trans-desc" placeholder="e.g. Tractor Fuel, Sold Milk">
+                            <button id="add-trans-btn" class="btn-primary">Add</button>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 25px; color: var(--text-main);">Recent Transactions</h3>
+                    <div class="transaction-list" id="transaction-history">
                     </div>
                 </section>
             </main>

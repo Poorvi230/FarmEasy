@@ -7,6 +7,30 @@
     --nav-bg: #F4EEDF;
     --bg-yellow: rgba(252, 226, 111, 0.35);
     --bg-blue: rgba(188, 216, 226, 0.35);
+    --grass-color: rgba(130, 200, 110, 0.6);
+    --grass-dark: rgba(80, 160, 60, 0.8);
+}
+/*-time themeimg*/
+body.theme-afternoon {
+     --sky-top: #6c93b5;
+    --sky-bottom: #11eaf571;
+    --grass-color: rgba(96, 210, 25, 0.5);
+    --grass-dark: rgba(72, 177, 23, 0.7);
+}
+body.theme-evening {
+    --sky-top: #d3e33ae1;
+    --sky-bottom: #feb47b;
+    --grass-color: rgba(60, 72, 13, 0.7);
+    --grass-color: rgba(176, 222, 38, 0.597);
+}
+body.theme-night {
+    --sky-top: #0f2027;
+    --sky-bottom: #275564;
+    --text-main: #e4e7eb;
+    --card-bg: rgba(30, 39, 50, 0.85);
+    --nav-bg: rgba(40, 52, 66, 0.9);
+    --grass-color: rgba(22, 50, 41, 0.6);
+    --grass-dark: rgba(29, 183, 101, 0.9);
 }
 /*--Base--*/
 * {
@@ -14,20 +38,15 @@
 }
 body {
     font-family: 'Quicksand', sans-serif;
-    background-color: var(--bg-color);
-    background-image: conic-gradient(
-        var(--bg-yellow) 25%,
-        var(--bg-blue) 0 50%,
-        var(--bg-yellow) 0 75%,
-        var(--bg-blue) 0
-    );
-    background-size: 180px 180px;
+    background-color: var(--text-main);
+    background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
     color: var(--text-main);
     height: 100vh; display: flex;
     flex-direction: column;
 }
 #app {
     display: flex; flex-direction: column; height: 100%;
+    z-index: 10; position: relative;
 }
 .topbar {
     background-color: var(--brand-green);
@@ -38,6 +57,7 @@ body {
 }
 .content {
     flex: 1; padding: 1.5rem; overflow-y: auto;
+    transition: opacity 0.25s ease, transform 0.25s ease; 
 }
 .hidden {
     display: none !important;
@@ -697,6 +717,7 @@ main section {
 
 
 
+
 .fields-header-row {
     display: flex;
     justify-content: space-between;
@@ -919,3 +940,203 @@ main section {
     color: #555;
     margin-left: auto;
 }
+
+.btn-irrigate:hover {
+    background-color: #bbdefb;
+}
+
+.btn-advance:hover {
+    background-color: #d6ecc5;
+}
+
+.btn-log-activity {
+    background-color: #f5eedf;
+    color: #7d6b52;
+}
+
+.btn-log-activity:hover {
+    background-color: #eae1cd;
+}
+
+/*-- Task Checkbox Desktop Hover Reveal --*/
+.task-item:hover .task-check {
+    opacity: 0.75;
+    pointer-events: auto;
+}
+
+.task-item:hover .task-check:hover {
+    opacity: 1;
+}
+
+/*-- Subview Transition --*/
+.asset-subview {
+    animation: popIn 0.3s ease-out;
+}
+
+
+/*--butterflies and fireflies*/
+#bug-container {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 1;
+    overflow: hidden;
+}
+.bug {
+    position: absolute; 
+    height: 6px; width: 6px;
+    background-color: #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 3px rgba(255, 215, 0, 0.8);
+    opacity: 0;
+    animation: floatBug 15s infinite linear, glowBug 3s infinite ease-in-out;
+}
+
+body:not(.theme-night):not(.theme-evening) .bug {
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    box-shadow: none;
+    opacity: 1;
+    animation: floatBug 15s infinite linear;
+}
+body:not(.theme-night):not(.theme-evening) .bug::after {
+    content: '🦋';
+    font-size: 20px;
+    position: absolute;
+    top: 0; 
+    left: 0;
+    animation: flutterBug 1.2s infinite alternate ease-in-out;
+}
+/*Animation*/
+@keyframes floatBug {
+    0% { transform:translate(0, 100vh) scale(0.5); }
+    100% { transform: translate(var(--drift), -10vh) scale(1); }
+}
+@keyframes glowBug {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 1; }
+}
+@keyframes flutterBug {
+    0% { opacity: 0.8; transform: rotate(-25deg) scale(0.9); }
+    100% { opacity: 1; transform: rotate(25deg) scale(1.1); }
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: -10vw;
+    width: 120vw;
+    height: 35vh;
+    z-index: 0;
+    pointer-events: 0;
+    background:
+            radial-gradient(ellipse at 20% 120%, var(--grass-color) 0%, transparent 70%),
+            radial-gradient(ellipse at 80% 120%, var(--grass-color) 0%, transparent 70%),
+            radial-gradient(ellipse at 50% 130%, var(--grass-dark) 0%, transparent 65%);
+    }
+
+    /*--floating text*/
+    .floating-text {
+        position: fixed;
+        font-size: 1.5rem; 
+        font-weight: 800;
+        color: var(--brand-green);
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        pointer-events: none;
+        z-index: 9999;
+        animation: floatUpGamify 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+@keyframes floatUpGamify {
+    0% { transform: translateY(0) scale(0.5); opacity: 1; }
+    40% { transform: translateY(-40px) scale(1.3); opacity: 1; }
+    100% { transform: translateY(-80px) scale(1); opacity: 0; }
+}
+
+/*--finance--*/
+.finance-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+.finance-card {
+    background-color: var(--card-bg);
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+}
+.finance-card h3 { font-size: 0.85rem; color: #888; margin-bottom: 5px; }
+.finance-card p { font-size: 1.4rem; font-weight: 700; }
+.finance-card.balance p { color: var(--text-main); }
+.finance-card.income p { color: #699b4f; }
+.finance-card.expense p { color: #d9534f; }
+
+.finance-form-container {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    border: 1px solid #f0f0f0;
+}
+
+.finance-form-container h3 { margin-bottom: 15px; color: var(--text-main); }
+.finance-form { display: flex; flex-wrap: wrap; gap: 10px; }
+.finance-form > * { flex: 1 1 100px; }
+
+.finance-form input, .finance-form select {
+    padding: 10px;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    font-family: inherit;
+    font-family: 0.95rem;
+    background-color: var(--bg-color);
+    outline: none;
+    color: var(--text-main);
+}
+.finance-form input:focus, .finance-form select:focus { border-color: var(--brand-green); }
+.transaction-list { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+.transaction-item { display: flex; justify-content: space-between; align-items: center;
+background-color: var(--card-bg); 
+padding: 15px; border-radius: 10px;
+border-left: 5px solid #ccc; }
+
+.transaction-item.income { border-left-color: #699b4f; }
+.transaction-item.expense { border-left-color: #d9534f; }
+.trans-info strong {
+    display: block; color: var(--text-main); font-size: 1rem;
+}
+.trans-info small { color: #999; font-size: 0.8rem; }
+.trans-amount-text { font-weight: 700; font-size: 1.1rem; }
+.transaction-item.income .trans-amount-text { color: #699b4f; }
+.transaction-item.expense .trans-amount-text { color: #d9534f; }
+
+/*-- Mobile Responsiveness & Polish --*/
+@media (max-width: 640px) {
+    .content {
+        padding: 1rem 0.8rem;
+    }
+    .top-nav {
+        padding: 0.6rem 0.4rem;
+    }
+    .nav-btn {
+        font-size: 0.85rem;
+        padding: 0.3rem 0.5rem;
+    }
+    .agronomy-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .parcel-actions {
+        flex-direction: column;
+    }
+    .btn-advance {
+        margin-left: 0;
+    }
+    .machine-slide {
+        flex: 0 0 95%;
+    }
+}
+

@@ -158,26 +158,29 @@ function updateLivestockUI() {
 updateLivestockUI();
 
 if (milkBtn) {
-    milkBtn.addEventListener('click', () => {
+    milkBtn.addEventListener('click', (e) => {
         milkCount += 1;
         localStorage.setItem('farmeasy_milk_today', milkCount);
         updateLivestockUI();
+        if (window.spawnFloatingText) window.spawnFloatingText(e, '+1 Gal!');
     });
 }
 
 if (eggBtn) {
-    eggBtn.addEventListener('click', () => {
+    eggBtn.addEventListener('click', (e) => {
         eggCount += 6;
         localStorage.setItem('farmeasy_eggs_today', eggCount);
         updateLivestockUI();
+        if (window.spawnFloatingText) window.spawnFloatingText(e, '+6 Eggs!');
     });
 }
 
 if (pigsBtn) {
-    pigsBtn.addEventListener('click', () => {
+    pigsBtn.addEventListener('click', (e) => {
         pigsFed = !pigsFed;
         localStorage.setItem('farmeasy_pigs_fed', pigsFed);
         updateLivestockUI();
+        if (window.spawnFloatingText) window.spawnFloatingText(e, pigsFed ? 'Fed 🥕' : 'Hungry 🌾');
     });
 }
 
