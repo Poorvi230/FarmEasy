@@ -7,15 +7,21 @@
     --nav-bg: #F4EEDF;
     --bg-yellow: rgba(252, 226, 111, 0.35);
     --bg-blue: rgba(188, 216, 226, 0.35);
+    --grass-color: rgba(130, 200, 110, 0.6);
+    --grass-dark: rgba(80, 160, 60, 0.8);
 }
 /*-time themeimg*/
 body.theme-afternoon {
-     --sky-top: #4facfe;
-    --sky-bottom: #00f2fe;
+     --sky-top: #6c93b5;
+    --sky-bottom: #11eaf571;
+    --grass-color: rgba(96, 210, 25, 0.5);
+    --grass-dark: rgba(72, 177, 23, 0.7);
 }
 body.theme-evening {
-    --sky-top: #ff7e5f;
+    --sky-top: #d3e33ae1;
     --sky-bottom: #feb47b;
+    --grass-color: rgba(60, 72, 13, 0.7);
+    --grass-color: rgba(176, 222, 38, 0.597);
 }
 body.theme-night {
     --sky-top: #0f2027;
@@ -23,6 +29,8 @@ body.theme-night {
     --text-main: #e4e7eb;
     --card-bg: rgba(30, 39, 50, 0.85);
     --nav-bg: rgba(40, 52, 66, 0.9);
+    --grass-color: rgba(22, 50, 41, 0.6);
+    --grass-dark: rgba(7, 26, 16, 0.9);
 }
 /*--Base--*/
 * {
@@ -709,7 +717,7 @@ main section {
     border-radius: 50%;
     box-shadow: 0 0 10px 3px rgba(255, 215, 0, 0.8);
     opacity: 0;
-    animation: floatBug 10s infinite linear, glowBug 3s infinite ease-in-out;
+    animation: floatBug 15s infinite linear, glowBug 3s infinite ease-in-out;
 }
 
 body:not(.theme-night):not(.theme-evening) .bug {
@@ -717,7 +725,8 @@ body:not(.theme-night):not(.theme-evening) .bug {
     height: 20px;
     background-color: transparent;
     box-shadow: none;
-    animation: floatBug 15s infinite linear, flutterBug 0.8s infinite alternate ease-in-out;
+    opacity: 1;
+    animation: floatBug 15s infinite linear;
 }
 body:not(.theme-night):not(.theme-evening) .bug::after {
     content: '🦋';
@@ -725,6 +734,7 @@ body:not(.theme-night):not(.theme-evening) .bug::after {
     position: absolute;
     top: 0; 
     left: 0;
+    animation: flutterBug 1.2s infinite alternate ease-in-out;
 }
 /*Animation*/
 @keyframes floatBug {
@@ -736,6 +746,22 @@ body:not(.theme-night):not(.theme-evening) .bug::after {
     50% { opacity: 1; }
 }
 @keyframes flutterBug {
-        0% { opacity: 0.8; transform: translate(var(--drift), 0) rotate(-15deg); }
-        100% { opacity: 1; transform: translate(var(--drift), 0) rotate(15deg); }
+    0% { opacity: 0.8; transform: rotate(-25deg) scale(0.9); }
+    100% { opacity: 1; transform: rotate(25deg) scale(1.1); }
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: -10vw;
+    width: 120vw;
+    height: 35vh;
+    z-index: 0;
+    pointer-events: 0;
+    background:
+            radial-gradient(ellipse at 20% 120%, var(--grass-color) 0%, transparent 70%),
+            radial-gradient(ellipse at 80% 120%, var(--grass-color) 0%, transparent 70%),
+            radial-gradient(ellipse at 50% 130%, var(--grass-dark) 0%, transparent 65%);
     }
+

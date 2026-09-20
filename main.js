@@ -2,7 +2,7 @@ const navButtons = document.querySelectorAll('.nav-btn');
 let views = document.querySelectorAll('main section');
 
 function updateTimeTheme() {
-    const hour = 10;
+    const hour = 13;
     const body = document.body;
     const greeting = document.querySelector('#dashboard-view h2');
 
@@ -472,7 +472,7 @@ renderChores();
             bug.className = 'bug';
 
             let startX = Math.random() * 100;
-            let duration = 10 + Math.random() * 15;
+            let duration = 30 + Math.random() * 35;
             let delay = Math.random() * -20;
             let drift = (Math.random() * 200 - 100) + 'px';
 
