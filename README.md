@@ -20,7 +20,7 @@ FarmEasy is a fast, simple, local-first farm dashboard that gets out of your way
 * **Tractor Hours & Oil Service:** Log engine tach hours on your tractors and combines. Clean progress bars show you exactly when 250-hour oil and filter changes are due.
 * **Grain Silo Spoilage Defense:** Keep an eye on grain moisture and core temp in the corn silo. Turn on the aeration fan with a click to dry down wet grain and prevent mold.
 * **Daily Livestock & Barn:** Collect daily milk (+1 Gal), gather eggs (+6 Eggs), feed the pigs, and test the well pump pressure (42 PSI).
-* **Chore Board & Finance Ledger:** Simple daily to-do list sorted by morning/evening/urgent, plus a quick income and expense tracker for fuel and farm sales.
+* **Chore Board & Finance Ledger:** Simple daily ito-do list sorted by morning/evening/urgent, plus a quick income and expense tracker for fuel and farm sales.
 * **Day & Night Themes:** The app changes colors automatically based on the time of day (morning light, golden hour, night watch) with cute floating fireflies.
 
 ---
@@ -39,6 +39,10 @@ python3 -m http.server 8000
 Then open `http://localhost:8000` in your browser.
 
 ---
+
+## AI USAGE
+
+AI was used to make a shippable project that can be deployed on github pages
 
 ## License
 
