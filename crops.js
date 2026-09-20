@@ -74,7 +74,11 @@ const defaultParcels = [
     }
 ];
 
-let fieldParcels = JSON.parse(localStorage.getItem('farmeasy_field_parcels')) || defaultParcels;
+let fieldParcels;
+try {
+    fieldParcels = JSON.parse(localStorage.getItem('farmeasy_field_parcels'));
+    if (!Array.isArray(fieldParcels) || fieldParcels.length === 0) fieldParcels = defaultParcels;
+} catch (e) { fieldParcels = defaultParcels; }
 let parcelFilter = 'all';
 let activeParcelForLogging = null;
 

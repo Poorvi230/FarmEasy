@@ -4,7 +4,11 @@ const defaultChores = [
     { id: 3, text: "Water tomato sprouts", tag: "Afternoon", completed: false}
 ];
 
-let chores = JSON.parse(localStorage.getItem('farmeasy_chores')) || defaultChores;
+let chores;
+try {
+    chores = JSON.parse(localStorage.getItem('farmeasy_chores'));
+    if (!Array.isArray(chores) || chores.length === 0) chores = defaultChores;
+} catch (e) { chores = defaultChores; }
 let activeFilter = 'all';
 
 const taskBoard = document.getElementById('task-board-container');
@@ -53,9 +57,11 @@ function renderChores() {
 
 if (openModalBtn) {
     openModalBtn.addEventListener('click',() => {
-        modalOverlay.classList.remove('hidden');
-        choreInput.value = '';
-        choreInput.focus();
+        if (modalOverlay) modalOverlay.classList.remove('hidden');
+        if (choreInput) {
+            choreInput.value = '';
+            choreInput.focus();
+        }
     });
 }
 
@@ -73,7 +79,7 @@ if (modalOverlay) {
 
 if (saveBtn) {
     saveBtn.addEventListener('click', () => {
-        const text = choreInput.value.trim();
+        const text = choreInput ? choreInput.value.trim() : '';
         const tag = choreTagSelect ? choreTagSelect.value : 'Morning';
         if (text) {
             chores.push({
@@ -84,14 +90,14 @@ if (saveBtn) {
             });
             saveChoresToStorage();
             renderChores();
-            modalOverlay.classList.add('hidden');
+            if (modalOverlay) modalOverlay.classList.add('hidden');
         }
     });
 }
 
 if (choreInput) {
     choreInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') saveBtn.click();
+        if (e.key === 'Enter' && saveBtn) saveBtn.click();
     });
 }
 

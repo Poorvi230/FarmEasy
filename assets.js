@@ -62,7 +62,11 @@ const defaultFleet = [
         } 
 ];
 
-let fleet = JSON.parse(localStorage.getItem('farmeasy_fleet')) || defaultFleet;                                                                                                                                    
+let fleet;
+try {
+    fleet = JSON.parse(localStorage.getItem('farmeasy_fleet'));
+    if (!Array.isArray(fleet) || fleet.length === 0) fleet = defaultFleet;
+} catch (e) { fleet = defaultFleet; }                                                                                                                                    
 let activeMachineForLog = null;
 
 const fleetContainer = document.getElementById('machinery-cards-container');                                                                                                                                       
@@ -212,13 +216,18 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-let siloState = JSON.parse(localStorage.getItem('farmeasy_silo_state')) || {
+const defaultSiloState = {
     storedCrops: "Yellow Dent Corn",
     bushels: 4625,
     moisturePercent: 14.8,
     coreTempF: 72,
     fanRunning: false
 };
+let siloState;
+try {
+    siloState = JSON.parse(localStorage.getItem('farmeasy_silo_state'));
+    if (!siloState || typeof siloState !== 'object') siloState = defaultSiloState;
+} catch (e) { siloState = defaultSiloState; }
 
 const siloMoistureEl = document.getElementById('silo-moisture-val');                                                                                                                                               
 const siloTempEl = document.getElementById('silo-temp-val');                                                                                                                                                       
@@ -301,7 +310,11 @@ const defaultFeedStock = [
     { id: 'chicken', name: 'Layer Hen Mash', icon: '🪱', current: 8, max: 15, unit: 'bags' }                                                                                                                       
 ];
 
-let feedStock = JSON.parse(localStorage.getItem('farmeasy_feed_stock')) || defaultFeedStock;
+let feedStock;
+try {
+    feedStock = JSON.parse(localStorage.getItem('farmeasy_feed_stock'));
+    if (!Array.isArray(feedStock) || feedStock.length === 0) feedStock = defaultFeedStock;
+} catch (e) { feedStock = defaultFeedStock; }
 const feedContainer = document.getElementById('feed-inventory-container');
 const feedSummary = document.getElementById('feed-summary-text');
 

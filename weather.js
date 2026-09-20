@@ -116,8 +116,8 @@ function updateDashboardKPIs() {
 
     if (acresEl) {
         try {
-            const parcels = JSON.parse(localStorage.getItem('farmeasy_field_parcels')) || [];
-            const total = parcels.reduce((sum, p) => sum + (p.acreage || 0), 0);
+            const parcels = JSON.parse(localStorage.getItem('farmeasy_field_parcels'));
+            const total = Array.isArray(parcels) ? parcels.reduce((sum, p) => sum + ((p && p.acreage) || 0), 0) : 0;
             acresEl.innerText = total > 0 ? `${total} Ac` : "90 Ac";  
         } catch (e) {
             acresEl.innerText = "90 Ac";

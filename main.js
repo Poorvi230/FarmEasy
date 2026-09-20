@@ -60,6 +60,7 @@ navButtons.forEach(btn => {
                 views.forEach(v => v.classList.add('hidden'));
                 const targetId = this.getAttribute('data-target');
                 const targetView = document.getElementById(targetId);
+                if (targetView) targetView.classList.remove('hidden');
                 if (targetId === 'dashboard-view' && window.updateDashboardKPIs) {
                     window.updateDashboardKPIs();
                 }
@@ -123,10 +124,15 @@ if (splash) {
 }
 
 // 6. Financial Ledger System
-let transactions = JSON.parse(localStorage.getItem('farmeasy_finances')) || [
+const defaultTransactions = [
     { id: 1, type: 'income', amount: 480.00, desc: 'Sold 60 Gal Raw Milk', date: new Date().toISOString() },
     { id: 2, type: 'expense', amount: 120.00, desc: 'Diesel Fuel for Tractor Fleet', date: new Date().toISOString() }
 ];
+let transactions;
+try {
+    transactions = JSON.parse(localStorage.getItem('farmeasy_finances'));
+    if (!Array.isArray(transactions)) transactions = defaultTransactions;
+} catch (e) { transactions = defaultTransactions; }
 
 function updateFinanceUI() {
     const list = document.getElementById('transaction-history');
