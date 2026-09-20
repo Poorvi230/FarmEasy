@@ -620,3 +620,67 @@ main section {
     color: #888;
 }
 
+.livestock-stat { 
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+.livesotck-stat strong {
+    color: var(--brand-green);
+}
+
+.livestock-action-btn {
+    margin-top: auto;
+    width: 100%;
+    font-size: 0.85rem;
+}
+
+.buildings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.facility-card {
+    background-color: var(--card-bg);
+    border: 1px solid #f0f0f0;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.03);
+}
+
+.facility-card h4 {
+    margin-bottom: 8px;
+    color: var(--text-main);
+}
+
+.facility-card p {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.facility-card small {
+    display: block;
+    color: #999;
+    margin-top: 6px;
+    font-size: 0.75rem;
+}
+
+.facility-badge {
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+.facility-badge.healthy {
+    background-color: #eaf5e1;
+    color: #4a7732;
+}
