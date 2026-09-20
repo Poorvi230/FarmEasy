@@ -229,6 +229,57 @@
                             </div>                                                                                                                                                                                     
                         </div>                                                                                                                                                                                                                                                                                                                                                                              
                 </section>
+                <section id="fields-view" class="hidden">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 5px;">
+                        <h2>Farm Plots & Garden</h2>
+                        <button id="water-all-btn" class="btn-secondary" style="font-size: 0.85rem;padding: 6px 14px;">Water all Beds</button>
+                    </div>
+                    <p class="subtitle" style="text-align: left; margin-bottom: 15px;">Select a seed, plant beds, and harvest produce.</p>
+                    <div class="seed-selector-ribbon">
+                        <div class="seed-chip active" data-crop="carrot">
+                            <span class="seed-chip-icon">🥕</span>
+                            <div class="seed-chip-info">
+                                <strong>Carrots</strong>
+                                <small>15s Yield 4</small>
+                            </div>
+                        </div>
+                        <div class="seed-chip" data-crop="tomato">
+                            <span class="seed-chip-icon"></span>
+                            <div class="seed-chip-info">
+                                <strong>Tomatoes</strong>
+                                <small>30s Yield 3</small>
+                            </div>
+                        </div>
+                                                    <div class="seed-chip" data-crop="corn">
+                                <span class="seed-chip-icon">🌽</span>                                                                                                                                                 
+                                <div class="seed-chip-info">                                                                                                                                                           
+                                    <strong>Sweet Corn</strong>
+                                    <small>45s • Yield 2</small>
+                                </div>
+                            </div>
+                            <div class="seed-chip" data-crop="strawberry">
+                                <span class="seed-chip-icon">🍓</span>
+                                <div class="seed-chip-info">
+                                    <strong>Strawberries</strong>
+                                    <small>60s • Yield 5</small>
+                                </div>
+                            </div>                                                                                                                                                                                     
+                    </div>
+
+                    <div class="harvest-storage-card">
+                        <div class="harvest-storage-title">
+                            <h3>Granary produce Storage</h3>
+                            <small id="total-produce-count">0 items stored</small>
+                        </div>
+                        <div class="harvest-items-row" id="harvest-summary-row">
+
+                        </div>
+                    </div>
+
+                    <div class="plots-grid" id="gardens-plots-grid">
+
+                    </div>
+                </section>
             </main>
         </div>
         <!--cute add chore-->
@@ -251,7 +302,9 @@
                 </div>
             </div>
         </div>
-
-        <script src="./main.js"></script>
-    </body>
+            <script src="./weather.js"></script>                                                                                                                                                                       
+            <script src="./chores.js"></script>                                                                                                                                                                        
+            <script src="./assets.js"></script>                                                                                                                                                                        
+            <script src="./crops.js"></script>                                                                                                                                                                         
+            <script src="./main.js"></script>                                                                                                                                                                              </body>
 </html>

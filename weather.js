@@ -1,7 +1,8 @@
+// 1. Dismissible Alert Card
 const alertBtn = document.querySelector('.alert-card .btn-primary');
 if (alertBtn) {
     alertBtn.addEventListener('click', function() {
-        const card = this.closest('alert-card');
+        const card = this.closest('.alert-card');
         if (!card) return;
 
         card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
@@ -14,10 +15,11 @@ if (alertBtn) {
     });
 }
 
+// 2. Live Weather API (Open-Meteo + Geolocation)
 const weatherWidget = document.querySelector('.weather_widget');
-const weatherTitle = weatherWdiget ? weatherWdiget.querySelector('h3') : null;
-const weatherDemp = weatherWdiget ? weatherWidget.querySelector('p') : null;
-const weatherDesc = weatherWidget ? weatherWdiget.querySelector('small') : null;
+const weatherTitle = weatherWidget ? weatherWidget.querySelector('h3') : null;
+const weatherTemp = weatherWidget ? weatherWidget.querySelector('p') : null;
+const weatherDesc = weatherWidget ? weatherWidget.querySelector('small') : null;
 
 const weatherCodes = {
     0: "☀️ Clear skies",
@@ -46,13 +48,13 @@ function fetchLiveWeather() {
 
                 const data = await response.json();
 
-                const tempF = Math.round(data.current_weather.temprature);
+                const tempF = Math.round(data.current_weather.temperature);
                 const tempC = Math.round((tempF - 32) * 5 / 9);
-                const code = data.current_weather.weatherCodes;
-                const condition = weatherCodes[code] || "Wild weatehr";
+                const code = data.current_weather.weathercode;
+                const condition = weatherCodes[code] || "Wild weather";
 
                 if (weatherTitle) weatherTitle.innerText = "Live Local Weather";
-                if (weatehrTemp) weatherTemp.innerText = `${tempF}°F | ${tempC}°C`;
+                if (weatherTemp) weatherTemp.innerText = `${tempF}°F | ${tempC}°C`;
                 weatherDesc.innerText = condition;                                                                                                                                
             } catch (error) {
                 console.error("Weather API Failed: ", error);
