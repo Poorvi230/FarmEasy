@@ -2,7 +2,7 @@ const navButtons = document.querySelectorAll('.nav-btn');
 let views = document.querySelectorAll('main section');
 
 function updateTimeTheme() {
-    const hour = new Date().getHours();
+    const hour = 10;
     const body = document.body;
     const greeting = document.querySelector('#dashboard-view h2');
 
@@ -12,7 +12,7 @@ function updateTimeTheme() {
         if(greeting) greeting.innerText = "Morning Brief";
     }
     else if (hour >= 12 && hour < 17) {
-        body.classList.add('theme-afternoong');
+        body.classList.add('theme-afternoon');
         if(greeting) greeting.innerText = "Noon Check-in";
     }
     else if (hour >= 17 && hour < 20) {
@@ -458,3 +458,30 @@ renderChores();
             item.classList.toggle('expanded-note');
         });
     }
+
+    //fire n butterfliyes
+    function spawnBugs() {
+        const container = document.createElement('div');
+        container.id = 'bug-container'
+        document.body.appendChild(container);
+
+        const bugCount = 15;
+
+        for(let i = 0; i < bugCount; i++) {
+            let bug = document.createElement('div');
+            bug.className = 'bug';
+
+            let startX = Math.random() * 100;
+            let duration = 10 + Math.random() * 15;
+            let delay = Math.random() * -20;
+            let drift = (Math.random() * 200 - 100) + 'px';
+
+            bug.style.left = startX + 'vw';
+            bug.style.animationDuration = `${duration}s, 3s`;
+            bug.style.animationDelay = `${delay}s, ${delay}s`;
+            bug.style.setProperty('--drift', drift);
+
+            container.appendChild(bug);
+        }
+    }
+    spawnBugs();

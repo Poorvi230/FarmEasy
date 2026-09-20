@@ -10,31 +10,19 @@
 }
 /*-time themeimg*/
 body.theme-afternoon {
-    --bg-color: #f0f8ff;
-    --brand-green: #639c3a;
-    --bg-yellow: rgba(255, 215, 0, 0.25);
-    --bg-blue: rgba(135, 206, 235, 0.35);
-    --nav-bg: #e6f3e6;
+     --sky-top: #4facfe;
+    --sky-bottom: #00f2fe;
 }
 body.theme-evening {
-    --bg-color: #fff3e0;
-    --text-main: #3e2723;
-    --brand-green: #748c59;
-    --brand-orange: #d85732;
-    --card-bg: #fffbf7;
-    --nav-bg: #fcece3;
-    --bg-yellow: rgba(255, 140, 105, 0.3);
-    --bg-blue: rgba(179, 136, 255, 0.25);
+    --sky-top: #ff7e5f;
+    --sky-bottom: #feb47b;
 }
 body.theme-night {
-    --bg-color: #121a22;
+    --sky-top: #0f2027;
+    --sky-bottom: #203a43;
     --text-main: #e4e7eb;
-    --brand-green: #598539;
-    --brand-orange: #b86349;
-    --card-bg: #1e2732;
-    --nav-bg: #283422;
-    --bg-yellow: rgba(30, 60, 90, 0.6);
-    --bg-blue: rgba(20, 30, 45, 0.6);
+    --card-bg: rgba(30, 39, 50, 0.85);
+    --nav-bg: rgba(40, 52, 66, 0.9);
 }
 /*--Base--*/
 * {
@@ -42,20 +30,15 @@ body.theme-night {
 }
 body {
     font-family: 'Quicksand', sans-serif;
-    background-color: var(--bg-color);
-    background-image: conic-gradient(
-        var(--bg-yellow) 25%,
-        var(--bg-blue) 0 50%,
-        var(--bg-yellow) 0 75%,
-        var(--bg-blue) 0
-    );
-    background-size: 180px 180px;
+    background-color: var(--text-main);
+    background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
     color: var(--text-main);
     height: 100vh; display: flex;
     flex-direction: column;
 }
 #app {
     display: flex; flex-direction: column; height: 100%;
+    z-index: 10; position: relative;
 }
 .topbar {
     background-color: var(--brand-green);
@@ -712,3 +695,47 @@ main section {
     background-color: #eaf5e1;
     color: #4a7732;
 }
+/*--butterflies and fireflies*/
+#bug-container {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 1;
+    overflow: hidden;
+}
+.bug {
+    position: absolute; 
+    height: 6px; width: 6px;
+    background-color: #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 3px rgba(255, 215, 0, 0.8);
+    opacity: 0;
+    animation: floatBug 10s infinite linear, glowBug 3s infinite ease-in-out;
+}
+
+body:not(.theme-night):not(.theme-evening) .bug {
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    box-shadow: none;
+    animation: floatBug 15s infinite linear, flutterBug 0.8s infinite alternate ease-in-out;
+}
+body:not(.theme-night):not(.theme-evening) .bug::after {
+    content: '🦋';
+    font-size: 20px;
+    position: absolute;
+    top: 0; 
+    left: 0;
+}
+/*Animation*/
+@keyframes floatBug {
+    0% { transform:translate(0, 100vh) scale(0.5); }
+    100% { transform: translate(var(--drift), -10vh) scale(1); }
+}
+@keyframes glowBug {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 1; }
+}
+@keyframes flutterBug {
+        0% { opacity: 0.8; transform: translate(var(--drift), 0) rotate(-15deg); }
+        100% { opacity: 1; transform: translate(var(--drift), 0) rotate(15deg); }
+    }
