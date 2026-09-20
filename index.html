@@ -77,68 +77,157 @@
                 <section id="assets-view" class="hidden">
                     <h2>Barn & Garage</h2>
                     <p class="subtitle">Farm Inventory</p>
-
                     <div class="asset-grid" id="asset-overview-grid">
-                        <div class="asset-card" id="card-machinery" style="cursor: pointer;">
-                            <div class="asset-icon">🚜</div>
+                        <div class="asset-card asset-clickable" data-view="machinery-details">
+                            <div class="asset-icon"></div>
                             <h3>Machinery</h3>
-                            <p>3 active</p>
+                            <p id="machinery-summary-text">3 active 1 needs oil</p>
                         </div>
 
-                        <div class="asset-card">
-                            <div class="asset-icon">🌾</div>
+                        <div class="asset-card asset-clickable" data-view="seeds-details">
+                            <div class="asset-icon"></div>
                             <h3>Seeds & Feed</h3>
-                            <p> Low Stock</p>
+                            <p id="feed-summary-text">Low Stock Alert</p>
                         </div>
 
-                        <div class="asset-card">
-                            <div class="asset-icon">🐄</div>
-                            <h3>Livestock</h3>
-                            <p> 50 total</p>
-                            <p> 20cows, 14 pigs, 16 chickens</p>
+                        <div class="asset-card asset-clickable" data-view="livestock-details">
+                            <div class="asset-icon"></div>
+                            <h3>LiveStock</h3>
+                            <p id="livestock-summary-text">50 animals healthy</p>
                         </div>
 
-                        <div class="asset-card">
-                            <div class="asset-icon">🏚</div>
-                            <h3>Buildings</h3>
-                            <p>All cool</p>
+                        <div class="asset-card asset-clickable" data-view="buildings-details">
+                            <div class="asset-icon"></div>
+                            <h3>buildings</h3>
+                            <p>Silo, Barn, Well Ok</p>
                         </div>
                     </div>
 
-                    <div id="machinery-details" class="hidden">
-                        <button id="back-to-assets" class="btn-secondary" style="margin-bottom: 20px;">Back to Barns</button>
-                        <h3 style="margin-bottom: 15px; color: var(--text-main);">Your Machinery</h3>
+                    <div id="machinery-details" class="asset-subview hidden">
+                        <button class="back-to-assets-btn btn-secondary" style="margin-bottom: 20px;">Back to Barns</button>
+                        <h3 style="margin-bottom: 15px; color: var(--text-main);">Machinery & Fleet</h3>
 
                         <div class="machine-carousel">
-                            <!--Tractor1-->
                             <div class="machine-slide">
-                                <div class="img-placeholder">tractor 1<br>img</div>
+                                <div class="img-placeholder">🚜<br>Tractor</div>
                                 <div class="machine-info">
-                                    <h4>Big John</h4>
-                                    <p class="status healthy">🔥 Excellent</p>
-                                    <small>Last serviced: Oct 12</small>
+                                    <h3>Big John</h3>
+                                    <p class="status healthy">Excellent</p>
+                                    <small>Last Services: Oct 12</small>
                                 </div>
                             </div>
-                            <!--T2-->
-                            <div class="machine-slide">
-                                <div class="img-placeholder">tractor2<br>img</div>
+
+                            <div class="machine-slide" id="slide-rustus">
+                                <div class="img-placeholder">🚜<br>Tractor</div>
                                 <div class="machine-info">
-                                    <h4>Old Rustus</h4>
-                                    <p class="status warning">🥀Needs Oil</p>
-                                    <small>Last Serviced: Jan 04</small>
+                                    <h3>Old Rustus</h3>
+                                    <p class="status warning" id="rustus-status">Needs Oil</p>
+                                    <small id="rustus-serviced">Last Services: Jan 04</small>
+                                    <button id="service-rustus-btn" class="btn-primary" style="margin-top: 10px; font-size: 0.8rem; padding: 6px 14px;">Service Tractor</button>
                                 </div>
                             </div>
-                            <!--harvester-->
+
                             <div class="machine-slide">
-                                <div class="img-placeholder">harvester<br>img</div>
+                                <div class="img-placeholder">🌾<br>Harvester</div>
                                 <div class="machine-info">
-                                    <h4>The Reaper</h4>
-                                    <p class="status healthy">🔥 Ready</p>
-                                    <small>Stored in West Barn</small>
+                                    <h3>The Reaper</h3>
+                                    <p class="status healthy">Ready</p>
+                                    <small>Stored in West Barns</small>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div id="seeds-details" class="asset-subview hidden">
+                        <button class="back-to-assets-btn btn-secondary" style="margin-bottom: 20px;">Back to Barns</button>
+                        <h3 style="margin-bottom: 5px; color: var(--text-main);">Seeds & Feed Granary</h3>
+                        <p class="subtitle" style="text-align: left; margin-bottom: 15px;">Monitor Inventory levels and restock when low.</p>
+
+                        <div class="feed-inventory-list" id="feed-inventory-containter">
+
+                        </div>
+                    </div>
+
+                                            <div id="livestock-details" class="asset-subview hidden">                                                                                                                                      
+                            <button class="back-to-assets-btn btn-secondary" style="margin-bottom: 20px;">← Back to Barns</button>
+                            <h3 style="margin-bottom: 5px; color: var(--text-main);">Livestock & Pasture</h3>                                                                                                          
+                            <p class="subtitle" style="text-align: left; margin-bottom: 15px;">Daily farm production and feeding status.</p>                                                                           
+                                                                                                                                                                                                                       
+                            <div class="livestock-grid">                                                                                                                                                               
+                                <div class="livestock-card">                                                                                                                                                           
+                                    <div class="livestock-header">                                                                                                                                                     
+                                        <span class="livestock-emoji">🐄</span>                                                                                                                                        
+                                        <div>                                                                                                                                                                          
+                                            <h4>Dairy Cows</h4>                                                                                                                                                        
+                                            <small>20 Holstein head</small>                                                                                                                                            
+                                        </div>                                                                                                                                                                         
+                                    </div>                                                                                                                                                                             
+                                    <div class="livestock-stat">                                                                                                                                                       
+                                        <span>Today's Milk:</span>                                                                                                                                                     
+                                        <strong id="milk-tally">0 Gal</strong>                                                                                                                                         
+                                    </div>                                                                                                                                                                             
+                                    <button class="btn-primary livestock-action-btn" id="collect-milk-btn">🥛 +1 Gal Milk</button>                                                                                     
+                                </div>                                                                                                                                                                                 
+                                                                                                                                                                                                                       
+                                <div class="livestock-card">                                                                                                                                                           
+                                    <div class="livestock-header">                                                                                                                                                     
+                                        <span class="livestock-emoji">🐔</span>
+                                        <div>                                                                                                                                                                          
+                                            <h4>Egg Coop</h4>                                                                                                                                                          
+                                            <small>16 Rhode Island Reds</small>                                                                                                                                        
+                                        </div>                                                                                                                                                                         
+                                    </div>                                                                                                                                                                             
+                                    <div class="livestock-stat">                                                                                                                                                       
+                                        <span>Today's Eggs:</span>                                                                                                                                                     
+                                        <strong id="egg-tally">0 Eggs</strong>                                                                                                                                         
+                                    </div>                                                                                                                                                                             
+                                    <button class="btn-primary livestock-action-btn" id="gather-eggs-btn">🥚 +6 Eggs</button>                                                                                          
+                                </div>                                                                                                                                                                                 
+                                                                                                                                                                                                                       
+                                <div class="livestock-card">                                                                                                                                                           
+                                    <div class="livestock-header">                                                                                                                                                     
+                                        <span class="livestock-emoji">🐷</span>                                                                                                                                        
+                                        <div>                                                                                                                                                                          
+                                            <h4>Mud Pigs</h4>                                                                                                                                                          
+                                            <small>14 Berkshire pigs</small>                                                                                                                                           
+                                        </div>                                                                                                                                                                         
+                                    </div>                                                                                                                                                                             
+                                    <div class="livestock-stat">                                                                                                                                                       
+                                        <span>Pen State:</span>                                                                                                                                                        
+                                        <strong id="pigs-status">Hungry 🌾</strong>                                                                                                                                    
+                                    </div>                                                                                                                                                                             
+                                    <button class="btn-secondary livestock-action-btn" id="feed-pigs-btn">🥕 Feed Slop</button>                                                                                        
+                                </div>                                                                                                                                                                                 
+                            </div>
+                        </div>    
+                                               <div id="buildings-details" class="asset-subview hidden">                                                                                                                                      
+                            <button class="back-to-assets-btn btn-secondary" style="margin-bottom: 20px;">← Back to Barns</button>                                                                                     
+                            <h3 style="margin-bottom: 5px; color: var(--text-main);">Farm Buildings & Facilities</h3>                                                                                                  
+                            <p class="subtitle" style="text-align: left; margin-bottom: 15px;">Facility status and maintenance health.</p>                                                                             
+                                                                                                                                                                                                                       
+                            <div class="buildings-grid">                                                                                                                                                               
+                                <div class="facility-card">                                                                                                                                                            
+                                    <h4>🏚 Main Barn</h4>                                                                                                                                                               
+                                    <p>Ventilation: <span class="facility-badge healthy">Normal</span></p>                                                                                                             
+                                    <p>Indoor Temp: <strong>68°F</strong></p>                                                                                                                                          
+                                    <small>Last cleaned: 2 days ago</small>                                                                                                                                            
+                                </div>                                                                                                                                                                                 
+                                                                                                                                                                                                                       
+                                <div class="facility-card">                                                                                                                                                            
+                                    <h4>🌾 Grain Silo</h4>                                                                                                                                                             
+                                    <p>Capacity: <span class="facility-badge healthy">72% Full</span></p>                                                                                                              
+                                    <p>Stored: <strong>1,440 Bushels</strong></p>                                                                                                                                      
+                                    <small>Moisture level: Safe (13%)</small>                                                                                                                                          
+                                </div>                                                                                                                                                                                 
+                                                                                                                                                                                                                       
+                                <div class="facility-card">                                                                                                                                                            
+                                    <h4>💧 Water Well & Pump</h4>                                                                                                                                                      
+                                    <p>Status: <span class="facility-badge healthy" id="pump-status-badge">Online</span></p>                                                                                           
+                                    <p>Flow Rate: <strong>42 PSI</strong></p>                                                                                                                                          
+                                    <button class="btn-secondary" id="test-pump-btn" style="margin-top: 10px; width: 100%;">🔄 Run Pump Test</button>                                                                  
+                                </div>                                                                                                                                                                                 
+                            </div>                                                                                                                                                                                     
+                        </div>                                                                                                                                                                                                                                                                                                                                                                              
                 </section>
             </main>
         </div>
