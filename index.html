@@ -31,29 +31,78 @@
 
             <main class="content">
                 <section id="dashboard-view">
-                    <h2>Morning Brief</h2>
-                    <p style="margin-bottom: 20px; color: #888;">Welcome to the farm!</p>
-                    <div class="dashboard-grid">
-                        <!--weather stuff-->
-                        <div class="dash-card weather_widget">
-                            <h3> Weather</h3>
-                            <p>72°F and Sunny</p>
-                            <small>Connecting to weather station...</small>
+                    <div class="dashboard-view-row">
+                        <div>
+                            <h2>Morning Brief & Operations</h2>
+                            <p style="margin-bottom: 18px; color: #888;">Daily Agricultural overview and envoiermental conditions.</p>
                         </div>
-                        <!--animalssss-->
+                    </div>
+
+                    <div class="dash-kpi-grid">
+                        <div class="dash-kpi-card">
+                            <small>Cultivated Land</small>
+                            <strong id="dash-kpi-acres">90 ac</strong>
+                            <span>4 active Parcels</span>
+                        </div>
+
+                        <div class="dash-kpi-card">
+                            <small>Total Livestock</small>
+                            <strong id="dash-kpi-livestock">50 Head</strong>
+                            <span>4 active parcels</span>
+                        </div>
+
+                        <div class="dash-kpi-card">
+                            <small>Machinery Fleet</small>
+                            <strong id="dash-kpi-fleet">2 / 3 Ready</strong>
+                            <span> 1 Needs Oil</span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="dash-card spray-command-card">
+                            <div class="card-header-flex">
+                                <div>
+                                    <h3 id="weather-station-title">Field Weather & Spray Advisor</h3>
+                                    <span class="weather-condition-text" id="weather-condition-val">Checking Skies...</span>
+                                </div>
+                                <div class="weather-temp-block">
+                                    <span id="weather-temp-val">--°F</span>
+                                </div>
+                            </div>
+
+                            <div class="weather-telemetry-row">
+                                <div class="telemetry-pill">
+                                    <small>Wind Speed</small>
+                                    <strong id="weather-wind-val">-- mph</strong>
+                                </div>
+                                <div class="telemetry-pill">
+                                    <small>Humidity</small>
+                                    <strong id="weather-humidity-val">--%</strong>
+                                </div>
+                                <div class="telemetry-pill">
+                                    <small>Ground Traffic</small>
+                                    <strong id="trafficability-text" class="traffic-status good">Checking///</strong>
+                                </div>
+                            </div>
+                            <div class="spray-window-box">
+                                <span class="spray-badge" id="spray-window-badge">Evaulting Spray Window...</span>
+                                <p class="spray-reason-text" id="spray-window-reason">Calculating wind speed, temprature, and drift factors...</p>
+                            </div>
+                            <p class="trafficability-subtext" id="trafficability-details"></p>
+                        </div>
                         <div class="dash-card">
-                            <h3>Livestock Overview</h3>
-                            <ul>
-                                <li>🐄 20 Dairy Cows</li>
-                                <li>🐔 16 Laying Hens</li>
-                                <li>🐷 14 Berkshire Pigs</li>
+                            <h3>LiveStock census</h3>
+                            <ul class="livestock-list">
+                                <li><span>🐄 Dairy Cows</span> <strong>20 head</strong></li>                                                                                                                       
+                                <li><span>🐔 Laying Hens</span> <strong>16 head</strong></li>                                                                                                                      
+                                <li><span>🐷 Mud Pigs</span> <strong>14 head</strong></li>   
                             </ul>
                         </div>
-                        <!--alert card-->
+
                         <div class="dash-card alert-card">
                             <h3>Attention Needed</h3>
-                            <p>Old Rustus tractor needs oil service</p>
-                            <button class="btn-primary">Acknowledge</button>
+                            <p>Old rustus tractor needs scheduled oil service</p>
+                            <button class="btn-primary" style="margin-top: 12px;">Acknowledge</button>
                         </div>
                     </div>
                 </section>
