@@ -60,7 +60,7 @@ const defaultFleet = [
             oilStatus: "Good",                                                                                                                                                                                         
             notes: "Stored in West Barn. Scheduled for corn harvest"                                                                                                                                                   
         } 
-],
+];
 
 let fleet = JSON.parse(localStorage.getItem('farmeasy_fleet')) || defaultFleet;                                                                                                                                    
 let activeMachineForLog = null;
@@ -91,8 +91,8 @@ function renderFleet() {
         const percent = Math.min(100, Math.round((machine.hoursSinceService / machine.serviceInterval) * 100));
 
         let statusClass = "healthy";
-        let statusLabel = "ready for Duty";
-        let barColorClass = "bar-good"
+        let statusLabel = "Ready for Duty";
+        let barColorClass = "bar-good";
 
         if (isOverdue) {
             statusClass = "warning";
@@ -143,21 +143,24 @@ function renderFleet() {
 
 if (fleetContainer) {
     fleetContainer.addEventListener('click', (e) => {
-        const btn = e.target.cloest('.log-hours-btn');
+        const btn = e.target.closest('.log-hours-btn');
         if (!btn) return;
         const machineId = btn.getAttribute('data-id');
         activeMachineForLog = fleet.find(m => m.id === machineId);
         if (!activeMachineForLog) return;
 
         if (modalMachineTitle) modalMachineTitle.innerText = `${activeMachineForLog.name} (${activeMachineForLog.model})`;
-        if (hoursToAddInput) hoursToAddInput.value = '';
+        if (hoursToAddInput) {
+            hoursToAddInput.value = '';
+            setTimeout(() => hoursToAddInput.focus(), 60);
+        }
         if (markServicedCheckbox) markServicedCheckbox.checked = false;
         if (fleetModal) fleetModal.classList.remove('hidden');
     });
 }
 
 if (saveMachineBtn) {
-    saveMachineBtn.addEventListener('click', () => {
+    saveMachineBtn.addEventListener('click', (e) => {
         if (!activeMachineForLog) return;
         const addHours = parseFloat(hoursToAddInput ? hoursToAddInput.value : 0) || 0;
         const performService = markServicedCheckbox ? markServicedCheckbox.checked : false;
@@ -177,16 +180,37 @@ if (saveMachineBtn) {
         if (fleetModal) fleetModal.classList.add('hidden');
 
         if (window.spawnFloatingText) {
-            window.spawnFloatingText(event, performService ? "✅ Oil Serviced!" : `+${addHours} hrs`);
+            window.spawnFloatingText(e, performService ? "✅ Oil Serviced!" : `+${addHours} hrs`);
+        }
+    });
+}
+
+if (hoursToAddInput) {
+    hoursToAddInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            if (saveMachineBtn) saveMachineBtn.click();
         }
     });
 }
 
 if (cancelMachineBtn) {
     cancelMachineBtn.addEventListener('click', () => {
-        if(fleetModal) fleetModal.classList.add('hidden');
+        if (fleetModal) fleetModal.classList.add('hidden');
     });
 }
+
+if (fleetModal) {
+    fleetModal.addEventListener('click', (e) => {
+        if (e.target === fleetModal) fleetModal.classList.add('hidden');
+    });
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && fleetModal && !fleetModal.classList.contains('hidden')) {
+        fleetModal.classList.add('hidden');
+    }
+});
 
 let siloState = JSON.parse(localStorage.getItem('farmeasy_silo_state')) || {
     storedCrops: "Yellow Dent Corn",
@@ -206,7 +230,7 @@ let fanInterval = null;
 function saveSilo() {
     localStorage.setItem('farmeasy_silo_state', JSON.stringify(siloState));
 }
-function updateSiloUi() {
+function updateSiloUI() {
     if (!siloMoistureEl) return;
 
     siloMoistureEl.innerText = `${siloState.moisturePercent.toFixed(1)}%`;
@@ -218,9 +242,9 @@ function updateSiloUi() {
             siloBadgeEl.innerText = "Safe Storage (<14%)";
         } else if (siloState.moisturePercent <= 15.0) {
             siloBadgeEl.className = "facility-badge warning";
-            siloBadgeEl.innerText = "Elevated Moisture (runFan)"
+            siloBadgeEl.innerText = "Elevated Moisture (Run Fan)";
         } else {
-            siloBadgeEl.className = "Facility Badge Danger"
+            siloBadgeEl.className = "facility-badge danger";
             siloBadgeEl.innerText = "Critical Spoilage Risk";
         }
     }
@@ -240,7 +264,7 @@ function updateSiloUi() {
 function toggleAerationFan() {
     siloState.fanRunning = !siloState.fanRunning;
     saveSilo();
-    updateSiloUi;
+    updateSiloUI();
 
     if (siloState.fanRunning) {
         if (fanInterval) clearInterval(fanInterval);
@@ -258,7 +282,7 @@ function toggleAerationFan() {
                 siloState.fanRunning = false;
                 clearInterval(fanInterval);
                 saveSilo();
-                updateSiloUi();
+                updateSiloUI();
             }
         }, 1200);
     } else {
@@ -351,9 +375,72 @@ const milkBtn = document.getElementById('collect-milk-btn');
 const eggBtn = document.getElementById('gather-eggs-btn');                                                                                                                                                         
 const pigsBtn = document.getElementById('feed-pigs-btn');
 
-function updateLiveStockUI() {
+function updateLivestockUI() {
     if (milkTally) milkTally.innerText = `${milkCount} Gal`;                                                                                                                                                       
     if (eggTally) eggTally.innerText = `${eggCount} Eggs`;                                                                                                                                                         
     if (pigsStatus) pigsStatus.innerText = pigsFed ? 'Fed & Happy 🐷' : 'Hungry 🌾';                                                                                                                               
     if (pigsBtn) pigsBtn.innerText = pigsFed ? '✅ Fed Today' : '🥕 Feed Slop';                                                                                                                                    
 }
+
+if (milkBtn) {
+    milkBtn.addEventListener('click', (e) => {
+        milkCount += 1;
+        localStorage.setItem('farmeasy_milk_today', milkCount);
+        updateLivestockUI();
+        if (window.spawnFloatingText) window.spawnFloatingText(e, '+1 Gal!');
+    });
+}
+
+if (eggBtn) {
+    eggBtn.addEventListener('click', (e) => {
+        eggCount += 6;
+        localStorage.setItem('farmeasy_eggs_today', eggCount);
+        updateLivestockUI();
+        if (window.spawnFloatingText) window.spawnFloatingText(e, '+6 Eggs!');
+    });
+}
+
+if (pigsBtn) {
+    pigsBtn.addEventListener('click', (e) => {
+        pigsFed = !pigsFed;
+        localStorage.setItem('farmeasy_pigs_fed', pigsFed);
+        updateLivestockUI();
+        if (window.spawnFloatingText) window.spawnFloatingText(e, pigsFed ? 'Fed 🥕' : 'Hungry 🌾');    
+    });
+}
+
+const pumpBtn = document.getElementById('test-pump-btn');
+const pumpBadge = document.getElementById('pump-status-badge');
+
+if (pumpBtn && pumpBadge) {
+    pumpBtn.addEventListener('click', () => {
+        pumpBtn.disabled = true;
+        pumpBtn.innerText = "Testing Pressure...";
+        pumpBadge.innerText = "Pumping...";
+        pumpBadge.style.backgroundColor = '#d8ebf9';
+        pumpBadge.style.color = '#1f6596';
+
+        setTimeout(() => {
+            pumpBtn.disabled = false;
+            pumpBtn.innerText = '🔄 Run Pump Test';
+            pumpBadge.innerText = 'Online (42 PSI)';
+            pumpBadge.style.backgroundColor = '';
+            pumpBadge.style.color = '';
+        }, 1200);
+    }); 
+}
+
+function renderAssetsOverview() {
+    const machinerySummary = document.getElementById('machinery-summary-text');
+    if (machinerySummary) {
+        const overdueCount = fleet.filter(m => m.hoursSinceService >= m.serviceInterval).length;
+        machinerySummary.innerText = overdueCount === 0
+            ? `${fleet.length} active • All healthy`                                                                                                                                                               
+            : `${fleet.length} active • ${overdueCount} needs service`;
+    }
+}
+
+renderFleet();
+renderFeedStock();
+updateLivestockUI();
+updateSiloUI();

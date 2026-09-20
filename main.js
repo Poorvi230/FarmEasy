@@ -60,7 +60,9 @@ navButtons.forEach(btn => {
                 views.forEach(v => v.classList.add('hidden'));
                 const targetId = this.getAttribute('data-target');
                 const targetView = document.getElementById(targetId);
-                if (targetView) targetView.classList.remove('hidden');
+                if (targetId === 'dashboard-view' && window.updateDashboardKPIs) {
+                    window.updateDashboardKPIs();
+                }
 
                 contentArea.style.transition = 'none';
                 contentArea.style.transform = 'translateX(15px)';
@@ -74,6 +76,9 @@ navButtons.forEach(btn => {
             const targetId = this.getAttribute('data-target');
             const targetView = document.getElementById(targetId);
             if (targetView) targetView.classList.remove('hidden');
+            if (targetId === 'dashboard-view' && window.updateDashboardKPIs) {
+                window.updateDashboardKPIs();
+            }
         }
     });
 });

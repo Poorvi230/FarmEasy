@@ -1302,3 +1302,131 @@ border-left: 5px solid #ccc; }
     0% { filter: brightness(1); }
     100% { filter: brightness(1.15); }
 }
+.model-subtext {
+    font-size: 0.82rem;
+    color: #888;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.tach-telemetry-box {
+    width: 100%;
+    background-color: var(--bg-color);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin: 10px 0;
+    border: 1px solid #eee;
+}
+
+.tach-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.tach-row strong {
+    color: var(--text-main);
+}
+
+.service-bar-bg {
+    width: 100%;
+    height: 8px;
+    background-color: #eee;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 6px;
+}
+
+.service-bar-fill {
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.4s ease, background-color 0.4s ease;
+}
+
+.service-bar-fill.bar-good { background-color: var(--brand-green); }                                                                                                                                               
+.service-bar-fill.bar-caution { background-color: #f4a261; }
+.service-bar-fill.bar-overdue { background-color: #e76f51; }
+
+.status.caution { color: #d69830; }
+
+    .machine-notes {                                                                                                                                                                                                   
+        display: block;                                                                                                                                                                                                
+        color: #888;                                                                                                                                                                                                   
+        font-size: 0.75rem;                                                                                                                                                                                            
+        font-style: italic;                                                                                                                                                                                            
+        margin-bottom: 12px;                                                                                                                                                                                           
+        text-align: center;                                                                                                                                                                                            
+    }                                                                                                                                                                                                                  
+                                                                                                                                                                                                                       
+    /*-- Silo Spoilage Defense Styles --*/                                                                                                                                                                             
+    .silo-defense-card {                                                                                                                                                                                               
+        grid-column: 1 / -1;                                                                                                                                                                                           
+    }                                                                                                                                                                                                                  
+                                                                                                                                                                                                                       
+    .silo-header-flex {                                                                                                                                                                                                
+        display: flex;                                                                                                                                                                                                 
+        justify-content: space-between;                                                                                                                                                                                
+        align-items: flex-start;                                                                                                                                                                                       
+        margin-bottom: 12px;                                                                                                                                                                                           
+    }                                                                                                                                                                                                                  
+                                                                                                                                                                                                                       
+    .silo-telemetry-grid {                                                                                                                                                                                             
+        display: grid;                                                                                                                                                                                                 
+        grid-template-columns: 1fr 1fr;                                                                                                                                                                                
+        gap: 12px;                                                                                                                                                                                                     
+        margin-bottom: 15px;                                                                                                                                                                                           
+    }                                                                                                                                                                                                                  
+                                                                                                                                                                                                                       
+    .silo-telemetry-cell {                                                                                                                                                                                             
+        background-color: var(--bg-color);                                                                                                                                                                             
+        padding: 10px;                                                                                                                                                                                                 
+        border-radius: 10px;                                                                                                                                                                                           
+        border: 1px solid #eee;                                                                                                                                                                                        
+    }                                                                                                                                                                                                                  
+                                                                                                                                                                                                                       
+    .silo-telemetry-cell small {                                                                                                                                                                                       
+        display: block;                                                                                                                                                                                                
+        color: #888;                                                                                                                                                                                                   
+        font-size: 0.75rem;                                                                                                                                                                                            
+        margin-bottom: 2px;                                                                                                                                                                                            
+    }                                                                                                                                                                                                                  
+                                                                                                                                                                                                                       
+    .silo-telemetry-cell strong {                                                                                                                                                                                      
+        font-size: 1.3rem;                                                                                                                                                                                             
+        color: var(--brand-orange);                                                                                                                                                                                    
+    }                                                                                                                                                                                                                  
+                                                                                                                                                                                                                       
+    .silo-target-note {                                                                                                                                                                                                
+        display: block;                                                                                                                                                                                                
+        font-size: 0.72rem;                                                                                                                                                                                            
+        color: #999;                                                                                                                                                                                                   
+        margin-top: 2px;                                                                                                                                                                                               
+    }                                                                                                                                                                                                                  
+                                                                                                                                                                                                                       
+    .aeration-control-box {                                                                                                                                                                                            
+        text-align: center;                                                                                                                                                                                            
+        margin-top: 10px;                                                                                                                                                                                              
+    }                                                                                                                                                                                                                  
+                                                                                                                                                                                                                       
+    .fan-active-btn {                                                                                                                                                                                                  
+        background-color: #1976d2 !important;                                                                                                                                                                          
+        animation: pulse 2s infinite ease-in-out;                                                                                                                                                                      
+    }                                                                                                                                                                                                                  
+                                                                                                                                                                                                                       
+    .fan-status-caption {                                                                                                                                                                                              
+        font-size: 0.8rem;                                                                                                                                                                                             
+        color: #666;                                                                                                                                                                                                   
+        margin-top: 6px;                                                                                                                                                                                               
+    }                                                                                                                                                                                                                  
+                                                                                                                                                                                                                       
+    .fan-spinning {                                                                                                                                                                                                    
+        display: inline-block;                                                                                                                                                                                         
+        animation: spin 1s infinite linear;                                                                                                                                                                            
+    }                                                                                                                                                                                                                  
+  
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
