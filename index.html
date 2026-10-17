@@ -6,17 +6,9 @@
         <title>FarmEasy — Agricultural Management System</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./style.css">
     </head>
     <body>
-        <div id="splash-screen">
-            <div class="splash-content">
-                <div class="splash-logo">🚜</div>
-                <h1 class="splash-title">FarmEasy</h1>
-                <p class="splash-tagline">Your farm management, made easy!</p>
-            </div>
-        </div>
         <div id="app">
             <header class="topbar">
                 <h1>🚜 FarmEasy</h1>
@@ -25,7 +17,6 @@
                 <button class="nav-btn active" data-target="dashboard-view">Dashboard</button>
                 <button class="nav-btn" data-target="tasks-view">Tasks</button>
                 <button class="nav-btn" data-target="assets-view">Assets</button>
-                <button class="nav-btn" data-target="fields-view">🌾 Fields</button>
                 <button class="nav-btn" data-target="finance-view">💰 Finance</button>
             </nav>
 
@@ -34,7 +25,7 @@
                     <div class="dashboard-view-row">
                         <div>
                             <h2>Morning Brief & Operations</h2>
-                            <p style="margin-bottom: 18px; color: #888;">Daily Agricultural overview and envoiermental conditions.</p>
+                            <p style="margin-bottom: 18px; color: #888;">Daily Agricultural overview and environmental conditions.</p>
                         </div>
                     </div>
 
@@ -48,7 +39,7 @@
                         <div class="dash-kpi-card">
                             <small>Total Livestock</small>
                             <strong id="dash-kpi-livestock">50 Head</strong>
-                            <span>4 active parcels</span>
+                            <span>Healthy</span>
                         </div>
 
                         <div class="dash-kpi-card">
@@ -59,11 +50,11 @@
                     </div>
 
                     <div class="dashboard-grid">
-                        <div class="dash-card spray-command-card">
+                        <div class="dash-card">
                             <div class="card-header-flex">
                                 <div>
-                                    <h3 id="weather-station-title">Field Weather & Spray Advisor</h3>
-                                    <span class="weather-condition-text" id="weather-condition-val">Checking Skies...</span>
+                                    <h3 id="weather-station-title">Local Weather</h3>
+                                    <span class="weather-condition-text" id="weather-condition-val">Loading skies...</span>
                                 </div>
                                 <div class="weather-temp-block">
                                     <span id="weather-temp-val">--°F</span>
@@ -72,7 +63,7 @@
 
                             <div class="weather-telemetry-row">
                                 <div class="telemetry-pill">
-                                    <small>Wind Speed</small>
+                                    <small>Wind</small>
                                     <strong id="weather-wind-val">-- mph</strong>
                                 </div>
                                 <div class="telemetry-pill">
@@ -80,15 +71,10 @@
                                     <strong id="weather-humidity-val">--%</strong>
                                 </div>
                                 <div class="telemetry-pill">
-                                    <small>Ground Traffic</small>
-                                    <strong id="trafficability-text" class="traffic-status good">Checking///</strong>
+                                    <small>Field Traffic</small>
+                                    <strong id="trafficability-text" class="traffic-status good">Good</strong>
                                 </div>
                             </div>
-                            <div class="spray-window-box">
-                                <span class="spray-badge" id="spray-window-badge">Evaulting Spray Window...</span>
-                                <p class="spray-reason-text" id="spray-window-reason">Calculating wind speed, temprature, and drift factors...</p>
-                            </div>
-                            <p class="trafficability-subtext" id="trafficability-details"></p>
                         </div>
                         <div class="dash-card">
                             <h3>LiveStock census</h3>
@@ -281,44 +267,7 @@
                         </div>
                     </div>                                                                                                                                                                                                                                                                                                                                                                              
                 </section>
-                <section id="fields-view" class="hidden">
-                    <div class="fields-header-row">
-                        <div>
-                            <h2>Agronomy & Field Parcels</h2>
-                            <p class="subtitle" style="text-align: left; margin-bottom: 15px;">Crop phenology, acreage management, and field records.</p>
-                        </div>    
-                    </div>
 
-                    <div class="agronomy-kpi-grid">
-                        <div class="agronomy-kpi-card">
-                            <small>Total Cultivated</small>
-                            <strong id="kpi-total-acres">-- Acres</strong>
-                        </div>
-
-                        <div class="agronomy-kpi-card">
-                            <small>Active Crops</small>
-                            <strong id="kpi-active-varieties">-- Crops</strong>
-                        </div>
-                        <div class="agronomy-kpi-card">
-                            <small>Avg Soil Moisture</small>
-                            <strong id="kpi-avg-moisture">--%</strong>
-                        </div>
-                        <div class="agronomy-kpi-card">
-                            <small>Next Harvest Window</small>
-                            <strong id="kpi-next-harvest">--</strong>
-                        </div>
-                    </div>
-
-                    <div class="parcel-filters-row">
-                        <button class="parcel-filter-btn active" data-filter="all">All Parcels</button>
-                        <button class="parcel-filter-btn" data-filter="grains">🌾 Grains & Corn</button>
-                        <button class="parcel-filter-btn" data-filter="forage">🌱 Forage & Hay</button>
-                        <button class="parcel-filter-btn" data-filter="orchard">🍎 Orchard</button>
-                    </div>
-
-                    <div class="parcels-list" id="field-parcels-container">
-                    </div>
-                </section>
 
                 <section id="finance-view" class="hidden">
                     <h2>Financial Ledger</h2>
@@ -358,57 +307,29 @@
                 </section>
             </main>
         </div>
-        <!--cute add chore-->
+        <!-- Add Chore Modal -->
         <div id="chore-modal" class="modal-overlay hidden">
             <div class="cute-modal">
-                <h3>What do u have to do?</h3>
-                <input type="text" id="new-chore-input" placeholder="e.g. Pet cutie cows" maxlength="45"/>
+                <h3>Add Farm Task</h3>
+                <input type="text" id="new-chore-input" placeholder="e.g. Service irrigation pump" maxlength="45"/>
                 <div class="tag-selector-group">
-                    <label for="chore-tag-select">Chore Tag:</label>
+                    <label for="chore-tag-select">Priority / Time:</label>
                     <select id="chore-tag-select">
-                        <option value="Morning">🌱 Morning</option>                                                                                                                                                
-                        <option value="Afternoon">☀️ Afternoon</option>                                                                                                                                            
-                        <option value="Evening">🌙 Evening</option>                                                                                                                                                
+                        <option value="Morning">🌱 Morning</option>
+                        <option value="Afternoon">☀️ Afternoon</option>
+                        <option value="Evening">🌙 Evening</option>
                         <option value="Urgent">🚨 Urgent</option>
                     </select>
                 </div>
                 <div class="modal-button">
-                    <button id="cancel-chore-btn" class="btn-secondary">Nevermind</button>
-                    <button id="save-chore-btn" class="btn-primary">Add it</button>
-                </div>
-            </div>
-        </div>
-        <div id="field-activity-modal" class="modal-overlay hidden">
-            <div class="cute-modal" style="max-width: 420px; text-align: left;">
-                <h3 style="color: var(--brand-green); margin-bottom: 5px;">Record Field Activity</h3>
-                <p id="modal-parcel-name" style="font-weight: 700; color: #666; margin-bottom: 15px;">Parcel Name</p>
-
-                <div style="margin-bottom: 15px;">
-                    <label for="activity-type-select" style="font-size: 0.85rem; font-weight: 700; color:#555; display: block; margin-bottom: 5px;">Activity Type:</label>
-                    <select id="activity-type-select" style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-weight: 600;">
-                        <option value="Fertilizer">🧪 Fertilizer / Nutrient (N-P-K)</option>                                                                                                                       
-                        <option value="Irrigation">💧 Irrigation Application</option>                                                                                                                              
-                        <option value="Chemical Spray">🛡️ Herbicide / Fungicide Spray</option>                                                                                                                     
-                        <option value="Scouting">🔍 Field Scouting & Crop Stand</option>                                                                                                                           
-                        <option value="Soil Test">🧪 Soil Moisture & pH Sampling</option>                                                                                                                          
-                        <option value="Harvest">🧺 Harvest & Yield Logging</option>                                                                                                                                
-                    </select>
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                    <label for="activity-note-input" style="font-size: 0.85rem; font-weight: 700; color: #555; display: block; margin-bottom: 5px;">Activity Details & Application Rate:</label>
-                    <input type="text" id="activity-note-input" placeholder="e.g. Applied 120 lbs/ac 46-0-0 Urea" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.9rem;" maxlength="80" />  
-                </div>
-
-                <div class="modal-button">
-                    <button id="cancel-activity-btn" class="btn-secondary">Cancel</button>
-                    <button id="save-activity-btn" class="btn-primary">Save to Field Log</button>
+                    <button id="cancel-chore-btn" class="btn-secondary">Cancel</button>
+                    <button id="save-chore-btn" class="btn-primary">Add Task</button>
                 </div>
             </div>
         </div>
             <script src="./weather.js"></script>                                                                                                                                                                       
             <script src="./chores.js"></script>                                                                                                                                                                        
             <script src="./assets.js"></script>                                                                                                                                                                        
-            <script src="./crops.js"></script>                                                                                                                                                                         
-            <script src="./main.js"></script>                                                                                                                                                                              </body>
+            <script src="./main.js"></script>
+        </body>
 </html>

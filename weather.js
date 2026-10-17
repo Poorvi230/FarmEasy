@@ -153,60 +153,38 @@ async function loadWeatherData(lat, lon, stationLabel) {
         const data = await response.json();
 
         const current = data.current_weather;
-        const tempF = Math.round(current.temprature);
+        const tempF = Math.round(current.temperature || 72);
         const tempC = Math.round((tempF - 32) * 5 / 9);
-        const winMph = Math.round(current.windspeed);
-        const code = current.weatherCode;
+        const windMph = Math.round(current.windspeed || 5);
+        const code = current.weathercode !== undefined ? current.weathercode : 0;
         const weatherInfo = weatherCodes[code] || { label: "Clear skies", icon: "☀️" };
 
         let humidity = 55;
-        if (data.hourly && data.hourly.relativeHumidiy_2m && data.hourly.relativeHumidiy_2m.length > 0) {
-            humidity = Math.round(data.hourly.relativeHumidiy_2m[0]);
+        if (data.hourly && data.hourly.relativehumidity_2m && data.hourly.relativehumidity_2m.length > 0) {
+            humidity = Math.round(data.hourly.relativehumidity_2m[0]);
         }
 
         if (stationTitleEl) stationTitleEl.innerText = stationLabel;
-        if (tempE1) tempE1.innerText = `${tempF}°F / ${tempC}°C`; 
+        if (tempEl) tempEl.innerText = `${tempF}°F / ${tempC}°C`; 
         if (conditionEl) conditionEl.innerText = `${weatherInfo.icon} ${weatherInfo.label}`;
         if (windEl) windEl.innerText = `${windMph} mph`;   
         if (humidityEl) humidityEl.innerText = `${humidity}%`;
-
-        const sprayResult = evaulateSprayWindow(windMph, tempF, code);
-        if (sprayBadgeEl) {
-            sprayBadgeEl.className = `spray-badge ${sprayResult.status}`;
-            sprayBadgeEl.innerText = sprayResult.badgeText;
-        }
-        if (sprayReasonEl) {
-            sprayReasonEl.innerText = sprayResult.reason;
-        }
 
         const trafficResult = evaluateTrafficability(code);
         if (trafficTextEl) {
             trafficTextEl.innerText = trafficResult.text;
             trafficTextEl.className = `traffic-status ${trafficResult.level}`; 
         }
-        if (trafficDetailEl) {
-            trafficDetailEl.innerText = trafficResult.detail;
-        }
     } catch (err) {
         console.warn("Weather API fallback active: ", err);
         if (stationTitleEl) stationTitleEl.innerText = "🌾 Heartland Farm Station (Offline Cached)";  
         if (tempEl) tempEl.innerText = "72°F / 22°C"; 
         if (conditionEl) conditionEl.innerText = "☀️ Clear skies"; 
-        if (windEl) windEl.innerText = " 6 mph";
-        if (humidityEl) humidityEl,innerText = "52%";
-        if (sprayBadgeEl) {
-            sprayBadgeEl.className = "spray-badge optimal";
-            sprayBadgeEl.innerText = "Optimal Spray window"
-        }
-        if (sprayReasonEl) {
-            sprayReasonEl.innerText = "Wind 6 mph, 72°F. Excellent conditions for field application.";
-        }
+        if (windEl) windEl.innerText = "6 mph";
+        if (humidityEl) humidityEl.innerText = "52%";
         if (trafficTextEl) {
-            trafficTextEl.innerText = "Dry / Fully Passable"; 
-            trafficTextEl.className = "traffic-status good"
-        }
-        if (trafficDetailEl) {
-            trafficDetailEl.innerText = "Ground firm and dry for all tillage and equipment passes.";
+            trafficTextEl.innerText = "Good for Field Work"; 
+            trafficTextEl.className = "traffic-status good";
         }
     }
 }

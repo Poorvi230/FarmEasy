@@ -41,7 +41,6 @@ function updateRustusUI() {
         }
         if (machinerySummary) machinerySummary.innerText = '3 active • All healthy';
 
-        // Auto-remove oil service alert on dashboard if already serviced
         const alertCard = document.querySelector('.alert-card');
         if (alertCard) alertCard.remove();
     } else {
