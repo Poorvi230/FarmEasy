@@ -2,35 +2,27 @@ const navButtons = document.querySelectorAll('.nav-btn');
 const views = document.querySelectorAll('main section');
 
 navButtons.forEach(btn => {
-    btn.addEventListener('click', function(e) {
-        if (this.classList.contains('active')) return;
+    btn.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-target');
+        if (!targetId) return;
 
         navButtons.forEach(b => b.classList.remove('active'));
         this.classList.add('active');
 
-        const contentArea = document.querySelector('.content');
-        if (contentArea) {
-            contentArea.style.opacity = '0';
-            contentArea.style.transform = 'translateX(-15px)';
+        views.forEach(v => {
+            if (v.id === targetId) {
+                v.classList.remove('hidden');
+            } else {
+                v.classList.add('hidden');
+            }
+        });
 
-            setTimeout(() => {
-                views.forEach(v => v.classList.add('hidden'));
-                const targetId = this.getAttribute('data-target');
-                const targetView = document.getElementById(targetId);
-                if (targetView) targetView.classList.remove('hidden');
-
-                contentArea.style.transition = 'none';
-                contentArea.style.transform = 'translateX(15px)';
-                void contentArea.offsetWidth;
-                contentArea.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
-                contentArea.style.opacity = '1';
-                contentArea.style.transform = 'translateX(0)';
-            }, 200);
-        } else {
-            views.forEach(v => v.classList.add('hidden'));
-            const targetId = this.getAttribute('data-target');
-            const targetView = document.getElementById(targetId);
-            if (targetView) targetView.classList.remove('hidden');
+        // When opening Assets view, ensure the main overview grid is visible
+        if (targetId === 'assets-view') {
+            const overviewGrid = document.getElementById('asset-overview-grid');
+            const assetSubViews = document.querySelectorAll('.asset-subview');
+            if (overviewGrid) overviewGrid.classList.remove('hidden');
+            if (assetSubViews) assetSubViews.forEach(v => v.classList.add('hidden'));
         }
     });
 });
