@@ -75,7 +75,13 @@ const defaultFeedStock = [
         { id: 'chicken', name: 'Layer Feed', icon: '🪱', current: 8, max: 15, unit: 'bags' }                                                                                                                           
 ]
 
-let feedStock = JSON.parse(localStorage.getItem('farmeasy_feed_stock')) || defaultFeedStock;
+let feedStock = defaultFeedStock;
+try {
+    const saved = localStorage.getItem('farmeasy_feed_stock');
+    if (saved) feedStock = JSON.parse(saved);
+} catch (e) {
+    feedStock = defaultFeedStock;
+}
 const feedContainer = document.getElementById('feed-inventory-container');
 const feedSummary = document.getElementById('feed-summary-text');
 

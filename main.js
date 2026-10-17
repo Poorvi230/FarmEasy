@@ -1,36 +1,52 @@
-const navButtons = document.querySelectorAll('.nav-btn');
-const views = document.querySelectorAll('main section');
+function initNavigation() {
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const views = document.querySelectorAll('main section');
 
-navButtons.forEach(btn => {
-    btn.addEventListener('click', function() {
-        const targetId = this.getAttribute('data-target');
-        if (!targetId) return;
+    navButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            if (!targetId) return;
 
-        navButtons.forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
+            navButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
 
-        views.forEach(v => {
-            if (v.id === targetId) {
-                v.classList.remove('hidden');
-            } else {
-                v.classList.add('hidden');
+            views.forEach(v => {
+                if (v.id === targetId) {
+                    v.classList.remove('hidden');
+                } else {
+                    v.classList.add('hidden');
+                }
+            });
+
+            // When opening Assets view, ensure the main overview grid is visible
+            if (targetId === 'assets-view') {
+                const overviewGrid = document.getElementById('asset-overview-grid');
+                const assetSubViews = document.querySelectorAll('.asset-subview');
+                if (overviewGrid) overviewGrid.classList.remove('hidden');
+                if (assetSubViews) assetSubViews.forEach(v => v.classList.add('hidden'));
             }
         });
-
-        // When opening Assets view, ensure the main overview grid is visible
-        if (targetId === 'assets-view') {
-            const overviewGrid = document.getElementById('asset-overview-grid');
-            const assetSubViews = document.querySelectorAll('.asset-subview');
-            if (overviewGrid) overviewGrid.classList.remove('hidden');
-            if (assetSubViews) assetSubViews.forEach(v => v.classList.add('hidden'));
-        }
     });
-});
+}
 
-let transactions = JSON.parse(localStorage.getItem('farmeasy_finances')) || [
-    { id: 1, type: 'income', amount: 480.00, desc: 'Sold 60 Gal Raw Milk', date: new Date().toISOString() },
-    { id: 2, type: 'expense', amount: 120.00, desc: 'Diesel Fuel for Tractor Fleet', date: new Date().toISOString() }
-];
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavigation);
+} else {
+    initNavigation();
+}
+
+let transactions = [];
+try {
+    transactions = JSON.parse(localStorage.getItem('farmeasy_finances')) || [];
+} catch (e) {
+    transactions = [];
+}
+if (!transactions || !transactions.length) {
+    transactions = [
+        { id: 1, type: 'income', amount: 480.00, desc: 'Sold 60 Gal Raw Milk', date: new Date().toISOString() },
+        { id: 2, type: 'expense', amount: 120.00, desc: 'Diesel Fuel for Tractor Fleet', date: new Date().toISOString() }
+    ];
+}
 
 function updateFinanceUI() {
     const list = document.getElementById('transaction-history');

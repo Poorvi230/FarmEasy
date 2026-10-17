@@ -4,7 +4,13 @@ const defaultChores = [
     { id: 3, text: "Water tomato sprouts", tag: "Afternoon", completed: false}
 ];
 
-let chores = JSON.parse(localStorage.getItem('farmeasy_chores')) || defaultChores;
+let chores = defaultChores;
+try {
+    const saved = localStorage.getItem('farmeasy_chores');
+    if (saved) chores = JSON.parse(saved);
+} catch (e) {
+    chores = defaultChores;
+}
 let activeFilter = 'all';
 
 const taskBoard = document.getElementById('task-board-container');
