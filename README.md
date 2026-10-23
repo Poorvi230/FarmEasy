@@ -1,87 +1,52 @@
-<<<<<<< HEAD
-# FarmEasy 🚜
+# FarmEasy
 
-Hey! Welcome to **FarmEasy**. We built this because keeping track of crops, tractor oil changes, livestock feedings, and weather spray windows on a farm is usually a massive headache with paper clipboards and messy spreadsheets.
+A small web app for keeping track of a farm day to day: chores, fields, livestock, equipment, spraying and money. It started because paper notes and spreadsheets kept getting lost. Everything runs in the browser and nothing needs installing.
 
-FarmEasy is a fast, simple, local-first farm dashboard that gets out of your way so you can focus on actual farm work. Everything runs right in your browser with zero setup.
+Live: https://poorvi230.github.io/FarmEasy/
 
----
+![screenshot](image.png)
 
-## Screenshots 📸
+## What's in it
 
+**Dashboard.** Today's date, chores left and this month's net, plus local weather (temperature, wind, humidity from Open-Meteo). The spray advisor reads the wind and rain and tells you if it's a bad time to spray. There's also a spray log: pick a field, write down the product, and it saves the date and the wind speed at that moment.
 
-![alt text](image.png)
+**Tasks.** A chore board. Add chores with a tag (Morning, Afternoon, Evening, Urgent), tick them off, filter by status, and clear everything that's done in one go.
 
----
+**Assets.**
+- Machinery: log engine hours per machine and mark services. A bar shows how close each one is to its 250-hour oil change.
+- Seeds and feed: stock levels with use and restock buttons. Anything at 25% or below shows up in a reorder list with how much you need, and you can copy it.
+- Livestock: daily milk and egg tallies, and feeding the pigs.
+- Silo and well: grain moisture and core temperature, an aeration fan toggle, and a pump test.
 
-## What it does:
+**Fields.** Each parcel shows crop, acreage, soil moisture and growth stage. You can move a field to its next stage, log irrigation or fertiliser, and add notes to its activity log.
 
-* **Field Parcels & Crop Stages:** Track your acreage across wheat, corn, alfalfa, and orchards. Watch crops grow through 5 phenological stages from seeding to harvest, and log irrigation or fertilizer with one click.
-* **Live Weather & Spray Advisor:** Pulls live local weather and calculates chemical drift hazard before you spray. Warns you if winds are too high (>14 mph) or if the ground is too muddy for heavy tractors.
-* **Tractor Hours & Oil Service:** Log engine tach hours on your tractors and combines. Clean progress bars show you exactly when 250-hour oil and filter changes are due.
-* **Grain Silo Spoilage Defense:** Keep an eye on grain moisture and core temp in the corn silo. Turn on the aeration fan with a click to dry down wet grain and prevent mold.
-* **Daily Livestock & Barn:** Collect daily milk (+1 Gal), gather eggs (+6 Eggs), feed the pigs, and test the well pump pressure (42 PSI).
-* **Chore Board & Finance Ledger:** Simple daily ito-do list sorted by morning/evening/urgent, plus a quick income and expense tracker for fuel and farm sales.
-* **Day & Night Themes:** The app changes colors automatically based on the time of day (morning light, golden hour, night watch) with cute floating fireflies.
+**Finance.** Income and expenses with a running balance. You can delete entries and export the ledger as CSV.
 
----
+**Backup and Restore** (top right) saves everything to one JSON file and loads it back. Data lives in your browser's `localStorage`, so this is how you move it to another machine or keep a copy.
 
-## How to use it:
+## Running it
 
-You don't need to install Node, Docker, or mess with the terminal if you don't want to.
-
-Just double-click `index.html` in your file explorer, and you're good to go!
-
-If you want to run it from a local server instead:
+Open `index.html` in a browser. If weather or location won't load from a local file, serve the folder instead:
 
 ```bash
 python3 -m http.server 8000
 ```
-Then open `http://localhost:8000` in your browser.
 
----
+then go to `http://localhost:8000`.
 
-## AI USAGE
+## Built with
 
-AI was used to make a shippable project that can be deployed on github pages
+Plain HTML, CSS and JavaScript. No framework and no build step. Weather comes from the Open-Meteo API.
 
+## Known gaps
+
+- Data is per browser. Two devices won't share anything unless you use Backup and Restore.
+- The livestock numbers and default chores are sample data.
+- There are no automated tests; I checked it by hand in Chromium.
+
+## AI use
+
+Used to fix merge conflicts the spray log and the reorder list. used for debugging 
 ## License
 
-MIT License — free to use and tweak however you like!
-=======
-# FarmEasy 🚜
-
-  A simple web app I built to help small farm operators or milkmen keep trackof daily farm routines, chores, livestock tallies, and basic expenses in one
-  place.
-
-  🔗 **Live Link:** https://poorvi230.github.io/FarmEasy/
-
-  ---
-
-## What it does
-
-- Dashboard: Shows live local weather (temperature, wind, humidity fetched from the Open-Meteo API) and quick overview numbers for the day.
-- Chores: A daily to-do board to add and check off tasks, tagged by time of day (Morning, Afternoon, Evening) or marked Urgent.
-- Barn & Livestock: Quick counter buttons to log daily milk gallons andeggs collected, feed the pigs, track tractor service status, and monitor feed inventory.
-- Finance: A simple daily logbook to record expenses (like fuel or seeds) and income (selling milk), which automatically calculates the net balance.
-
-    All data is saved in `localStorage`, so everything stays saved even when you refresh or close the tab.
-
-    ---
-
-  ## Tech Used
-
-  - HTML & CSS
-  - Vanilla JavaScript
-  - Open-Meteo API
-
-  ## How to Run
-
-    1. Clone or download this repo.
-    2. Open `index.html` in any web browser. That's it!
-
-    ---
-
-## AI Declaration
-Used an AI assistant in debugging, mainly to check Open-Meteo API documentation, troubleshoot CSS timing quirks, and help with Git merge conflict commands.
->>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
+MIT
