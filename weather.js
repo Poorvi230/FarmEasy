@@ -14,34 +14,34 @@ if (alertBtn) {
 }
 
 const weatherCodes = {
-            0: { label: "Clear skies", icon: "☀️" },                                                                                                                                                                       
-        1: { label: "Mostly clear", icon: "🌤️" },                                                                                                                                                                      
-        2: { label: "Partly cloudy", icon: "⛅" },                                                                                                                                                                     
-        3: { label: "Overcast", icon: "☁️" },                                                                                                                                                                          
-        45: { label: "Foggy", icon: "🌫️" },                                                                                                                                                                            
-        48: { label: "Frost fog", icon: "🌫️" },                                                                                                                                                                        
-        51: { label: "Light drizzle", icon: "🌦️" },                                                                                                                                                                    
-        53: { label: "Moderate drizzle", icon: "🌦️" },                                                                                                                                                                 
-        55: { label: "Dense drizzle", icon: "🌧️" },                                                                                                                                                                    
-        56: { label: "Freezing drizzle", icon: "🌨️" },                                                                                                                                                                 
-        57: { label: "Dense freezing drizzle", icon: "🌨️" },                                                                                                                                                           
-        61: { label: "Slight rain", icon: "🌧️" },                                                                                                                                                                      
-        63: { label: "Moderate rain", icon: "🌧️" },                                                                                                                                                                    
-        65: { label: "Heavy rain", icon: "🌧️" },                                                                                                                                                                       
-        66: { label: "Freezing rain", icon: "🌨️" },                                                                                                                                                                    
-        67: { label: "Heavy freezing rain", icon: "🌨️" },                                                                                                                                                              
-        71: { label: "Slight snow", icon: "❄️" },                                                                                                                                                                      
-        73: { label: "Moderate snow", icon: "❄️" },                                                                                                                                                                    
-        75: { label: "Heavy snow", icon: "❄️" },                                                                                                                                                                       
-        77: { label: "Snow grains", icon: "🌨️" },                                                                                                                                                                      
-        80: { label: "Passing rain showers", icon: "🌦️" },                                                                                                                                                             
-        81: { label: "Moderate rain showers", icon: "🌧️" },                                                                                                                                                            
-        82: { label: "Violent rain showers", icon: "⛈️" },                                                                                                                                                             
-        85: { label: "Light snow showers", icon: "🌨️" },                                                                                                                                                               
-        86: { label: "Heavy snow showers", icon: "🌨️" },                                                                                                                                                               
-        95: { label: "Thunderstorm", icon: "⛈️" },                                                                                                                                                                     
-        96: { label: "Thunderstorm with hail", icon: "⛈️" },                                                                                                                                                           
-        99: { label: "Severe hail thunderstorm", icon: "⛈️" }                                                                                                                                                          
+            0: { label: "Clear skies", icon: "" },                                                                                                                                                                       
+        1: { label: "Mostly clear", icon: "" },                                                                                                                                                                      
+        2: { label: "Partly cloudy", icon: "" },                                                                                                                                                                     
+        3: { label: "Overcast", icon: "" },                                                                                                                                                                          
+        45: { label: "Foggy", icon: "" },                                                                                                                                                                            
+        48: { label: "Frost fog", icon: "" },                                                                                                                                                                        
+        51: { label: "Light drizzle", icon: "" },                                                                                                                                                                    
+        53: { label: "Moderate drizzle", icon: "" },                                                                                                                                                                 
+        55: { label: "Dense drizzle", icon: "" },                                                                                                                                                                    
+        56: { label: "Freezing drizzle", icon: "" },                                                                                                                                                                 
+        57: { label: "Dense freezing drizzle", icon: "" },                                                                                                                                                           
+        61: { label: "Slight rain", icon: "" },                                                                                                                                                                      
+        63: { label: "Moderate rain", icon: "" },                                                                                                                                                                    
+        65: { label: "Heavy rain", icon: "" },                                                                                                                                                                       
+        66: { label: "Freezing rain", icon: "" },                                                                                                                                                                    
+        67: { label: "Heavy freezing rain", icon: "" },                                                                                                                                                              
+        71: { label: "Slight snow", icon: "" },                                                                                                                                                                      
+        73: { label: "Moderate snow", icon: "" },                                                                                                                                                                    
+        75: { label: "Heavy snow", icon: "" },                                                                                                                                                                       
+        77: { label: "Snow grains", icon: "" },                                                                                                                                                                      
+        80: { label: "Passing rain showers", icon: "" },                                                                                                                                                             
+        81: { label: "Moderate rain showers", icon: "" },                                                                                                                                                            
+        82: { label: "Violent rain showers", icon: "" },                                                                                                                                                             
+        85: { label: "Light snow showers", icon: "" },                                                                                                                                                               
+        86: { label: "Heavy snow showers", icon: "" },                                                                                                                                                               
+        95: { label: "Thunderstorm", icon: "" },                                                                                                                                                                     
+        96: { label: "Thunderstorm with hail", icon: "" },                                                                                                                                                           
+        99: { label: "Severe hail thunderstorm", icon: "" }                                                                                                                                                          
 };
 
 function evaluateSprayWindow(windMph, tempF, weatherCode) {
@@ -50,7 +50,7 @@ function evaluateSprayWindow(windMph, tempF, weatherCode) {
     if (isRain) {
         return {
             status: "danger",
-            badgeText: "⛔ Spray Prohibited (Rain Active)",
+            badgeText: "Spray Prohibited (Rain Active)",
             reason: "Precipitation detected. Wash-off hazard; wait for foliage and soil to dry."
         };
     }
@@ -58,7 +58,7 @@ function evaluateSprayWindow(windMph, tempF, weatherCode) {
     if (windMph > 14) {
         return {
             status: "danger",
-            badgeText: "⛔ High Drift Hazard (>14 mph)",                                                                                                                                                           
+            badgeText: "High Drift Hazard (>14 mph)",                                                                                                                                                           
             reason: `Wind speed is ${windMph} mph. Severe chemical drift risk onto neighboring crops & waterways.`                                                                                                 
         };
     }
@@ -66,20 +66,20 @@ function evaluateSprayWindow(windMph, tempF, weatherCode) {
     if (windMph > 9) {
         return {
             status: "caution",
-            badgeText: "⚠️ Marginal Spray Window (10–14 mph)",                                                                                                                                                     
+            badgeText: "Marginal Spray Window (10–14 mph)",                                                                                                                                                     
             reason: `Wind is ${windMph} mph. Use low-drift air-induction nozzles and lower boom height.`                                                                                                           
         };
     }
     if (tempF > 85) {                                                                                                                                                                                              
         return {                                                                                                                                                                                                   
             status: "caution",                                                                                                                                                                                     
-            badgeText: "⚠️ High Volatilization (>85°F)",                                                                                                                                                           
+            badgeText: "High Volatilization (>85°F)",                                                                                                                                                           
             reason: "High ambient temperature accelerates droplet evaporation before reaching canopy."                                                                                                             
         };                                                                                                                                                                                                         
     }                                                                                                                                                                                                             
     return {                                                                                                                                                                                                       
         status: "optimal",                                                                                                                                                                                         
-        badgeText: "✅ Optimal Spray Window (3–9 mph)",                                                                                                                                                            
+        badgeText: "Optimal Spray Window (3–9 mph)",                                                                                                                                                            
         reason: `Wind ${windMph} mph, ${tempF}°F. Ideal droplet deposition with minimal drift hazard.`                                                                                                             
     };
 }
@@ -162,7 +162,7 @@ async function loadWeatherData(lat, lon, stationLabel) {
         const tempC = Math.round((tempF - 32) * 5 / 9);
         const windMph = Math.round(current.windspeed !== undefined ? current.windspeed : 6);
         const code = current.weathercode !== undefined ? current.weathercode : (current.weather_code !== undefined ? current.weather_code : (current.weatherCode || 0));
-        const weatherInfo = weatherCodes[code] || { label: "Clear skies", icon: "☀️" };
+        const weatherInfo = weatherCodes[code] || { label: "Clear skies", icon: "" };
 
         let humidity = 55;
         if (data.hourly && data.hourly.relativehumidity_2m && data.hourly.relativehumidity_2m.length > 0) {
@@ -191,14 +191,14 @@ async function loadWeatherData(lat, lon, stationLabel) {
         }
     } catch (err) {
         console.warn("Weather API fallback active: ", err);
-        if (stationTitleEl) stationTitleEl.innerText = "🌾 Heartland Farm Station (Offline Cached)";  
+        if (stationTitleEl) stationTitleEl.innerText = "Heartland Farm Station (Offline Cached)";  
         if (tempEl) tempEl.innerText = "72°F / 22°C"; 
-        if (conditionEl) conditionEl.innerText = "☀️ Clear skies"; 
+        if (conditionEl) conditionEl.innerText = "Clear skies"; 
         if (windEl) windEl.innerText = "6 mph";
         if (humidityEl) humidityEl.innerText = "52%";
         if (sprayBadgeEl) {
             sprayBadgeEl.className = "spray-badge optimal";
-            sprayBadgeEl.innerText = "✅ Optimal Spray Window (3–9 mph)";
+            sprayBadgeEl.innerText = "Optimal Spray Window (3–9 mph)";
         }
         if (sprayReasonEl) {
             sprayReasonEl.innerText = "Wind 6 mph, 72°F. Excellent conditions for field application.";
@@ -222,15 +222,15 @@ function initAgriculturalWeather() {
     if (navigator.geolocation && window.location.protocol.startsWith('http')) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                loadWeatherData(position.coords.latitude, position.coords.longitude, "📍 Local Field Station");
+                loadWeatherData(position.coords.latitude, position.coords.longitude, "Local Field Station");
             },
             () => {
-                loadWeatherData(fallbackLat, fallbackLon, "🌾 Heartland Farm Station");
+                loadWeatherData(fallbackLat, fallbackLon, "Heartland Farm Station");
             },
             { timeout: 5000 }
         );
     } else {
-        loadWeatherData(fallbackLat, fallbackLon, "🌾 Heartland Farm Station");
+        loadWeatherData(fallbackLat, fallbackLon, "Heartland Farm Station");
     }
 }
 

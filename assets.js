@@ -29,7 +29,7 @@ const defaultFleet = [
             name: "Big John",                                                                                                                                                                                          
             model: "John Deere 8R 370",                                                                                                                                                                                
             type: "Tractor",                                                                                                                                                                                           
-            icon: "🚜",                                                                                                                                                                                                
+            icon: "",                                                                                                                                                                                                
             totalHours: 1425,                                                                                                                                                                                          
             hoursSinceService: 225,                                                                                                                                                                                    
             serviceInterval: 250,                                                                                                                                                                                      
@@ -41,7 +41,7 @@ const defaultFleet = [
             name: "Old Rustus",                                                                                                                                                                                        
             model: "Case IH Magnum 7120",                                                                                                                                                                              
             type: "Tractor",                                                                                                                                                                                           
-            icon: "🚜",                                                                                                                                                                                                
+            icon: "",                                                                                                                                                                                                
             totalHours: 4890,                                                                                                                                                                                          
             hoursSinceService: 265,
             serviceInterval: 250,                                                                                                                                                                                      
@@ -53,7 +53,7 @@ const defaultFleet = [
             name: "The Reaper",                                                                                                                                                                                        
             model: "Claas Lexion 760 Combine",                                                                                                                                                                         
             type: "Harvester",                                                                                                                                                                                         
-            icon: "🌾",                                                                                                                                                                                                
+            icon: "",                                                                                                                                                                                                
             totalHours: 840,                                                                                                                                                                                           
             hoursSinceService: 110,                                                                                                                                                                                    
             serviceInterval: 250,                                                                                                                                                                                      
@@ -135,7 +135,7 @@ function renderFleet() {
                                                                                                                                                                                                                        
                     <div class="machine-actions-row">                                                                                                                                                                  
                         <button class="btn-primary log-hours-btn" data-id="${machine.id}" style="font-size: 0.8rem; padding: 7px 14px; width: 100%;">                                                                  
-                            ⚙️ Log Hours & Service                                                                                                                                                                     
+                            Log Hours & Service                                                                                                                                                                     
                         </button>                                                                                                                                                                                      
                     </div>                                                                                                                                                                                             
                 </div>                                                                                                                                                                                                 
@@ -184,7 +184,7 @@ if (saveMachineBtn) {
         if (fleetModal) fleetModal.classList.add('hidden');
 
         if (window.spawnFloatingText) {
-            window.spawnFloatingText(e, performService ? "✅ Oil Serviced!" : `+${addHours} hrs`);
+            window.spawnFloatingText(e, performService ? "Oil Serviced!" : `+${addHours} hrs`);
         }
     });
 }
@@ -259,13 +259,13 @@ function updateSiloUI() {
     }
 
     if (siloFanBtn) {
-        siloFanBtn.innerText = siloState.fanRunning ? "🛑 Stop Aeration Fan" : "🌀 Turn On Aeration Fan";
+        siloFanBtn.innerText = siloState.fanRunning ? "Stop Aeration Fan" : "Turn On Aeration Fan";
         siloFanBtn.className = siloState.fanRunning ? "btn-primary fan-active-btn" : "btn-secondary";
     }
 
     if (siloFanStatusEl) {
         siloFanStatusEl.innerHTML = siloState.fanRunning
-            ? `<span class="fan-spinning">🌀</span> Airflow Active: Drying grain core (-0.1%/sec)`                                                                                                                 
+            ? `<span class="fan-spinning"></span> Airflow Active: Drying grain core (-0.1%/sec)`                                                                                                                 
             : `Aeration Fan is Off`;   
     }
 }
@@ -304,10 +304,10 @@ if (siloFanBtn) {
 }
 
 const defaultFeedStock = [
-    { id: 'wheat', name: 'Winter Wheat Seed', icon: '🌾', current: 14, max: 30, unit: 'bags' },                                                                                                                    
-    { id: 'corn', name: 'Dent Corn Seed', icon: '🌽', current: 4, max: 25, unit: 'sacks' },                                                                                                                        
-    { id: 'fertilizer', name: '46-0-0 Urea Fertilizer', icon: '🧪', current: 18, max: 20, unit: 'bags' },                                                                                                          
-    { id: 'chicken', name: 'Layer Hen Mash', icon: '🪱', current: 8, max: 15, unit: 'bags' }                                                                                                                       
+    { id: 'wheat', name: 'Winter Wheat Seed', icon: '', current: 14, max: 30, unit: 'bags' },                                                                                                                    
+    { id: 'corn', name: 'Dent Corn Seed', icon: '', current: 4, max: 25, unit: 'sacks' },                                                                                                                        
+    { id: 'fertilizer', name: '46-0-0 Urea Fertilizer', icon: '', current: 18, max: 20, unit: 'bags' },                                                                                                          
+    { id: 'chicken', name: 'Layer Hen Mash', icon: '', current: 8, max: 15, unit: 'bags' }                                                                                                                       
 ];
 
 let feedStock;
@@ -406,8 +406,8 @@ const pigsBtn = document.getElementById('feed-pigs-btn');
 function updateLivestockUI() {
     if (milkTally) milkTally.innerText = `${milkCount} Gal`;                                                                                                                                                       
     if (eggTally) eggTally.innerText = `${eggCount} Eggs`;                                                                                                                                                         
-    if (pigsStatus) pigsStatus.innerText = pigsFed ? 'Fed & Happy 🐷' : 'Hungry 🌾';                                                                                                                               
-    if (pigsBtn) pigsBtn.innerText = pigsFed ? '✅ Fed Today' : '🥕 Feed Slop';                                                                                                                                    
+    if (pigsStatus) pigsStatus.innerText = pigsFed ? 'Fed & Happy ' : 'Hungry ';                                                                                                                               
+    if (pigsBtn) pigsBtn.innerText = pigsFed ? 'Fed Today' : 'Feed Slop';                                                                                                                                    
 }
 
 if (milkBtn) {
@@ -433,7 +433,7 @@ if (pigsBtn) {
         pigsFed = !pigsFed;
         localStorage.setItem('farmeasy_pigs_fed', pigsFed);
         updateLivestockUI();
-        if (window.spawnFloatingText) window.spawnFloatingText(e, pigsFed ? 'Fed 🥕' : 'Hungry 🌾');    
+        if (window.spawnFloatingText) window.spawnFloatingText(e, pigsFed ? 'Fed ' : 'Hungry ');    
     });
 }
 
@@ -450,7 +450,7 @@ if (pumpBtn && pumpBadge) {
 
         setTimeout(() => {
             pumpBtn.disabled = false;
-            pumpBtn.innerText = '🔄 Run Pump Test';
+            pumpBtn.innerText = 'Run Pump Test';
             pumpBadge.innerText = 'Online (42 PSI)';
             pumpBadge.style.backgroundColor = '';
             pumpBadge.style.color = '';

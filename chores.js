@@ -46,7 +46,7 @@ function renderChores() {
         card.className = 'task-item';
         card.dataset.id = chore.id;
         card.innerHTML = `                                                                                                                                                                                         
-                <button class="task-delete-btn" title="Delete chore">✖</button>                                                                                                                                        
+                <button class="task-delete-btn" title="Delete chore"></button>                                                                                                                                        
                 <span class="task-text">${esc(chore.text)}</span>
                 <span class="task-tag ${isUrgent ? 'urgent' : ''}">${esc(chore.tag)}</span>                                                                                                                                 
                 <input type="checkbox" class="task-check" ${chore.completed ? 'checked' : ''}>                                                                                                                         

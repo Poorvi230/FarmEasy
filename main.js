@@ -1,38 +1,10 @@
-function updateTimeTheme() {
+function updateGreeting() {
     const hour = new Date().getHours();
-    const body = document.body;
     const greeting = document.querySelector('#dashboard-view h2');
-
-    body.classList.remove('theme-afternoon', 'theme-evening', 'theme-night');
-
-    if (hour >= 5 && hour < 12) {
-        if (greeting) greeting.innerText = "Morning Brief & Operations";
-    } else if (hour >= 12 && hour < 17) {
-        body.classList.add('theme-afternoon');
-        if (greeting) greeting.innerText = "Noon Field Operations";
-    } else if (hour >= 17 && hour < 20) {
-        body.classList.add('theme-evening');
-        if (greeting) greeting.innerText = "Golden Evening Chores";
-    } else {
-        body.classList.add('theme-night');
-        if (greeting) greeting.innerText = "Night Watch & Security";
-    }
+    if (!greeting) return;
+    greeting.innerText = hour < 5 || hour >= 20 ? 'Night' : hour < 12 ? 'Morning' : hour < 17 ? 'Afternoon' : 'Evening';
 }
-updateTimeTheme();
-setInterval(updateTimeTheme, 60000);
-
-function spawnFloatingText(e, text) {
-    if (!e || !e.clientX) return;
-    const floater = document.createElement('div');
-    floater.className = 'floating-text';
-    floater.innerText = text;
-    floater.style.left = (e.clientX - 10) + 'px';
-    floater.style.top = (e.clientY - 20) + 'px';
-
-    document.body.appendChild(floater);
-    setTimeout(() => { floater.remove(); }, 1000);
-}
-window.spawnFloatingText = spawnFloatingText;
+updateGreeting();
 
 const navButtons = document.querySelectorAll('.nav-btn');
 const views = document.querySelectorAll('main section');
@@ -71,43 +43,6 @@ navButtons.forEach(btn => {
         }, 200);
     });
 });
-
-function spawnBugs() {
-    const container = document.createElement('div');
-    container.id = 'bug-container';
-    document.body.appendChild(container);
-
-    const bugCount = 14;
-    for (let i = 0; i < bugCount; i++) {
-        let bug = document.createElement('div');
-        bug.className = 'bug';
-        let startX = Math.random() * 100;
-        let duration = 25 + Math.random() * 30;
-        let delay = Math.random() * -20;
-        let drift = (Math.random() * 200 - 100) + 'px';
-
-        bug.style.left = startX + 'vw';
-        bug.style.animationDuration = `${duration}s, 3s`;
-        bug.style.animationDelay = `${delay}s, ${delay}s`;
-        bug.style.setProperty('--drift', drift);
-
-        container.appendChild(bug);
-    }
-}
-spawnBugs();
-
-const splash = document.getElementById('splash-screen');
-if (splash) {
-    let dismissed = false;
-    const dismissSplash = () => {
-        if (dismissed) return;
-        dismissed = true;
-        splash.classList.add('fade-out');
-        setTimeout(() => splash.remove(), 800);
-    };
-    splash.addEventListener('click', dismissSplash);
-    setTimeout(dismissSplash, 2200);
-}
 
 const defaultTransactions = [
     { id: 1, type: 'income', amount: 480.00, desc: 'Sold 60 Gal Raw Milk', date: new Date().toISOString() },

@@ -199,9 +199,9 @@ function renderParcels() {
                     ${recentLogsHTML || '<span style="color:#aaa; font-size:0.8rem; font-style:italic;">No recorded activities yet.</span>'}                                                                           
                 </div>                                                                                                                                                                                                 
                 <div class="parcel-actions">                                                                                                                                                                           
-                    <button class="btn-parcel-action btn-irrigate" data-action="irrigate" title="Add 10% soil moisture">💧 Irrigate</button>                                                                           
-                    <button class="btn-parcel-action btn-advance" data-action="advance" title="Advance to next phenological stage">⏩ Next Stage</button>                                                              
-                    <button class="btn-parcel-action btn-log-activity" data-action="log-activity">📝 Log Activity</button>                                                                                             
+                    <button class="btn-parcel-action btn-irrigate" data-action="irrigate" title="Add 10% soil moisture">Irrigate</button>                                                                           
+                    <button class="btn-parcel-action btn-advance" data-action="advance" title="Advance to next phenological stage">Next Stage</button>                                                              
+                    <button class="btn-parcel-action btn-log-activity" data-action="log-activity">Log Activity</button>                                                                                             
                 </div>                                                                                                                                                                                                 
             `;
         parcelsContainer.appendChild(card);
