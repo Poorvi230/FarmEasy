@@ -43,7 +43,7 @@ const defaultFleet = [
             type: "Tractor",                                                                                                                                                                                           
             icon: "🚜",                                                                                                                                                                                                
             totalHours: 4890,                                                                                                                                                                                          
-            hoursSinceService: 265, // Overdue by 15 hours                                                                                                                                                             
+            hoursSinceService: 265,
             serviceInterval: 250,                                                                                                                                                                                      
             oilStatus: "Needs Oil",                                                                                                                                                                                    
             notes: "Secondary yard tractor & manure spreader"                                                                                                                                                          

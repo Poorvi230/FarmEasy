@@ -12,21 +12,26 @@
     <body>
         <div id="splash-screen">
             <div class="splash-content">
-                <div class="splash-logo">🚜</div>
+                
                 <h1 class="splash-title">FarmEasy</h1>
-                <p class="splash-tagline">Your farm management, made easy!</p>
+                <p class="splash-tagline">Farm records, no clipboard.</p>
             </div>
         </div>
         <div id="app">
             <header class="topbar">
-                <h1>🚜 FarmEasy</h1>
+                <h1>FarmEasy</h1>
+                <div class="topbar-tools">
+                    <button id="backup-btn" class="link-btn">Backup</button>
+                    <button id="restore-btn" class="link-btn">Restore</button>
+                    <input type="file" id="restore-file" accept="application/json" hidden>
+                </div>
             </header>
             <nav class="top-nav">
                 <button class="nav-btn active" data-target="dashboard-view">Dashboard</button>
                 <button class="nav-btn" data-target="tasks-view">Tasks</button>
                 <button class="nav-btn" data-target="assets-view">Assets</button>
-                <button class="nav-btn" data-target="fields-view">🌾 Fields</button>
-                <button class="nav-btn" data-target="finance-view">💰 Finance</button>
+                <button class="nav-btn" data-target="fields-view">Fields</button>
+                <button class="nav-btn" data-target="finance-view">Finance</button>
             </nav>
 
             <main class="content">
@@ -34,7 +39,7 @@
                     <div class="dashboard-view-row">
                         <div>
                             <h2>Morning Brief & Operations</h2>
-                            <p style="margin-bottom: 18px; color: #888;">Daily Agricultural overview and environmental conditions.</p>
+                            <p id="today-line" style="margin-bottom: 18px; color: #888;">&nbsp;</p>
                         </div>
                     </div>
 
@@ -122,7 +127,10 @@
 
                     </div>
 
-                    <button id="open-chore-modal-btn" class="btn-primary" style="margin-top: 25px; width: 100%;">+Add new Chore</button>
+                    <div class="chore-actions">
+                        <button id="open-chore-modal-btn" class="btn-primary">+ Add chore</button>
+                        <button id="clear-done-btn" class="btn-secondary">Clear done</button>
+                    </div>
                 </section>
 
                 <section id="assets-view" class="hidden">                                                                                                                                                          
@@ -153,8 +161,6 @@
                                 <p>Aeration Fan & Moisture</p>                                                                                                                                                         
                             </div>                                                                                                                                                                                     
                         </div>                                                                                                                                                                                         
-                                                                                                                                                                                                                       
-                        <!-- 1. Machinery Fleet Subview -->                                                                                                                                                            
                         <div id="machinery-details" class="asset-subview hidden">                                                                                                                                      
                             <button class="back-to-assets-btn btn-secondary" style="margin-bottom: 20px;">← Back to Barns</button>                                                                                     
                             <h3 style="margin-bottom: 5px; color: var(--text-main);">Equipment Fleet & Engine Hours</h3>                                                                                               
@@ -348,13 +354,16 @@
                         </div>
                     </div>
 
-                    <h3 style="margin-top: 25px; color: var(--text-main);">Recent Transactions</h3>
+                    <div class="ledger-head">
+                        <h3>Recent Transactions</h3>
+                        <button id="export-csv-btn" class="link-btn">Export CSV</button>
+                    </div>
                     <div class="transaction-list" id="transaction-history">
                     </div>
                 </section>
             </main>
         </div>
-        <!--cute add chore-->
+        <div id="toast" class="toast" role="status"></div>
         <div id="chore-modal" class="modal-overlay hidden">
             <div class="cute-modal">
                 <h3>What do u have to do?</h3>
@@ -402,7 +411,6 @@
                 </div>
             </div>
         </div>
-        <!-- Equipment Engine Hours & Service Modal -->
         <div id="machine-log-modal" class="modal-overlay hidden">
             <div class="cute-modal" style="max-width: 420px; text-align: left;">
                 <h3 style="color: var(--brand-green); margin-bottom: 5px;">Log Machine Hours & Service</h3>
@@ -426,10 +434,12 @@
                 </div>
             </div>
         </div>
+        <script src="./util.js"></script>
         <script src="./weather.js"></script>                                                                                                                                                                       
         <script src="./chores.js"></script>                                                                                                                                                                        
         <script src="./assets.js"></script>                                                                                                                                                                        
         <script src="./crops.js"></script>                                                                                                                                                                         
         <script src="./main.js"></script>
+        <script src="./extras.js"></script>
     </body>
 </html>

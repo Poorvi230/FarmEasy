@@ -1,8 +1,3 @@
-// ==========================================================================
-// FarmEasy — App Coordinator, Navigation, Theming & Finance Ledger
-// ==========================================================================
-
-// 1. Time-of-Day Dynamic Environment Theming
 function updateTimeTheme() {
     const hour = new Date().getHours();
     const body = document.body;
@@ -26,7 +21,6 @@ function updateTimeTheme() {
 updateTimeTheme();
 setInterval(updateTimeTheme, 60000);
 
-// 2. Global Floating Gamified Feedback
 function spawnFloatingText(e, text) {
     if (!e || !e.clientX) return;
     const floater = document.createElement('div');
@@ -40,7 +34,6 @@ function spawnFloatingText(e, text) {
 }
 window.spawnFloatingText = spawnFloatingText;
 
-// 3. Top Navigation & Smooth View Transitions
 const navButtons = document.querySelectorAll('.nav-btn');
 const views = document.querySelectorAll('main section');
 
@@ -84,7 +77,6 @@ navButtons.forEach(btn => {
     });
 });
 
-// 4. Ambient Environmental Butterflies / Fireflies
 function spawnBugs() {
     const container = document.createElement('div');
     container.id = 'bug-container';
@@ -109,7 +101,6 @@ function spawnBugs() {
 }
 spawnBugs();
 
-// 5. Splash Screen Lifecycle
 const splash = document.getElementById('splash-screen');
 if (splash) {
     let dismissed = false;
@@ -123,7 +114,6 @@ if (splash) {
     setTimeout(dismissSplash, 2200);
 }
 
-// 6. Financial Ledger System
 const defaultTransactions = [
     { id: 1, type: 'income', amount: 480.00, desc: 'Sold 60 Gal Raw Milk', date: new Date().toISOString() },
     { id: 2, type: 'expense', amount: 120.00, desc: 'Diesel Fuel for Tractor Fleet', date: new Date().toISOString() }
@@ -158,12 +148,13 @@ function updateFinanceUI() {
         div.className = `transaction-item ${t.type}`;
         div.innerHTML = `
             <div class="trans-info">
-                <strong>${t.desc}</strong>
+                <strong>${esc(t.desc)}</strong>
                 <small>${new Date(t.date).toLocaleDateString()}</small>
             </div>
             <div class="trans-amount-text">
                 ${t.type === 'income' ? '+' : '-'}$${t.amount.toFixed(2)}
             </div>
+            <button class="trans-del-btn" data-id="${t.id}" title="Delete" aria-label="Delete transaction">&times;</button>
         `;
         list.appendChild(div);
     });
@@ -175,6 +166,28 @@ function updateFinanceUI() {
         balanceTxt.innerText = `${net >= 0 ? '+' : '-'}$${Math.abs(net).toFixed(2)}`;
         balanceTxt.style.color = net >= 0 ? '#699b4f' : '#d9534f';
     }
+}
+
+const transList = document.getElementById('transaction-history');
+if (transList) {
+    transList.addEventListener('click', (e) => {
+        const btn = e.target.closest('.trans-del-btn');
+        if (!btn) return;
+        transactions = transactions.filter(t => String(t.id) !== btn.dataset.id);
+        localStorage.setItem('farmeasy_finances', JSON.stringify(transactions));
+        updateFinanceUI();
+    });
+}
+
+const exportCsvBtn = document.getElementById('export-csv-btn');
+if (exportCsvBtn) {
+    exportCsvBtn.addEventListener('click', () => {
+        const q = v => '"' + String(v).replace(/"/g, '""') + '"';
+        const rows = [['date', 'type', 'amount', 'description']].concat(
+            transactions.map(t => [t.date.slice(0, 10), t.type, t.amount.toFixed(2), t.desc])
+        );
+        download('farmeasy-ledger.csv', rows.map(r => r.map(q).join(',')).join('\n'), 'text/csv');
+    });
 }
 
 const addTransBtn = document.getElementById('add-trans-btn');
@@ -189,7 +202,7 @@ if (addTransBtn) {
         const desc = descEl ? descEl.value.trim() : '';
 
         if (!amount || amount <= 0 || !desc) {
-            alert("Please enter a valid amount and description!");
+            toast("Need an amount and a description");
             return;
         }
 

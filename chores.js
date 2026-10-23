@@ -36,7 +36,7 @@ function renderChores() {
     });
 
     if (filtered.length === 0) {
-        taskBoard.innerHTML = `<p class="empty-board-msg">No chores found here! Grab a cold lemonade 🍋</p>`; 
+        taskBoard.innerHTML = `<p class="empty-board-msg">Nothing here.</p>`; 
         return;
     }
 
@@ -47,8 +47,8 @@ function renderChores() {
         card.dataset.id = chore.id;
         card.innerHTML = `                                                                                                                                                                                         
                 <button class="task-delete-btn" title="Delete chore">✖</button>                                                                                                                                        
-                <span class="task-text">${chore.text}</span>                                                                                                                                                           
-                <span class="task-tag ${isUrgent ? 'urgent' : ''}">${chore.tag}</span>                                                                                                                                 
+                <span class="task-text">${esc(chore.text)}</span>
+                <span class="task-tag ${isUrgent ? 'urgent' : ''}">${esc(chore.tag)}</span>                                                                                                                                 
                 <input type="checkbox" class="task-check" ${chore.completed ? 'checked' : ''}>                                                                                                                         
             `;
         taskBoard.appendChild(card);
@@ -90,6 +90,7 @@ if (saveBtn) {
             });
             saveChoresToStorage();
             renderChores();
+            if (window.refreshToday) window.refreshToday();
             if (modalOverlay) modalOverlay.classList.add('hidden');
         }
     });
@@ -128,6 +129,7 @@ if (taskBoard) {
             if (chore) {
                 chore.completed = e.target.checked;
                 saveChoresToStorage();
+                if (window.refreshToday) window.refreshToday();
                 if (activeFilter !== 'all'){
                     renderChores();
                 }
@@ -139,6 +141,18 @@ if (taskBoard) {
             if (note !== item) note.classList.remove('expanded-note');
         });
         item.classList.toggle('expanded-note');
+    });
+}
+
+const clearDoneBtn = document.getElementById('clear-done-btn');
+if (clearDoneBtn) {
+    clearDoneBtn.addEventListener('click', () => {
+        const n = chores.filter(c => c.completed).length;
+        if (!n) return toast('Nothing finished yet');
+        chores = chores.filter(c => !c.completed);
+        saveChoresToStorage();
+        renderChores();
+        toast(`Cleared ${n} done`);
     });
 }
 
