@@ -29,14 +29,11 @@ restoreFile?.addEventListener('change', async () => {
 window.refreshToday = function () {
     const el = document.getElementById('today-line');
     if (!el) return;
-    let left = 0, net = 0;
-    try {
-        left = JSON.parse(localStorage.getItem('farmeasy_chores') || '[]').filter(c => !c.completed).length;
-        const m = new Date().toISOString().slice(0, 7);
-        JSON.parse(localStorage.getItem('farmeasy_finances') || '[]').forEach(t => {
-            if (t.date.startsWith(m)) net += t.type === 'income' ? t.amount : -t.amount;
-        });
-    } catch (e) {}
+    const left = chores.filter(c => !c.completed).length;
+    const month = new Date().toISOString().slice(0, 7);
+    const net = transactions
+        .filter(t => t.date.startsWith(month))
+        .reduce((sum, t) => sum + (t.type === 'income' ? t.amount : -t.amount), 0);
     const date = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' });
     el.textContent = `${date} · ${left} chore${left === 1 ? '' : 's'} left · ${net < 0 ? '-' : ''}$${Math.abs(net).toFixed(0)} this month`;
 };

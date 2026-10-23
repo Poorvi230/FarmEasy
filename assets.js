@@ -69,7 +69,6 @@ try {
 } catch (e) { fleet = defaultFleet; }                                                                                                                                    
 let activeMachineForLog = null;
 
-<<<<<<< HEAD
 const fleetContainer = document.getElementById('machinery-cards-container');                                                                                                                                       
 const fleetModal = document.getElementById('machine-log-modal');                                                                                                                                                   
 const modalMachineTitle = document.getElementById('modal-machine-name');                                                                                                                                           
@@ -84,20 +83,6 @@ function saveFleet() {
     if (rustus) {
         const isRustusServiced = rustus.hoursSinceService < rustus.serviceInterval;
         localStorage.setItem('farmeasy_rustus_serviced', isRustusServiced ? 'true' : 'false');
-=======
-        const alertCard = document.querySelector('.alert-card');
-        if (alertCard) alertCard.remove();
-    } else {
-        rustusStatus.className = 'status warning';
-        rustusStatus.innerText = 'Needs Oil';
-        rustusServiced.innerText = 'Last Serviced: Jan 04';
-        if (rustusBtn) {
-            rustusBtn.innerText = 'Service Tractor';
-            rustusBtn.disabled = false;
-            rustusBtn.style.opacity = '1';
-        }
-        if (machinerySummary) machinerySummary.innerText = '3 active • 1 needs oil';
->>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
     }
 }
 
@@ -184,7 +169,6 @@ if (saveMachineBtn) {
         const addHours = parseFloat(hoursToAddInput ? hoursToAddInput.value : 0) || 0;
         const performService = markServicedCheckbox ? markServicedCheckbox.checked : false;
 
-<<<<<<< HEAD
         if (addHours > 0) {
             activeMachineForLog.totalHours += addHours;
             activeMachineForLog.hoursSinceService += addHours;
@@ -331,15 +315,6 @@ try {
     feedStock = JSON.parse(localStorage.getItem('farmeasy_feed_stock'));
     if (!Array.isArray(feedStock) || feedStock.length === 0) feedStock = defaultFeedStock;
 } catch (e) { feedStock = defaultFeedStock; }
-=======
-let feedStock = defaultFeedStock;
-try {
-    const saved = localStorage.getItem('farmeasy_feed_stock');
-    if (saved) feedStock = JSON.parse(saved);
-} catch (e) {
-    feedStock = defaultFeedStock;
-}
->>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
 const feedContainer = document.getElementById('feed-inventory-container');
 const feedSummary = document.getElementById('feed-summary-text');
 
@@ -380,7 +355,22 @@ function renderFeedStock() {
         feedSummary.innerText = hasLowStock ? 'Low Stock Alert' : 'Stock Levels Good';
     }
     localStorage.setItem('farmeasy_feed_stock', JSON.stringify(feedStock));
+    renderReorderList();
 }
+
+function renderReorderList() {
+    const box = document.getElementById('reorder-box');
+    const list = document.getElementById('reorder-list');
+    if (!box || !list) return;
+    const low = feedStock.filter(i => i.current / i.max <= 0.25);
+    box.hidden = low.length === 0;
+    list.innerHTML = low.map(i => `<li>${esc(i.name)}: ${i.max - i.current} ${esc(i.unit)}</li>`).join('');
+}
+
+document.getElementById('copy-reorder-btn')?.addEventListener('click', () => {
+    const text = [...document.querySelectorAll('#reorder-list li')].map(li => '- ' + li.textContent).join('\n');
+    navigator.clipboard?.writeText(text).then(() => toast('Reorder list copied'), () => toast('Copy failed'));
+});
 
 if (feedContainer) {
     feedContainer.addEventListener('click', (e) => {
