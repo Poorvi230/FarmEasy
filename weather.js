@@ -157,11 +157,19 @@ async function loadWeatherData(lat, lon, stationLabel) {
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
 
+<<<<<<< HEAD
         const current = data.current_weather || {};
         const tempF = Math.round(current.temperature !== undefined ? current.temperature : (current.temprature !== undefined ? current.temprature : 72));
         const tempC = Math.round((tempF - 32) * 5 / 9);
         const windMph = Math.round(current.windspeed !== undefined ? current.windspeed : 6);
         const code = current.weathercode !== undefined ? current.weathercode : (current.weather_code !== undefined ? current.weather_code : (current.weatherCode || 0));
+=======
+        const current = data.current_weather;
+        const tempF = Math.round(current.temperature || 72);
+        const tempC = Math.round((tempF - 32) * 5 / 9);
+        const windMph = Math.round(current.windspeed || 5);
+        const code = current.weathercode !== undefined ? current.weathercode : 0;
+>>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
         const weatherInfo = weatherCodes[code] || { label: "Clear skies", icon: "☀️" };
 
         let humidity = 55;
@@ -175,6 +183,7 @@ async function loadWeatherData(lat, lon, stationLabel) {
         if (windEl) windEl.innerText = `${windMph} mph`;   
         if (humidityEl) humidityEl.innerText = `${humidity}%`;
 
+<<<<<<< HEAD
         const sprayResult = evaluateSprayWindow(windMph, tempF, code);
         if (sprayBadgeEl) {
             sprayBadgeEl.className = `spray-badge ${sprayResult.status}`;
@@ -184,13 +193,12 @@ async function loadWeatherData(lat, lon, stationLabel) {
             sprayReasonEl.innerText = sprayResult.reason;
         }
 
+=======
+>>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
         const trafficResult = evaluateTrafficability(code);
         if (trafficTextEl) {
             trafficTextEl.innerText = trafficResult.text;
             trafficTextEl.className = `traffic-status ${trafficResult.level}`; 
-        }
-        if (trafficDetailEl) {
-            trafficDetailEl.innerText = trafficResult.detail;
         }
     } catch (err) {
         console.warn("Weather API fallback active: ", err);
@@ -199,6 +207,7 @@ async function loadWeatherData(lat, lon, stationLabel) {
         if (conditionEl) conditionEl.innerText = "☀️ Clear skies"; 
         if (windEl) windEl.innerText = "6 mph";
         if (humidityEl) humidityEl.innerText = "52%";
+<<<<<<< HEAD
         if (sprayBadgeEl) {
             sprayBadgeEl.className = "spray-badge optimal";
             sprayBadgeEl.innerText = "✅ Optimal Spray Window (3–9 mph)";
@@ -212,6 +221,11 @@ async function loadWeatherData(lat, lon, stationLabel) {
         }
         if (trafficDetailEl) {
             trafficDetailEl.innerText = "Ground firm and dry for all tillage and equipment passes.";
+=======
+        if (trafficTextEl) {
+            trafficTextEl.innerText = "Good for Field Work"; 
+            trafficTextEl.className = "traffic-status good";
+>>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
         }
     }
 }

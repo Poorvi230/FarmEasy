@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function updateTimeTheme() {
     const hour = new Date().getHours();
     const body = document.body;
@@ -123,6 +124,57 @@ try {
     transactions = JSON.parse(localStorage.getItem('farmeasy_finances'));
     if (!Array.isArray(transactions)) transactions = defaultTransactions;
 } catch (e) { transactions = defaultTransactions; }
+=======
+function initNavigation() {
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const views = document.querySelectorAll('main section');
+
+    navButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            if (!targetId) return;
+
+            navButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            views.forEach(v => {
+                if (v.id === targetId) {
+                    v.classList.remove('hidden');
+                } else {
+                    v.classList.add('hidden');
+                }
+            });
+
+            // When opening Assets view, ensure the main overview grid is visible
+            if (targetId === 'assets-view') {
+                const overviewGrid = document.getElementById('asset-overview-grid');
+                const assetSubViews = document.querySelectorAll('.asset-subview');
+                if (overviewGrid) overviewGrid.classList.remove('hidden');
+                if (assetSubViews) assetSubViews.forEach(v => v.classList.add('hidden'));
+            }
+        });
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavigation);
+} else {
+    initNavigation();
+}
+
+let transactions = [];
+try {
+    transactions = JSON.parse(localStorage.getItem('farmeasy_finances')) || [];
+} catch (e) {
+    transactions = [];
+}
+if (!transactions || !transactions.length) {
+    transactions = [
+        { id: 1, type: 'income', amount: 480.00, desc: 'Sold 60 Gal Raw Milk', date: new Date().toISOString() },
+        { id: 2, type: 'expense', amount: 120.00, desc: 'Diesel Fuel for Tractor Fleet', date: new Date().toISOString() }
+    ];
+}
+>>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
 
 function updateFinanceUI() {
     const list = document.getElementById('transaction-history');
@@ -218,9 +270,6 @@ if (addTransBtn) {
         if (amountEl) amountEl.value = '';
         if (descEl) descEl.value = '';
         updateFinanceUI();
-        if (typeof spawnFloatingText === 'function') {
-            spawnFloatingText(e, type === 'income' ? `+$${amount.toFixed(0)}` : `-$${amount.toFixed(0)}`);
-        }
     });
 }
 updateFinanceUI();

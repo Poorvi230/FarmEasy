@@ -4,11 +4,21 @@ const defaultChores = [
     { id: 3, text: "Water tomato sprouts", tag: "Afternoon", completed: false}
 ];
 
+<<<<<<< HEAD
 let chores;
 try {
     chores = JSON.parse(localStorage.getItem('farmeasy_chores'));
     if (!Array.isArray(chores) || chores.length === 0) chores = defaultChores;
 } catch (e) { chores = defaultChores; }
+=======
+let chores = defaultChores;
+try {
+    const saved = localStorage.getItem('farmeasy_chores');
+    if (saved) chores = JSON.parse(saved);
+} catch (e) {
+    chores = defaultChores;
+}
+>>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
 let activeFilter = 'all';
 
 const taskBoard = document.getElementById('task-board-container');

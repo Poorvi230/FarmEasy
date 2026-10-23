@@ -6,10 +6,10 @@
         <title>FarmEasy — Agricultural Management System</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="./style.css?v=2">
     </head>
     <body>
+<<<<<<< HEAD
         <div id="splash-screen">
             <div class="splash-content">
                 
@@ -17,6 +17,8 @@
                 <p class="splash-tagline">Farm records, no clipboard.</p>
             </div>
         </div>
+=======
+>>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
         <div id="app">
             <header class="topbar">
                 <h1>FarmEasy</h1>
@@ -30,8 +32,12 @@
                 <button class="nav-btn active" data-target="dashboard-view">Dashboard</button>
                 <button class="nav-btn" data-target="tasks-view">Tasks</button>
                 <button class="nav-btn" data-target="assets-view">Assets</button>
+<<<<<<< HEAD
                 <button class="nav-btn" data-target="fields-view">Fields</button>
                 <button class="nav-btn" data-target="finance-view">Finance</button>
+=======
+                <button class="nav-btn" data-target="finance-view">💰 Finance</button>
+>>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
             </nav>
 
             <main class="content">
@@ -39,7 +45,11 @@
                     <div class="dashboard-view-row">
                         <div>
                             <h2>Morning Brief & Operations</h2>
+<<<<<<< HEAD
                             <p id="today-line" style="margin-bottom: 18px; color: #888;">&nbsp;</p>
+=======
+                            <p style="margin-bottom: 18px; color: #888;">Daily Agricultural overview and environmental conditions.</p>
+>>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
                         </div>
                     </div>
 
@@ -53,7 +63,11 @@
                         <div class="dash-kpi-card">
                             <small>Total Livestock</small>
                             <strong id="dash-kpi-livestock">50 Head</strong>
+<<<<<<< HEAD
                             <span>Cows, Hens, Pigs</span>
+=======
+                            <span>Healthy</span>
+>>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
                         </div>
 
                         <div class="dash-kpi-card">
@@ -64,11 +78,11 @@
                     </div>
 
                     <div class="dashboard-grid">
-                        <div class="dash-card spray-command-card">
+                        <div class="dash-card">
                             <div class="card-header-flex">
                                 <div>
-                                    <h3 id="weather-station-title">Field Weather & Spray Advisor</h3>
-                                    <span class="weather-condition-text" id="weather-condition-val">Checking Skies...</span>
+                                    <h3 id="weather-station-title">Local Weather</h3>
+                                    <span class="weather-condition-text" id="weather-condition-val">Loading skies...</span>
                                 </div>
                                 <div class="weather-temp-block">
                                     <span id="weather-temp-val">--°F</span>
@@ -77,7 +91,7 @@
 
                             <div class="weather-telemetry-row">
                                 <div class="telemetry-pill">
-                                    <small>Wind Speed</small>
+                                    <small>Wind</small>
                                     <strong id="weather-wind-val">-- mph</strong>
                                 </div>
                                 <div class="telemetry-pill">
@@ -85,6 +99,7 @@
                                     <strong id="weather-humidity-val">--%</strong>
                                 </div>
                                 <div class="telemetry-pill">
+<<<<<<< HEAD
                                     <small>Ground Traffic</small>
                                     <strong id="trafficability-text" class="traffic-status good">Checking...</strong>
                                 </div>
@@ -94,6 +109,12 @@
                                 <p class="spray-reason-text" id="spray-window-reason">Calculating wind speed, temperature, and drift factors...</p>
                             </div>
                             <p class="trafficability-subtext" id="trafficability-detail"></p>
+=======
+                                    <small>Field Traffic</small>
+                                    <strong id="trafficability-text" class="traffic-status good">Good</strong>
+                                </div>
+                            </div>
+>>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
                         </div>
                         <div class="dash-card">
                             <h3>LiveStock census</h3>
@@ -133,6 +154,7 @@
                     </div>
                 </section>
 
+<<<<<<< HEAD
                 <section id="assets-view" class="hidden">                                                                                                                                                          
                         <h2>Barn & Garage</h2>                                                                                                                                                                         
                         <p class="subtitle">Farm Inventory, Fleet Health & Grain Storage</p>                                                                                                                           
@@ -290,37 +312,165 @@
                             <p class="subtitle" style="text-align: left; margin-bottom: 15px;">Crop phenology, acreage management, and field records.</p>
                         </div>    
                     </div>
-
-                    <div class="agronomy-kpi-grid">
-                        <div class="agronomy-kpi-card">
-                            <small>Total Cultivated</small>
-                            <strong id="kpi-total-acres">-- Acres</strong>
+=======
+                <section id="assets-view" class="hidden">
+                    <h2>Barn & Garage</h2>
+                    <p class="subtitle">Farm Inventory</p>
+                    <div class="asset-grid" id="asset-overview-grid">
+                        <div class="asset-card asset-clickable" data-view="machinery-details">
+                            <div class="asset-icon">🚜</div>
+                            <h3>Machinery</h3>
+                            <p id="machinery-summary-text">3 active • 1 needs oil</p>
                         </div>
 
-                        <div class="agronomy-kpi-card">
-                            <small>Active Crops</small>
-                            <strong id="kpi-active-varieties">-- Crops</strong>
+                        <div class="asset-card asset-clickable" data-view="seeds-details">
+                            <div class="asset-icon">🌾</div>
+                            <h3>Seeds & Feed</h3>
+                            <p id="feed-summary-text">Low Stock Alert</p>
                         </div>
-                        <div class="agronomy-kpi-card">
-                            <small>Avg Soil Moisture</small>
-                            <strong id="kpi-avg-moisture">--%</strong>
+
+                        <div class="asset-card asset-clickable" data-view="livestock-details">
+                            <div class="asset-icon">🐄</div>
+                            <h3>Livestock</h3>
+                            <p id="livestock-summary-text">50 animals • Healthy</p>
                         </div>
-                        <div class="agronomy-kpi-card">
-                            <small>Next Harvest Window</small>
-                            <strong id="kpi-next-harvest">--</strong>
+
+                        <div class="asset-card asset-clickable" data-view="buildings-details">
+                            <div class="asset-icon">🏚</div>
+                            <h3>Buildings</h3>
+                            <p>Silo, Barn, Well • OK</p>
                         </div>
                     </div>
 
-                    <div class="parcel-filters-row">
-                        <button class="parcel-filter-btn active" data-filter="all">All Parcels</button>
-                        <button class="parcel-filter-btn" data-filter="grains">🌾 Grains & Corn</button>
-                        <button class="parcel-filter-btn" data-filter="forage">🌱 Forage & Hay</button>
-                        <button class="parcel-filter-btn" data-filter="orchard">🍎 Orchard</button>
+                    <div id="machinery-details" class="asset-subview hidden">
+                        <button class="back-to-assets-btn btn-secondary" style="margin-bottom: 20px;">Back to Barns</button>
+                        <h3 style="margin-bottom: 15px; color: var(--text-main);">Machinery & Fleet</h3>
+
+                        <div class="machine-carousel">
+                            <div class="machine-slide">
+                                <div class="img-placeholder">🚜<br>Tractor</div>
+                                <div class="machine-info">
+                                    <h3>Big John</h3>
+                                    <p class="status healthy">Excellent</p>
+                                    <small>Last Services: Oct 12</small>
+                                </div>
+                            </div>
+
+                            <div class="machine-slide" id="slide-rustus">
+                                <div class="img-placeholder">🚜<br>Tractor</div>
+                                <div class="machine-info">
+                                    <h3>Old Rustus</h3>
+                                    <p class="status warning" id="rustus-status">Needs Oil</p>
+                                    <small id="rustus-serviced">Last Services: Jan 04</small>
+                                    <button id="service-rustus-btn" class="btn-primary" style="margin-top: 10px; font-size: 0.8rem; padding: 6px 14px;">Service Tractor</button>
+                                </div>
+                            </div>
+
+                            <div class="machine-slide">
+                                <div class="img-placeholder">🌾<br>Harvester</div>
+                                <div class="machine-info">
+                                    <h3>The Reaper</h3>
+                                    <p class="status healthy">Ready</p>
+                                    <small>Stored in West Barns</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="parcels-list" id="field-parcels-container">
+                    <div id="seeds-details" class="asset-subview hidden">
+                        <button class="back-to-assets-btn btn-secondary" style="margin-bottom: 20px;">Back to Barns</button>
+                        <h3 style="margin-bottom: 5px; color: var(--text-main);">Seeds & Feed Granary</h3>
+                        <p class="subtitle" style="text-align: left; margin-bottom: 15px;">Monitor Inventory levels and restock when low.</p>
+
+                        <div class="feed-inventory-list" id="feed-inventory-container">
+
+                        </div>
                     </div>
+
+                    <div id="livestock-details" class="asset-subview hidden">
+                        <button class="back-to-assets-btn btn-secondary" style="margin-bottom: 20px;">← Back to Barns</button>
+                        <h3 style="margin-bottom: 5px; color: var(--text-main);">Livestock & Pasture</h3>
+                        <p class="subtitle" style="text-align: left; margin-bottom: 15px;">Daily farm production and feeding status.</p>
+
+                        <div class="livestock-grid">
+                            <div class="livestock-card">
+                                <div class="livestock-header">
+                                    <span class="livestock-emoji">🐄</span>
+                                    <div>
+                                        <h4>Dairy Cows</h4>
+                                        <small>20 Holstein head</small>
+                                    </div>
+                                </div>
+                                <div class="livestock-stat">
+                                    <span>Today's Milk:</span>
+                                    <strong id="milk-tally">0 Gal</strong>
+                                </div>
+                                <button class="btn-primary livestock-action-btn" id="collect-milk-btn">🥛 +1 Gal Milk</button>
+                            </div>
+
+                            <div class="livestock-card">
+                                <div class="livestock-header">
+                                    <span class="livestock-emoji">🐔</span>
+                                    <div>
+                                        <h4>Egg Coop</h4>
+                                        <small>16 Rhode Island Reds</small>
+                                    </div>
+                                </div>
+                                <div class="livestock-stat">
+                                    <span>Today's Eggs:</span>
+                                    <strong id="egg-tally">0 Eggs</strong>
+                                </div>
+                                <button class="btn-primary livestock-action-btn" id="gather-eggs-btn">🥚 +6 Eggs</button>
+                            </div>
+
+                            <div class="livestock-card">
+                                <div class="livestock-header">
+                                    <span class="livestock-emoji">🐷</span>
+                                    <div>
+                                        <h4>Mud Pigs</h4>
+                                        <small>14 Berkshire pigs</small>
+                                    </div>
+                                </div>
+                                <div class="livestock-stat">
+                                    <span>Pen State:</span>
+                                    <strong id="pigs-status">Hungry 🌾</strong>
+                                </div>
+                                <button class="btn-secondary livestock-action-btn" id="feed-pigs-btn">🥕 Feed Slop</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="buildings-details" class="asset-subview hidden">
+                        <button class="back-to-assets-btn btn-secondary" style="margin-bottom: 20px;">← Back to Barns</button>
+                        <h3 style="margin-bottom: 5px; color: var(--text-main);">Farm Buildings & Facilities</h3>
+                        <p class="subtitle" style="text-align: left; margin-bottom: 15px;">Facility status and maintenance health.</p>
+
+                        <div class="buildings-grid">
+                            <div class="facility-card">
+                                <h4>🏚 Main Barn</h4>
+                                <p>Ventilation: <span class="facility-badge healthy">Normal</span></p>
+                                <p>Indoor Temp: <strong>68°F</strong></p>
+                                <small>Last cleaned: 2 days ago</small>
+                            </div>
+
+                            <div class="facility-card">
+                                <h4>🌾 Grain Silo</h4>
+                                <p>Capacity: <span class="facility-badge healthy">72% Full</span></p>
+                                <p>Stored: <strong>1,440 Bushels</strong></p>
+                                <small>Moisture level: Safe (13%)</small>
+                            </div>
+
+                            <div class="facility-card">
+                                <h4>💧 Water Well & Pump</h4>
+                                <p>Status: <span class="facility-badge healthy" id="pump-status-badge">Online</span></p>
+                                <p>Flow Rate: <strong>42 PSI</strong></p>
+                                <button class="btn-secondary" id="test-pump-btn" style="margin-top: 10px; width: 100%;">🔄 Run Pump Test</button>
+                            </div>
+                        </div>
+                    </div>                                                                                                                                                                                                                                                                                                                                                                              
                 </section>
+>>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
+
 
                 <section id="finance-view" class="hidden">
                     <h2>Financial Ledger</h2>
@@ -363,26 +513,31 @@
                 </section>
             </main>
         </div>
+<<<<<<< HEAD
         <div id="toast" class="toast" role="status"></div>
+=======
+        <!-- Add Chore Modal -->
+>>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
         <div id="chore-modal" class="modal-overlay hidden">
             <div class="cute-modal">
-                <h3>What do u have to do?</h3>
-                <input type="text" id="new-chore-input" placeholder="e.g. Pet cutie cows" maxlength="45"/>
+                <h3>Add Farm Task</h3>
+                <input type="text" id="new-chore-input" placeholder="e.g. Service irrigation pump" maxlength="45"/>
                 <div class="tag-selector-group">
-                    <label for="chore-tag-select">Chore Tag:</label>
+                    <label for="chore-tag-select">Priority / Time:</label>
                     <select id="chore-tag-select">
-                        <option value="Morning">🌱 Morning</option>                                                                                                                                                
-                        <option value="Afternoon">☀️ Afternoon</option>                                                                                                                                            
-                        <option value="Evening">🌙 Evening</option>                                                                                                                                                
+                        <option value="Morning">🌱 Morning</option>
+                        <option value="Afternoon">☀️ Afternoon</option>
+                        <option value="Evening">🌙 Evening</option>
                         <option value="Urgent">🚨 Urgent</option>
                     </select>
                 </div>
                 <div class="modal-button">
-                    <button id="cancel-chore-btn" class="btn-secondary">Nevermind</button>
-                    <button id="save-chore-btn" class="btn-primary">Add it</button>
+                    <button id="cancel-chore-btn" class="btn-secondary">Cancel</button>
+                    <button id="save-chore-btn" class="btn-primary">Add Task</button>
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
         <div id="field-activity-modal" class="modal-overlay hidden">
             <div class="cute-modal" style="max-width: 420px; text-align: left;">
                 <h3 style="color: var(--brand-green); margin-bottom: 5px;">Record Field Activity</h3>
@@ -441,5 +596,11 @@
         <script src="./crops.js"></script>                                                                                                                                                                         
         <script src="./main.js"></script>
         <script src="./extras.js"></script>
+=======
+        <script src="./main.js?v=2"></script>
+        <script src="./chores.js?v=2"></script>
+        <script src="./assets.js?v=2"></script>
+        <script src="./weather.js?v=2"></script>
+>>>>>>> 1fcedc01395907fdfd12e4a9b6182b23d31b46f7
     </body>
 </html>
